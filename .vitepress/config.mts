@@ -25,11 +25,13 @@ export default withMermaid({
         nav: [
           { text: 'A propos', link: '/fr/about/introduction' },
           { text: 'Apprentissage', link: '/fr/learning/introduction' },
-          { text: 'Ateliers', link: '/fr/labs/introduction' }
+          { text: 'Ateliers', link: '/fr/labs/introduction' },
+          { text: 'Ressources', link: '/fr/resources/introduction' }
         ],
         sidebar: {
           '/fr/about/': getAboutSidebar('fr'),
-          '/fr/learning/': getLearningSidebar()
+          '/fr/learning/': getLearningSidebar(),
+          '/fr/labs/': getLabsSidebar()
         },
         docFooter: {
           prev: 'Page précédente',
@@ -47,7 +49,8 @@ export default withMermaid({
     nav: [
       { text: 'About', link: '/about/introduction' },
       { text: 'Learning', link: '/learning/introduction' },
-      { text: 'Labs', link: '/labs/introduction' }
+      { text: 'Labs', link: '/labs/introduction' },
+      { text: 'Resources', link: '/resources/introduction' }
     ],
     sidebar: {
       '/about/': getAboutSidebar()
@@ -120,6 +123,18 @@ function getLearningSidebar () {
             { text: 'Introduction', link: '/fr/learning/libraries/seaborn/introduction' },
           ]
         },
+      ]
+    }
+  ]
+}
+
+function getLabsSidebar () {
+  return [
+    { text: 'Ateliers', link: '/fr/labs/introduction' },
+    { text: 'Bibliothèques',
+      collapsed: true,
+      items: [
+        { text: 'NumPy', link: '/fr/labs/libraries/numpy' }
       ]
     }
   ]
