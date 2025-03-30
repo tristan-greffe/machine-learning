@@ -99,12 +99,7 @@ function getLearningSidebar () {
     { text: 'Bibliothèques',
       collapsed: true,
       items: [
-        { text: 'NumPy',
-          collapsed: true,
-          items: [
-            { text: 'Introduction', link: '/fr/learning/libraries/numpy/introduction' },
-          ]
-        },
+        { text: 'NumPy', link: '/fr/learning/libraries/numpy' },
         { text: 'Pandas',
           collapsed: true,
           items: [
@@ -130,12 +125,6 @@ function getLearningSidebar () {
 
 function getLabsSidebar () {
   return [
-    { text: 'Ateliers', link: '/fr/labs/introduction' },
-    { text: 'Bibliothèques',
-      collapsed: true,
-      items: [
-        { text: 'NumPy', link: '/fr/labs/libraries/numpy' }
-      ]
-    }
+    { text: 'Ateliers', link: '/fr/labs/introduction' }
   ]
 }

@@ -1,4 +1,4 @@
-# Introduction à [NumPy](https://numpy.org/doc/stable)
+# [NumPy](https://numpy.org/doc/stable)
 
 `NumPy` est la bibliothèque fondamentale de Python pour le calcul numérique. Elle est utilisée dans toute la data science et le machine learning.`Pandas`, `Scikit-learn` ou `TensorFlow` reposent sur NumPy.
 
@@ -20,6 +20,12 @@ $$
 \end{bmatrix}
 $$
 :::
+
+Dans un contexte de machine learning :
+
+* les **features** sont souvent stockées sous forme de matrices
+* les **paramètres du modèle** sont des vecteurs
+* les **données d’entrée et sorties** sont des tableaux `NumPy`
 
 ## Pourquoi utiliser `NumPy` ?
 
@@ -89,14 +95,41 @@ Ici, le vecteur `B` est diffusé sur chaque ligne de `A`.
 - Code plus clair et plus lisible.  
 - Calculs optimisés en C, donc très rapides.  
 
-➡️ Le broadcasting est donc **une des raisons principales d’utiliser NumPy plutôt que les listes Python**.
+➡️ **Le broadcasting est l’une des raisons majeures pour lesquelles NumPy remplace les listes Python en Data Science**
 
 ### 3. Fonctions intégrées
 
 `NumPy` ne se limite pas aux tableaux. Il propose un grand nombre de fonctions mathématiques prêtes à l’emploi :
-* **Algèbre linéaire** : produit matriciel, inverse, déterminant, valeurs propres.
-* **Statistiques** : moyenne, écart-type, variance, quantiles.
-* **Trigonométrie** : sinus, cosinus, tangente, etc.
-* **Nombres aléatoires** : tirages pseudo-aléatoires, distributions gaussiennes, binomiales, uniformes…
+* **Algèbre linéaire** : produit matriciel, inverse, déterminant, valeurs propres
+* **Statistiques** : moyenne, écart-type, variance, quantiles
+* **Fonctions mathématiques** : exponentielle, logarithme, trigonométrie
+* **Génération aléatoire** : échantillonnage pseudo-aléatoire & distributions uniforme, normale, binomiale
 
-Ces fonctionnalités couvrent la majorité des besoins en calcul scientifique et évitent de réécrire des algorithmes de base.  
+Ces fonctionnalités couvrent la majorité des besoins en calcul scientifique et évitent de réécrire des algorithmes de base.
+
+## `NumPy` & Machine Learning
+
+Dans un algorithme de machine learning :
+
+* les **données** sont stockées dans des tableaux `NumPy`
+* les **calculs de perte** sont des opérations vectorisées
+* la **descente de gradient** repose sur l’algèbre linéaire
+* les **performances** dépendent directement de `NumPy`
+
+Comprendre `NumPy`, c’est comprendre ce qui se passe réellement
+lorsqu’un modèle est entraîné.
+
+## Les bases de `NumPy`
+
+Le fichier suivant contient les **principales opérations NumPy**
+utilisées en Data Science :
+
+* création de tableaux
+* opérations vectorisées
+* statistiques de base
+* manipulation de matrices
+* génération de données
+
+:::details principales opérations NumPy
+<<< ../../../public/labs/numpy_basics.py
+:::
