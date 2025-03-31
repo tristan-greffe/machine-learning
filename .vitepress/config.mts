@@ -104,6 +104,14 @@ function getLearningSidebar () {
           collapsed: true,
           items: [
             { text: 'Introduction', link: '/fr/learning/libraries/pandas/introduction' },
+            { text: 'Series', link: '/fr/learning/libraries/pandas/series' },
+            { text: 'DataFrames', link: '/fr/learning/libraries/pandas/data-frames' },
+            { text: 'Filtrage conditionnel', link: '/fr/learning/libraries/pandas/conditional-filtering' },
+            { text: 'Useful methods', link: '/fr/learning/libraries/pandas/useful-methods' },
+            { text: 'Missing data', link: '/fr/learning/libraries/pandas/missing-data' },
+            { text: 'GroupBy operation', link: '/fr/learning/libraries/pandas/groupby-operation' },
+            { text: 'DataFrame combination', link: '/fr/learning/libraries/pandas/data-frames-combination' },
+            { text: 'Inpu & output', link: '/fr/learning/libraries/pandas/introduction' }
           ]
         },
         { text: 'Matplotlib',
