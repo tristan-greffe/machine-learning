@@ -1,6 +1,6 @@
 """
 ========================
-NumPy Basics - Exercices et Solutions
+NumPy Basics
 ========================
 """
 
