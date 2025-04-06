@@ -132,3 +132,46 @@ one_row = df.iloc[0]
 # Attention : .append() est déprécié depuis Pandas 2.0, utiliser pd.concat() à la place
 df = pd.concat([df, one_row.to_frame().T])
 print("DataFrame après ajout d'une nouvelle ligne :\n", df.tail(), "\n")
+
+# ======================================================
+# 6. Filtrage conditionnel
+# ======================================================
+
+print("=== Filtrage conditionnel : une seule condition ===\n")
+# Exemple : total_bill > 40
+condition1 = df['total_bill'] > 40
+print("Série booléenne pour total_bill > 40 :\n", condition1.head(), "\n")
+
+# Appliquer le filtre
+df_filtered1 = df[condition1]
+print("Lignes où total_bill > 40 :\n", df_filtered1.head(), "\n")
+
+# Filtrage direct sans variable intermédiaire
+df_filtered_direct = df[df['total_bill'] > 40]
+print("Filtrage direct total_bill > 40 :\n", df_filtered_direct.head(), "\n")
+
+# Exemple : filtrage sur une colonne catégorielle
+df_filtered2 = df[df['sex'] == 'Male']
+print("Lignes où sex = 'Male' :\n", df_filtered2.head(), "\n")
+
+# ======================================================
+print("=== Filtrage conditionnel : conditions multiples ===\n")
+# Exemple : total_bill > 30 ET sex = 'Male'
+df_filtered_and = df[(df['total_bill'] > 30) & (df['sex'] == 'Male')]
+print("total_bill > 30 ET sex = 'Male' :\n", df_filtered_and.head(), "\n")
+
+# Exemple : total_bill > 30 OU sex = 'Female'
+df_filtered_or = df[(df['total_bill'] > 30) | (df['sex'] == 'Female')]
+print("total_bill > 30 OU sex = 'Female' :\n", df_filtered_or.head(), "\n")
+
+# ======================================================
+print("=== Filtrage conditionnel : plusieurs valeurs avec isin ===\n")
+# Exemple : filtrer les jours du week-end (Saturday, Sunday)
+weekend_days = ['Saturday', 'Sunday']
+df_filtered_weekend = df[df['day'].isin(weekend_days)]
+print("Lignes correspondant au week-end :\n", df_filtered_weekend.head(), "\n")
+
+# Ajouter un jour supplémentaire (Friday)
+days_filter = ['Friday', 'Saturday', 'Sunday']
+df_filtered_days = df[df['day'].isin(days_filter)]
+print("Lignes correspondant à Friday, Saturday ou Sunday :\n", df_filtered_days.head(), "\n")
