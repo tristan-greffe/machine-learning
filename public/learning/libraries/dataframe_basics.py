@@ -175,3 +175,48 @@ print("Lignes correspondant au week-end :\n", df_filtered_weekend.head(), "\n")
 days_filter = ['Friday', 'Saturday', 'Sunday']
 df_filtered_days = df[df['day'].isin(days_filter)]
 print("Lignes correspondant à Friday, Saturday ou Sunday :\n", df_filtered_days.head(), "\n")
+
+# ======================================================
+# 7. Méthodes utiles : apply sur une seule colonne
+# ======================================================
+
+print("=== Méthode apply : appliquer une fonction custom sur une colonne ===\n")
+
+# Exemple 1 : extraire les 4 derniers chiffres d'une colonne 'cc_number' (numéro de carte)
+# On crée une fonction custom
+def last_four(num):
+    """Retourne les 4 derniers chiffres d'un nombre en tant que chaîne"""
+    return str(num)[-4:]
+
+# Vérification rapide de la fonction
+print("Test fonction last_four sur un nombre :", last_four(123456789), "\n")
+
+# Application de la fonction à la colonne 'cc_number' via apply
+# Attention : cette colonne doit exister dans votre DataFrame df
+if 'cc_number' in df.columns:
+    df['last_four'] = df['cc_number'].apply(last_four)
+    print("Exemple d'application de last_four sur la colonne 'cc_number' :\n", df[['cc_number', 'last_four']].head(), "\n")
+else:
+    print("Colonne 'cc_number' non présente dans df. Passez à l'exemple suivant.\n")
+
+# Exemple 2 : catégoriser le total_bill en $ (low, medium, high) avec apply
+def categorize_price(price):
+    """Retourne un label $ en fonction du prix"""
+    if price < 10:
+        return '$'
+    elif 10 <= price < 30:
+        return '$$'
+    else:
+        return '$$$'
+
+# Application de la fonction sur la colonne 'total_bill'
+df['price_category'] = df['total_bill'].apply(categorize_price)
+print("DataFrame avec nouvelle colonne 'price_category' :\n", df[['total_bill', 'price_category']].head(), "\n")
+
+# Note pédagogique :
+print("""
+💡 Points clés sur l'utilisation de apply sur une seule colonne :
+- La fonction passée à apply doit prendre en entrée **une seule valeur** (une ligne de la série)
+- La fonction doit **retourner une seule valeur**, pas une série
+- Très utile pour transformer ou créer de nouvelles colonnes à partir d'une colonne existante
+""")
