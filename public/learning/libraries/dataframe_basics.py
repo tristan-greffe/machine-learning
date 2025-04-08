@@ -220,3 +220,73 @@ print("""
 - La fonction doit **retourner une seule valeur**, pas une série
 - Très utile pour transformer ou créer de nouvelles colonnes à partir d'une colonne existante
 """)
+
+# ======================================================
+# 8. Méthodes utiles : apply sur des colonnes multiples
+# ======================================================
+
+print("=== Méthode apply : appliquer une fonction sur plusieurs colonnes ===\n")
+
+# ------------------------------------------------------
+# Rappel : expression lambda
+# ------------------------------------------------------
+# lambda x: x * 2
+# Fonction anonyme à usage unique, très utilisée avec apply
+
+
+# ------------------------------------------------------
+# Exemple : évaluer la qualité du pourboire
+# Colonnes utilisées : total_bill et tip
+# ------------------------------------------------------
+
+def tip_quality(total_bill, tip):
+    """
+    Évalue la qualité du pourboire en fonction du ratio tip / total_bill
+    """
+    if (tip / total_bill) > 0.25:
+        return "Généreux"
+    else:
+        return "Standard"
+
+
+# Test rapide de la fonction
+print("Test tip_quality :", tip_quality(16.99, 1.01), "\n")
+
+
+# ------------------------------------------------------
+# Méthode 1 : apply + lambda (axis=1)
+# ------------------------------------------------------
+df['tip_quality_apply'] = df[['total_bill', 'tip']].apply(
+    lambda row: tip_quality(row['total_bill'], row['tip']),
+    axis=1
+)
+
+print("Résultat avec apply + lambda :\n",
+      df[['total_bill', 'tip', 'tip_quality_apply']].head(), "\n")
+
+
+# ------------------------------------------------------
+# Méthode 2 : np.vectorize (plus lisible et souvent plus rapide)
+# ------------------------------------------------------
+import numpy as np
+
+df['tip_quality_vectorized'] = np.vectorize(tip_quality)(
+    df['total_bill'],
+    df['tip']
+)
+
+print("Résultat avec np.vectorize :\n",
+      df[['total_bill', 'tip', 'tip_quality_vectorized']].head(), "\n")
+
+
+# ------------------------------------------------------
+# Notes pédagogiques importantes
+# ------------------------------------------------------
+print("""
+💡 Points clés à retenir :
+- apply sur plusieurs colonnes nécessite axis=1
+- La fonction custom doit retourner UNE seule valeur par ligne
+- lambda est pratique pour des appels ponctuels
+- np.vectorize rend une fonction Python "consciente" de NumPy
+- np.vectorize améliore souvent la lisibilité et parfois les performances
+""")
