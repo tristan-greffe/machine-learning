@@ -290,3 +290,142 @@ print("""
 - np.vectorize rend une fonction Python "consciente" de NumPy
 - np.vectorize améliore souvent la lisibilité et parfois les performances
 """)
+
+# ======================================================
+# 9. Méthodes utiles : informations statistiques et tri
+# ======================================================
+
+print("=== Informations statistiques et tri de données ===\n")
+
+# ------------------------------------------------------
+# Statistiques descriptives
+# ------------------------------------------------------
+print("Description statistique du DataFrame :\n")
+print(df.describe().T, "\n")  # Transposé pour meilleure lisibilité
+
+
+# ------------------------------------------------------
+# Tri des données
+# ------------------------------------------------------
+print("Tri par pourboire (tip) croissant :\n")
+print(df.sort_values('tip').head(), "\n")
+
+print("Tri par pourboire décroissant :\n")
+print(df.sort_values('tip', ascending=False).head(), "\n")
+
+print("Tri sur plusieurs colonnes (tip puis size) :\n")
+print(df.sort_values(['tip', 'size']).head(), "\n")
+
+
+# ------------------------------------------------------
+# Valeurs min / max et leurs index
+# ------------------------------------------------------
+max_total = df['total_bill'].max()
+idx_max = df['total_bill'].idxmax()
+
+min_total = df['total_bill'].min()
+idx_min = df['total_bill'].idxmin()
+
+print(f"Max total_bill = {max_total} à l'index {idx_max}")
+print(df.loc[idx_max], "\n")
+
+print(f"Min total_bill = {min_total} à l'index {idx_min}")
+print(df.loc[idx_min], "\n")
+
+
+# ------------------------------------------------------
+# Corrélation entre colonnes numériques
+# ------------------------------------------------------
+print("Matrice de corrélation :\n")
+print(df.corr(numeric_only=True), "\n")
+
+
+# ------------------------------------------------------
+# Comptage de valeurs catégorielles
+# ------------------------------------------------------
+print("Répartition par sexe :\n")
+print(df['sex'].value_counts(), "\n")
+
+print("Valeurs uniques pour 'day' :\n")
+print(df['day'].unique(), "\n")
+
+print("Nombre de jours uniques :")
+print(df['day'].nunique(), "\n")
+
+
+# ------------------------------------------------------
+# Remplacement de valeurs : replace
+# ------------------------------------------------------
+print("Remplacement des valeurs de 'sex' avec replace :\n")
+print(df['sex'].replace(['Female', 'Male'], ['F', 'M']).head(), "\n")
+
+
+# ------------------------------------------------------
+# Remplacement de valeurs : map (recommandé)
+# ------------------------------------------------------
+sex_mapping = {
+    'Female': 'F',
+    'Male': 'M'
+}
+
+print("Remplacement des valeurs de 'sex' avec map :\n")
+print(df['sex'].map(sex_mapping).head(), "\n")
+
+
+# ------------------------------------------------------
+# Détection et suppression de doublons
+# ------------------------------------------------------
+print("Présence de doublons :")
+print(df.duplicated().any(), "\n")
+
+# Exemple pédagogique
+simple_df = pd.DataFrame([1, 2, 2, 2], index=['A', 'B', 'C', 'D'])
+print("DataFrame avec doublons :\n", simple_df, "\n")
+
+print("Lignes dupliquées :\n")
+print(simple_df.duplicated(), "\n")
+
+print("Suppression des doublons :\n")
+print(simple_df.drop_duplicates(), "\n")
+
+
+# ------------------------------------------------------
+# Filtrage par intervalle avec between
+# ------------------------------------------------------
+between_filter = df['total_bill'].between(10, 20, inclusive='both')
+
+print("Notes totales entre 10 et 20 $ :\n")
+print(df[between_filter].head(), "\n")
+
+
+# ------------------------------------------------------
+# nlargest et nsmallest
+# ------------------------------------------------------
+print("Top 5 des pourboires les plus élevés :\n")
+print(df.nlargest(5, 'tip'), "\n")
+
+print("Top 5 des pourboires les plus faibles :\n")
+print(df.nsmallest(5, 'tip'), "\n")
+
+
+# ------------------------------------------------------
+# Échantillonnage aléatoire (sampling)
+# ------------------------------------------------------
+print("Échantillon aléatoire de 5 lignes :\n")
+print(df.sample(5), "\n")
+
+print("Échantillon aléatoire de 10% du DataFrame :\n")
+print(df.sample(frac=0.1), "\n")
+
+
+print("""
+💡 Points clés à retenir :
+- describe() donne une vue statistique rapide
+- sort_values() permet le tri simple ou multi-colonnes
+- idxmax() / idxmin() donnent la position des valeurs extrêmes
+- value_counts(), unique(), nunique() sont essentiels pour les catégories
+- map() est plus lisible que replace() pour de nombreux remplacements
+- duplicated() et drop_duplicates() gèrent les doublons
+- between(), nlargest(), nsmallest() simplifient les filtres
+- sample() permet l’échantillonnage aléatoire
+""")
