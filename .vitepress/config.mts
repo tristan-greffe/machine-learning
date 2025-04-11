@@ -107,9 +107,7 @@ function getLearningSidebar () {
             { text: 'Series', link: '/fr/learning/libraries/pandas/series' },
             { text: 'DataFrames', link: '/fr/learning/libraries/pandas/data-frames' },
             { text: 'Données manquantes', link: '/fr/learning/libraries/pandas/missing-data' },
-            { text: 'GroupBy operation', link: '/fr/learning/libraries/pandas/groupby-operation' },
-            { text: 'DataFrame combination', link: '/fr/learning/libraries/pandas/data-frames-combination' },
-            { text: 'Inpu & output', link: '/fr/learning/libraries/pandas/introduction' }
+            { text: 'Input & output', link: '/fr/learning/libraries/pandas/input-output' }
           ]
         },
         { text: 'Matplotlib',
