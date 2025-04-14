@@ -123,7 +123,62 @@ function getLearningSidebar () {
           ]
         },
       ]
-    }
+    },
+    { text: 'Algorithmes d’apprentissage supervisé',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/learning/algorithms/introduction' },
+        { text: 'Régression linéaire',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/linear-regression/introduction' }
+          ]
+        },
+        { text: 'Régression logistique',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/logistic-regression/introduction' }
+          ]
+        },
+        { text: 'KNN (K-Nearest Neighbors)',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/knn/introduction' }
+          ]
+        },
+        { text: 'SVM (Support Vector Machine)',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/svm/introduction' }
+          ]
+        },
+        { text: 'Arbre de décision',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/decision-tree/introduction' }
+          ]
+        },
+        { text: 'Random Forest',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/random-forest/introduction' }
+          ]
+        },
+        { text: 'Méthodes de Boosting',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/algorithms/boosting/introduction' }
+          ]
+        },
+        
+      ]
+    },
+    { text: 'Fine-Tuning',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/learning/fine-tuning/introduction' }
+      ]
+    },
   ]
 }
 
