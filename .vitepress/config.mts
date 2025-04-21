@@ -173,6 +173,12 @@ function getLearningSidebar () {
         
       ]
     },
+    { text: 'Deep Learning',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/learning/deep-learning/introduction' }
+      ]
+    },
     { text: 'Fine-Tuning',
       collapsed: true,
       items: [
