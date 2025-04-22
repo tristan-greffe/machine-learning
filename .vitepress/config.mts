@@ -184,12 +184,42 @@ function getLearningSidebar () {
       items: [
         { text: 'Introduction', link: '/fr/learning/fine-tuning/introduction' }
       ]
-    },
+    }
   ]
 }
 
 function getLabsSidebar () {
   return [
-    { text: 'Ateliers', link: '/fr/labs/introduction' }
+    { text: 'Ateliers', link: '/fr/labs/introduction' },
+    { text: 'Détecteur de visage',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/labs/introduction' }
+      ]
+    },
+    { text: 'Classificateur d\'images',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/labs/introduction' }
+      ]
+    },
+    { text: 'IA de reconnaissance d\'écriture manuscrite',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/labs/introduction' }
+      ]
+    },
+    { text: 'Détecteur de Spam',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/labs/introduction' }
+      ]
+    },
+    { text: 'Reconnaissance Faciale',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/labs/introduction' }
+      ]
+    }
   ]
 }
