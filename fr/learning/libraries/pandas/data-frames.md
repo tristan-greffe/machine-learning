@@ -47,8 +47,28 @@ DataFrame :
 | MEXICO | 1821 | 126 | 1.22 |
 :::
 
+## `groupby`
+
+Une opération `groupby` permet de :
+
+* segmenter les données par catégories
+* appliquer une fonction d’agrégation (mean, sum, count…)
+
+::: info **Exemple**
+<img src="/learning/libraries/pandas-dataframe-groupby.png" style="display: block; margin: 0 auto;width: 100%; height: auto;">
+:::
+
+**Colonnes catégorielles vs continues** :
+
+* **Colonnes catégorielles** : Valeurs discrètes mais peuvent être numériques ou textuelles (ex : années)
+* **Colonnes continues** : Valeurs numériques continues
+
 ## Fichier Python associé
 
 :::details DataFrame
 <<< ../../../../public/learning/libraries/dataframe_basics.py
+:::
+
+:::details `groupby`
+<<< ../../../../public/learning/libraries/dataframe_groupby.py
 :::
