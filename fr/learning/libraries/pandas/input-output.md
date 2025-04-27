@@ -133,6 +133,6 @@ df.to_excel(
 
 ## Fichier Python associé
 
-:::details Series
+:::details input & output
 <<< ../../../../public/learning/libraries/panda_input_output.py
 :::
