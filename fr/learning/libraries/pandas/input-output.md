@@ -1,4 +1,4 @@
-# Input & Output
+# Les entrées / sorties de données avec Pandas
 
 Pandas peut lire et écrire des données depuis de nombreuses sources : fichiers CSV, tables HTML, fichiers Excel, bases de données SQL, etc.
 
