@@ -201,3 +201,53 @@ DataFrame concaténé:
 :::details Fichier Python associé
 <<< ../../../../public/learning/libraries/dataframe_combination.py
 :::
+
+## Pivot Tables
+
+Les tableaux croisés dynamiques permettent de :
+* Réorganiser vos données,
+* Créer de nouveaux index,
+* Résumer des valeurs par regroupement.
+
+::: details **Exemple**
+<div style="display: flex; gap: 2rem;">
+<div style="flex: 1">
+
+`df` 
+
+| | foo | bar | baz | zoo |
+|------|------|------|------|------|
+| o | one | A | 1 | x |
+| 1 | one | B | 2 | y |
+| 2 | one | C | 3 | z |
+| 3 | two | A | 4 | q |
+| 4 | two | B | 5 | w |
+| 5 | two | C | 6 | t |
+
+</div>
+<div style="flex: 1">
+
+Après pivot `df.pivot(index='Foo', columns='Bar', values='Base')` :
+
+| bar | A | B | C |
+|------|------|------|------|
+| foo | | | |
+| one | 1 | 2 | 3 |
+| two | 4 | 5 | 6 |
+
+* `foo` devient l’index
+* `bar` devient les colonnes
+* `baz` est la valeur à afficher
+> Remarque : Les colonnes avec des valeurs uniques comme `zoo` sont ignorées lors du pivot.
+</div>
+</div>
+:::
+
+::: tip 
+* `pivot()` : réorganise les données, aucune agrégation.
+* `pivot_table()` : réorganise et agrège les données.
+:::
+
+:::details Fichier Python associé
+<<< ../../../../public/learning/libraries/pandas_pivot_tables.py
+:::
