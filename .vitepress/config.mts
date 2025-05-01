@@ -184,6 +184,12 @@ function getLearningSidebar () {
       items: [
         { text: 'Introduction', link: '/fr/learning/fine-tuning/introduction' }
       ]
+    },
+    { text: 'RAG (Retrieval-Augmented Generation)',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/learning/rag/introduction' }
+      ]
     }
   ]
 }
