@@ -124,6 +124,12 @@ function getLearningSidebar () {
         },
       ]
     },
+    { text: 'Concepts',
+      collapsed: true,
+      items: [
+        { text: 'Introduction', link: '/fr/learning/concepts/introduction' }
+      ]
+    },
     { text: 'Algorithmes d’apprentissage supervisé',
       collapsed: true,
       items: [
