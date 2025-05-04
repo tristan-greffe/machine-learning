@@ -99,7 +99,7 @@ function getLearningSidebar () {
     { text: 'Bibliothèques',
       collapsed: true,
       items: [
-        { text: 'NumPy', link: '/fr/learning/libraries/numpy' },
+        { text: 'NumPy', link: '/fr/learning/libraries/numpy/introduction' },
         { text: 'Pandas',
           collapsed: true,
           items: [
@@ -107,7 +107,8 @@ function getLearningSidebar () {
             { text: 'Series', link: '/fr/learning/libraries/pandas/series' },
             { text: 'DataFrames', link: '/fr/learning/libraries/pandas/data-frames' },
             { text: 'Données manquantes', link: '/fr/learning/libraries/pandas/missing-data' },
-            { text: 'Input & output', link: '/fr/learning/libraries/pandas/input-output' }
+            { text: 'Input & output', link: '/fr/learning/libraries/pandas/input-output' },
+            { text: 'Projet', link: '/fr/learning/libraries/pandas/project' }
           ]
         },
         { text: 'Matplotlib',

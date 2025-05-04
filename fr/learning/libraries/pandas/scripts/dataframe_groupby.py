@@ -20,7 +20,7 @@ import numpy as np
 # 0. Chargement des données
 # ======================================================
 
-df = pd.read_csv("mpg.csv")
+df = pd.read_csv("./data/mpg.csv")
 
 print("=== Aperçu du DataFrame ===")
 print(df.head())

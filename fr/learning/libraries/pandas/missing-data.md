@@ -147,5 +147,5 @@ Remplacement avec une valeur interpolée ou estimée :
 ## Fichier Python associé
 
 :::details missing data
-<<< ../../../../public/learning/libraries/missing_data_basics.py
+<<< ./scripts/missing_data_basics.py
 :::

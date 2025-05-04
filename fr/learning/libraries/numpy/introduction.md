@@ -131,5 +131,5 @@ utilisées en Data Science :
 * génération de données
 
 :::details principales opérations NumPy
-<<< ../../../public/learning/libraries/numpy_basics.py
+<<< ./scripts/numpy_basics.py
 :::

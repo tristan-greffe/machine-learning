@@ -48,7 +48,7 @@ DataFrame :
 :::
 
 :::details Fichier Python associé
-<<< ../../../../public/learning/libraries/dataframe_basics.py
+<<< ./scripts/dataframe_basics.py
 :::
 
 ## `groupby`
@@ -98,7 +98,7 @@ Lorsque tu groupes sur plusieurs colonnes, Pandas crée un index hiérarchique (
 
 
 :::details Fichier Python associé
-<<< ../../../../public/learning/libraries/dataframe_groupby.py
+<<< ./scripts/dataframe_groupby.py
 :::
 
 ## Combinaison
@@ -199,7 +199,7 @@ DataFrame concaténé:
 :::
 
 :::details Fichier Python associé
-<<< ../../../../public/learning/libraries/dataframe_combination.py
+<<< ./scripts/dataframe_combination.py
 :::
 
 ## Pivot Tables
@@ -249,5 +249,5 @@ Après pivot `df.pivot(index='Foo', columns='Bar', values='Base')` :
 :::
 
 :::details Fichier Python associé
-<<< ../../../../public/learning/libraries/pandas_pivot_tables.py
+<<< ./scripts/pandas_pivot_tables.py
 :::

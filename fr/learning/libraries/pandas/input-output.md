@@ -134,5 +134,5 @@ df.to_excel(
 ## Fichier Python associé
 
 :::details input & output
-<<< ../../../../public/learning/libraries/panda_input_output.py
+<<< ./scripts/panda_input_output.py
 :::

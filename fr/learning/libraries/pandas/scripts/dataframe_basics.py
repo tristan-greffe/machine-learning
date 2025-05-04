@@ -50,7 +50,7 @@ print("\n")
 # ======================================================
 
 # Lecture du fichier 'tips.csv' (assurez-vous qu'il est dans le même dossier)
-df = pd.read_csv('tips.csv')
+df = pd.read_csv('./data/tips.csv')
 print("Lecture du fichier CSV 'tips.csv' :\n", df.head(), "\n")
 
 # Obtenir des informations de base sur le DataFrame

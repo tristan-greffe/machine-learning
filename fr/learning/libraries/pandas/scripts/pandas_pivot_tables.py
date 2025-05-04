@@ -13,7 +13,7 @@ import pandas as pd
 # ======================================================
 # Lecture du fichier CSV
 # ======================================================
-df = pd.read_csv('Sales_Funnel_CRM.csv')
+df = pd.read_csv('./data/Sales_Funnel_CRM.csv')
 
 # ======================================================
 # 1. Méthode pivot()

@@ -56,7 +56,7 @@ print()
 # 2. Création et exploration d'un DataFrame
 # ======================================================
 
-df = pd.read_csv("movie_scores.csv")
+df = pd.read_csv("./data/movie_scores.csv")
 
 print("=== DataFrame initial ===")
 print(df)

@@ -14,8 +14,8 @@ from sqlalchemy import create_engine
 # ======================================================
 
 # Lecture d'un fichier CSV
-df = pd.read_csv('example.csv')                  # lecture simple
-df = pd.read_csv('example.csv', index_col=0)    # lecture avec l'index sur la première colonne
+df = pd.read_csv('./data/example.csv')                  # lecture simple
+df = pd.read_csv('./data/example.csv', index_col=0)    # lecture avec l'index sur la première colonne
 
 # Écriture d'un CSV
 # index=False pour ne pas sauvegarder l'index par défaut, sinon une colonne "Unnamed: 0" sera ajoutée
@@ -61,14 +61,14 @@ Chaque feuille (sheet) peut être importée en DataFrame.
 """
 
 # Lecture d'une feuille spécifique
-df_excel = pd.read_excel('my_excel_file.xlsx', sheet_name='First_Sheet')
+df_excel = pd.read_excel('./data/my_excel_file.xlsx', sheet_name='First_Sheet')
 
 # Pour connaître les noms des feuilles
-sheet_names = pd.ExcelFile('my_excel_file.xlsx').sheet_names
+sheet_names = pd.ExcelFile('./data/my_excel_file.xlsx').sheet_names
 print(sheet_names)
 
 # Écriture d'un DataFrame vers Excel
-df_excel.to_excel('example.xlsx', sheet_name='First_Sheet', index=False)
+df_excel.to_excel('./data/example.xlsx', sheet_name='First_Sheet', index=False)
 
 
 # ======================================================

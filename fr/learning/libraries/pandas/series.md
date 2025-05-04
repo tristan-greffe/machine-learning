@@ -88,6 +88,6 @@ Les Series reposent sur NumPy :
 Le fichier suivant contient tous les exemples de création et d’opérations sur les Series Pandas :
 
 :::details Series
-<<< ../../../../public/learning/libraries/series_basics.py
+<<< ./scripts/series_basics.py
 :::
 
