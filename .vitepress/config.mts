@@ -114,7 +114,7 @@ function getLearningSidebar () {
         { text: 'Matplotlib',
           collapsed: true,
           items: [
-            { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },+
+            { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },
             { text: 'Bases de Matplotlib', link: '/fr/learning/libraries/matplotlib/basis' },
             { text: 'Programmation orientée objet', link: '/fr/learning/libraries/matplotlib/poo' },
             { text: 'Personnalisation des graphiques', link: '/fr/learning/libraries/matplotlib/customization' },
