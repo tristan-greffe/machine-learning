@@ -108,13 +108,17 @@ function getLearningSidebar () {
             { text: 'DataFrames', link: '/fr/learning/libraries/pandas/data-frames' },
             { text: 'Données manquantes', link: '/fr/learning/libraries/pandas/missing-data' },
             { text: 'Input & output', link: '/fr/learning/libraries/pandas/input-output' },
-            { text: 'Projet', link: '/fr/learning/libraries/pandas/project' }
+            { text: 'Mise en pratique', link: '/fr/learning/libraries/pandas/project' }
           ]
         },
         { text: 'Matplotlib',
           collapsed: true,
           items: [
-            { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },
+            { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },+
+            { text: 'Bases de Matplotlib', link: '/fr/learning/libraries/matplotlib/basis' },
+            { text: 'Programmation orientée objet', link: '/fr/learning/libraries/matplotlib/poo' },
+            { text: 'Personnalisation des graphiques', link: '/fr/learning/libraries/matplotlib/customization' },
+            { text: 'Mise en pratique', link: '/fr/learning/libraries/matplotlib/project' },
           ]
         },
         { text: 'Seaborn',
