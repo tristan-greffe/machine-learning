@@ -14,7 +14,6 @@ Matplotlib est fortement inspiré des fonctions de traçage de **MATLAB**
 
 ## Deux approches pour créer des graphiques
 
-
 1. **Méthode fonctionnelle**  
    - Appels directs aux fonctions de Matplotlib (comme `plt.plot`, `plt.scatter`, etc.)
    - Idéal pour les graphiques simples et les débutants.
@@ -26,4 +25,10 @@ Matplotlib est fortement inspiré des fonctions de traçage de **MATLAB**
 
 :::info
 Les deux méthodes produisent souvent des graphiques similaires, mais la POO devient plus pratique pour la personnalisation avancée et les figures complexes.
+:::
+
+## Bases de Matplotlib
+
+:::details Bases de Matplotlib
+<<< ./scripts/basis.py
 :::
