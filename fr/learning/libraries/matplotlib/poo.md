@@ -65,3 +65,9 @@ ax.plot(x, y) # Tracé sur cet axe
 ```
 <img src="/learning/libraries/matplotlib-figure-initialize-axes-7.png" style="display: block; margin: 0 auto;width: 50%; height: auto;">
 :::
+
+## Fichier Python associé
+
+:::details POO
+<<< ./scripts/poo.py
+:::
