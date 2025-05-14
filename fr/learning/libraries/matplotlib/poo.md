@@ -66,8 +66,28 @@ ax.plot(x, y) # Tracé sur cet axe
 <img src="/learning/libraries/matplotlib-figure-initialize-axes-7.png" style="display: block; margin: 0 auto;width: 50%; height: auto;">
 :::
 
+## Créer plusieurs axes avec `subplots`
+
+Pour gagner du temps et aligner plusieurs graphiques, on utilise `plt.subplots()` :
+
+:::tip Exemple
+```py
+fig, axes = plt.subplots(nrows=1, ncols=2)  # 1 ligne, 2 colonnes
+```
+* `fig` : objet Figure (le canevas)
+* `axes` : tableau d’objets Axes (`numpy.ndarray`)
+* Indexation : `axes[0]` = premier graphique & `axes[1]` = deuxième graphique
+<img src="/learning/libraries/matplotlib-subplots.png" style="display: block; margin: 0 auto;width: 50%; height: auto;">
+
+ℹ️ Si `nrows` ou `ncols` > 1, `axes` devient un tableau 2D et l’indexation se fait ainsi : `axes[i, j]`.
+:::
+
 ## Fichier Python associé
 
-:::details POO
+:::details POO basis
 <<< ./scripts/poo.py
+:::
+
+:::details POO `subplots`
+<<< ./scripts/poo-subplots.py
 :::
