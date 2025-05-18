@@ -1,6 +1,4 @@
-# Projet Matplotlib
-
-## Fichier Python associé
+# Exercice Matplotlib
 
 :::details Projet Matplotlib
 <<< ./scripts/project.py
