@@ -5,5 +5,5 @@
 :::
 
 :::details Commandes Avancées Matplotlib
-<<< ./scripts/supp.py
+<<< ./scripts/advanced_commands.py
 :::
