@@ -124,6 +124,7 @@ function getLearningSidebar () {
           collapsed: true,
           items: [
             { text: 'Introduction', link: '/fr/learning/libraries/seaborn/introduction' },
+            { text: 'Diagrammes de dispersion', link: '/fr/learning/libraries/seaborn/scatter-plots' },
           ]
         },
       ]
