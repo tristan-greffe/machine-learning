@@ -125,6 +125,7 @@ function getLearningSidebar () {
           items: [
             { text: 'Introduction', link: '/fr/learning/libraries/seaborn/introduction' },
             { text: 'Diagrammes de dispersion', link: '/fr/learning/libraries/seaborn/scatter-plots' },
+            { text: 'Diagrammes de distribution', link: '/fr/learning/libraries/seaborn/distribution-plots' },
           ]
         },
       ]
