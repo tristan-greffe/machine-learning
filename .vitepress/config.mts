@@ -128,6 +128,7 @@ function getLearningSidebar () {
             { text: 'Diagrammes de distribution', link: '/fr/learning/libraries/seaborn/distribution-plots' },
             { text: 'Diagrammes catégoriels', link: '/fr/learning/libraries/seaborn/categorical-plots' },
             { text: 'Diagrammes de comparaison', link: '/fr/learning/libraries/seaborn/comparison-plots' },
+            { text: 'Grilles Seaborn', link: '/fr/learning/libraries/seaborn/seaborn-grids' },
           ]
         },
       ]
