@@ -117,7 +117,7 @@ function getLearningSidebar () {
             { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },
             { text: 'Programmation orientée objet', link: '/fr/learning/libraries/matplotlib/poo' },
             { text: 'Personnalisation des graphiques', link: '/fr/learning/libraries/matplotlib/customization' },
-            { text: 'Mise en pratique', link: '/fr/learning/libraries/matplotlib/project' },
+            { text: 'Mise en pratique', link: '/fr/learning/libraries/matplotlib/project' }
           ]
         },
         { text: 'Seaborn',
@@ -130,6 +130,7 @@ function getLearningSidebar () {
             { text: 'Diagrammes de comparaison', link: '/fr/learning/libraries/seaborn/comparison-plots' },
             { text: 'Grilles Seaborn', link: '/fr/learning/libraries/seaborn/seaborn-grids' },
             { text: 'Diagrammes matriciels', link: '/fr/learning/libraries/seaborn/matrix-plots' },
+            { text: 'Mise en pratique', link: '/fr/learning/libraries/seaborn/project' }
           ]
         },
       ]
