@@ -214,35 +214,44 @@ function getLearningSidebar () {
 function getLabsSidebar () {
   return [
     { text: 'Ateliers', link: '/fr/labs/introduction' },
-    { text: 'Détecteur de visage',
+    { text: 'Data Analyst / Scientist',
       collapsed: true,
-      items: [
-        { text: 'Introduction', link: '/fr/labs/introduction' }
-      ]
+      items: []
     },
-    { text: 'Classificateur d\'images',
+    { text: 'ML Engineer',
       collapsed: true,
       items: [
-        { text: 'Introduction', link: '/fr/labs/introduction' }
+        { text: 'Détecteur de visage',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/labs/introduction' }
+          ]
+        },
+        { text: 'Classificateur d\'images',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/labs/introduction' }
+          ]
+        },
+        { text: 'IA de reconnaissance d\'écriture manuscrite',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/labs/introduction' }
+          ]
+        },
+        { text: 'Détecteur de Spam',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/labs/introduction' }
+          ]
+        },
+        { text: 'Reconnaissance Faciale',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/labs/introduction' }
+          ]
+        }
       ]
-    },
-    { text: 'IA de reconnaissance d\'écriture manuscrite',
-      collapsed: true,
-      items: [
-        { text: 'Introduction', link: '/fr/labs/introduction' }
-      ]
-    },
-    { text: 'Détecteur de Spam',
-      collapsed: true,
-      items: [
-        { text: 'Introduction', link: '/fr/labs/introduction' }
-      ]
-    },
-    { text: 'Reconnaissance Faciale',
-      collapsed: true,
-      items: [
-        { text: 'Introduction', link: '/fr/labs/introduction' }
-      ]
-    }
+    } 
   ]
 }
