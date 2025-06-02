@@ -60,3 +60,9 @@ Chaque point représente un employé.
 Seaborn peut ensuite ajouter de la couleur et du style
 <img src="/learning/libraries/seaborn-scatter-plots-2.png" style="display: block; margin: 0 auto;width: 70%; height: auto;">
 :::
+
+## Fichier Python associé
+
+:::details scatter-plots
+<<< ./scripts/scatter-plots.py
+:::
