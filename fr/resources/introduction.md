@@ -3,12 +3,20 @@
 Cette page regroupe une sélection de **ressources externes essentielles**
 en Data Science et Machine Learning.
 
-## 📘 Livres
+## PDFs
 
 ### Introduction to Statistical Learning (ISLR)
 
-👉 [PDF local](/resources/ISLR.pdf)  
+👉 [ISLR](/resources/ISLR.pdf)  
 👉 Site officiel : https://www.statlearning.com
+
+### Machine Learning Flashcards
+
+👉 [Computer Science](/resources/flashcards/computer-science.pdf)  
+👉 [Machine Learning General](/resources/flashcards/machine-learning-general.pdf)  
+👉 [Fundamentals for Computer Vision and Deep Learning](/resources/flashcards/fundamentals-computer-vision-and-deep-learning.pdf)  
+👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)  
+👉 [Large Language Models and Related](/resources/flashcards/large-language-models-and-related.pdf)  
 
 ## 🎥 Vidéos
 
