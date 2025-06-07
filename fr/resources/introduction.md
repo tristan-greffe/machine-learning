@@ -12,19 +12,15 @@ en Data Science et Machine Learning.
 
 ### Machine Learning Flashcards
 
-👉 [Computer Science](/resources/flashcards/computer-science.pdf)
-
-👉 [Machine Learning General](/resources/flashcards/machine-learning-general.pdf)
-
-👉 [Fundamentals for Computer Vision and Deep Learning](/resources/flashcards/fundamentals-computer-vision-and-deep-learning.pdf)
-
-👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)
-
+👉 [Computer Science](/resources/flashcards/computer-science.pdf)  
+👉 [Machine Learning General](/resources/flashcards/machine-learning-general.pdf)  
+👉 [Fundamentals for Computer Vision and Deep Learning](/resources/flashcards/fundamentals-computer-vision-and-deep-learning.pdf)  
+👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)  
 👉 [Large Language Models and Related](/resources/flashcards/large-language-models-and-related.pdf)
 
 ### LLM Evaluation
 
-👉 [The LLM Evaluation Guidebook](/resources/the-llm-evaluation-guidebook.pdf)
+👉 [The LLM Evaluation Guidebook](/resources/the-llm-evaluation-guidebook.pdf)  
 
 ## WebSite
 
@@ -34,22 +30,13 @@ en Data Science et Machine Learning.
 
 ## Vidéos
 
-### StatQuest with Josh Starmer (YouTube)
+### nanoGPT
 
-👉 https://www.youtube.com/@statquest
+Vidéo YouTube pour réimplémenter GPT à partir de zéro par [Andrej Karpathy](https://www.youtube.com/@AndrejKarpathy)
+
+👉 [https://youtu.be/kCc8FmEb1nY?si=zTvKRHEsT5qPxukG](https://youtu.be/kCc8FmEb1nY?si=zTvKRHEsT5qPxukG)  
+👉 [https://youtu.be/zduSFxRajkE?si=-p-dGwn0_ZkE3LCy](https://youtu.be/zduSFxRajkE?si=-p-dGwn0_ZkE3LCy)
 
 ## Jeux de données
-
-### UCI Machine Learning Repository
-- Datasets académiques classiques
-- Parfait pour les premiers exercices
-
-👉 https://archive.ics.uci.edu
-
-### Kaggle
-- Datasets réels
-- Problèmes concrets + notebooks communautaires
-
-👉 https://www.kaggle.com/datasets
 
 ## LLM Open Source
