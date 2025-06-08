@@ -39,4 +39,6 @@ Vidéo YouTube pour réimplémenter GPT à partir de zéro par [Andrej Karpathy]
 
 ## Jeux de données
 
+👉 [RedPajama-Data](https://github.com/togethercomputer/RedPajama-Data)
+
 ## LLM Open Source
