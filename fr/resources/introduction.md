@@ -18,6 +18,11 @@ en Data Science et Machine Learning.
 👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)  
 👉 [Large Language Models and Related](/resources/flashcards/large-language-models-and-related.pdf)
 
+### Distributed & Parallel Training
+
+👉 [Parallel Training](/resources/parallel-training-chenyan-xiong.pdf) — *Chenyan Xiong*  
+👉 [Distributed Training](/resources/distributed-training-duan-et-al.pdf) — *Duan et al*  
+
 ### LLM Evaluation
 
 👉 [The LLM Evaluation Guidebook](/resources/the-llm-evaluation-guidebook.pdf)  
@@ -42,3 +47,5 @@ Vidéo YouTube pour réimplémenter GPT à partir de zéro par [Andrej Karpathy]
 👉 [RedPajama-Data](https://github.com/togethercomputer/RedPajama-Data)
 
 ## LLM Open Source
+
+👉 [OLMo 2](https://allenai.org/olmo) : Modèle linguistique open source avec modèle, données, code d'entraînement et d'évaluation.
