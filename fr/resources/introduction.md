@@ -5,10 +5,13 @@ en Data Science et Machine Learning.
 
 ## PDFs
 
-### Introduction to Statistical Learning (ISLR)
+### Books
 
-👉 [ISLR](/resources/ISLR.pdf)  
-👉 Site officiel : https://www.statlearning.com
+👉 [The LLM Evaluation Guidebook](/resources/the-llm-evaluation-guidebook.pdf)    
+👉 [An Introduction to Statistical Learning](/resources/ISLR.pdf) — [Site officiel](https://www.statlearning.com)   
+👉 [Parallel Training](/resources/parallel-training-chenyan-xiong.pdf)  
+👉 [Distributed Training](/resources/distributed-training-duan-et-al.pdf)  
+👉 [Deep learning interviews](/resources/deep-learning-interviews.pdf)  
 
 ### Machine Learning Flashcards
 
@@ -17,15 +20,6 @@ en Data Science et Machine Learning.
 👉 [Fundamentals for Computer Vision and Deep Learning](/resources/flashcards/fundamentals-computer-vision-and-deep-learning.pdf)  
 👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)  
 👉 [Large Language Models and Related](/resources/flashcards/large-language-models-and-related.pdf)
-
-### Distributed & Parallel Training
-
-👉 [Parallel Training](/resources/parallel-training-chenyan-xiong.pdf) — *Chenyan Xiong*  
-👉 [Distributed Training](/resources/distributed-training-duan-et-al.pdf) — *Duan et al*  
-
-### LLM Evaluation
-
-👉 [The LLM Evaluation Guidebook](/resources/the-llm-evaluation-guidebook.pdf)  
 
 ## WebSite
 
