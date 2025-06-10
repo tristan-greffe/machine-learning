@@ -23,9 +23,7 @@ en Data Science et Machine Learning.
 
 ## WebSite
 
-### LLM Visualization
-
-👉 [https://bbycroft.net/llm](https://bbycroft.net/llm)
+👉 LLM Visualization [https://bbycroft.net/llm](https://bbycroft.net/llm)
 
 ## Vidéos
 
