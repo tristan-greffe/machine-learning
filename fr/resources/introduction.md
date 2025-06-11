@@ -12,6 +12,7 @@ en Data Science et Machine Learning.
 👉 [Parallel Training](/resources/parallel-training-chenyan-xiong.pdf)  
 👉 [Distributed Training](/resources/distributed-training-duan-et-al.pdf)  
 👉 [Deep learning interviews](/resources/deep-learning-interviews.pdf)  
+👉 [Foundation of LLM](/resources/foundation-of-llm.pdf) 
 
 ### Machine Learning Flashcards
 
