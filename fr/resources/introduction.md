@@ -13,7 +13,9 @@ en Data Science et Machine Learning.
 👉 [Distributed Training](/resources/distributed-training-duan-et-al.pdf)  
 👉 [Deep learning interviews](/resources/deep-learning-interviews.pdf)  
 👉 [Foundation of LLM](/resources/foundation-of-llm.pdf)  
-👉 [Reinforcement learning an overview](/resources/reinforcement-learning-an-overview.pdf) 
+👉 [Reinforcement learning an overview](/resources/reinforcement-learning-an-overview.pdf)  
+👉 [Algorithms for artificial intelligence](/resources/algorithms-for-artificial-intelligence.pdf)  
+👉 [Mathematics for Machine Learning](/resources/mathematics-for-machine-learning.pdf) 
 
 ### Machine Learning Flashcards
 
