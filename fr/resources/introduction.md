@@ -16,7 +16,8 @@ en Data Science et Machine Learning.
 👉 [Reinforcement learning an overview](/resources/reinforcement-learning-an-overview.pdf)  
 👉 [Algorithms for artificial intelligence](/resources/algorithms-for-artificial-intelligence.pdf)  
 👉 [Mathematics for Machine Learning](/resources/mathematics-for-machine-learning.pdf)  
-👉 [OpenAi - A practical guide to building agents](/resources/openai-guide-to-building-practical-agents.pdf) 
+👉 [OpenAi - A practical guide to building agents](/resources/openai-guide-to-building-practical-agents.pdf)  
+👉 [Exercises in Machine Learning](/resources/exercises-ml.pdf) 
 
 ### Machine Learning Flashcards
 
