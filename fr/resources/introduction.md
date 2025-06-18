@@ -17,9 +17,9 @@ en Data Science et Machine Learning.
 👉 [Algorithms for artificial intelligence](/resources/algorithms-for-artificial-intelligence.pdf)  
 👉 [Mathematics for Machine Learning](/resources/mathematics-for-machine-learning.pdf)  
 👉 [OpenAi - A practical guide to building agents](/resources/openai-guide-to-building-practical-agents.pdf)  
-👉 [Exercises in Machine Learning](/resources/exercises-ml.pdf) 
-👉 [The Matrix Cookbook](/resources/matrix-cookbook.pdf) 
-
+👉 [Exercises in Machine Learning](/resources/exercises-ml.pdf)  
+👉 [The Matrix Cookbook](/resources/matrix-cookbook.pdf)  
+👉 [The Matrix Cookbook](/resources/finetuning-guide.pdf) 
 
 ### Machine Learning Flashcards
 
