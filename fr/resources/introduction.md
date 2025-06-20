@@ -21,6 +21,7 @@ en Data Science et Machine Learning.
 👉 [The Matrix Cookbook](/resources/matrix-cookbook.pdf)   
 👉 [The Ultimate Guide to Fine-Tuning LLMs](/resources/finetuning-guide.pdf)  
 👉 [Multi agent reinforcement learning](/resources/multi-agent-reinforcement-learning.pdf) 
+👉 [A Survey of Context Engineering for Large Language Models](/resources/context-engineering.pdf) 
 
 ### Machine Learning Flashcards
 
