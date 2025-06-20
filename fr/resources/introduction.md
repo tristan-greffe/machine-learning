@@ -20,8 +20,9 @@ en Data Science et Machine Learning.
 👉 [Exercises in Machine Learning](/resources/exercises-ml.pdf)  
 👉 [The Matrix Cookbook](/resources/matrix-cookbook.pdf)   
 👉 [The Ultimate Guide to Fine-Tuning LLMs](/resources/finetuning-guide.pdf)  
-👉 [Multi agent reinforcement learning](/resources/multi-agent-reinforcement-learning.pdf) 
-👉 [A Survey of Context Engineering for Large Language Models](/resources/context-engineering.pdf) 
+👉 [Multi agent reinforcement learning](/resources/multi-agent-reinforcement-learning.pdf)  
+👉 [A Survey of Context Engineering for Large Language Models](/resources/context-engineering.pdf)  
+👉 [Linear algebra - essence and form](/resources/linear-algebra-essence-and-form.pdf) 
 
 ### Machine Learning Flashcards
 
