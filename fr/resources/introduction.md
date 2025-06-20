@@ -22,7 +22,8 @@ en Data Science et Machine Learning.
 👉 [The Ultimate Guide to Fine-Tuning LLMs](/resources/finetuning-guide.pdf)  
 👉 [Multi agent reinforcement learning](/resources/multi-agent-reinforcement-learning.pdf)  
 👉 [A Survey of Context Engineering for Large Language Models](/resources/context-engineering.pdf)  
-👉 [Linear algebra - essence and form](/resources/linear-algebra-essence-and-form.pdf) 
+👉 [Linear algebra - essence and form](/resources/linear-algebra-essence-and-form.pdf)  
+👉 [Machine learning systems](/resources/machine-learning-systems.pdf) 
 
 ### Machine Learning Flashcards
 
