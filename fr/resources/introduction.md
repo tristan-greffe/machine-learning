@@ -46,9 +46,37 @@ Vidéo YouTube pour réimplémenter GPT à partir de zéro par [Andrej Karpathy]
 👉 [https://youtu.be/kCc8FmEb1nY?si=zTvKRHEsT5qPxukG](https://youtu.be/kCc8FmEb1nY?si=zTvKRHEsT5qPxukG)  
 👉 [https://youtu.be/zduSFxRajkE?si=-p-dGwn0_ZkE3LCy](https://youtu.be/zduSFxRajkE?si=-p-dGwn0_ZkE3LCy)
 
-## Jeux de données
+## Datasets
 
-👉 [RedPajama-Data](https://github.com/togethercomputer/RedPajama-Data)
+### Text & NLP
+👉 [RedPajama-Data](https://github.com/togethercomputer/RedPajama-Data) — Corpus open source pour entraîner des LLMs  
+👉 [The Pile](https://pile.eleuther.ai/) — Large dataset textuel diversifié, open source  
+👉 [Wikipedia Dumps](https://dumps.wikimedia.org/) — Données textuelles brutes de Wikipedia, open source  
+👉 [Common Crawl](https://commoncrawl.org/) — Crawl web massif, libre pour NLP  
+
+### Vision / Images
+👉 [COCO Dataset](https://cocodataset.org/#home) — Détection, segmentation et légendes d’images, open source pour usage académique  
+👉 [Open Images](https://storage.googleapis.com/openimages/web/index.html) — Large dataset d’images annotées, open source  
+👉 [MNIST](http://yann.lecun.com/exdb/mnist/) — Chiffres manuscrits, open source  
+👉 [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) — Dataset de mode, open source  
+👉 [Flickr30k](http://shannon.cs.illinois.edu/DenotationGraph/) — Images avec descriptions textuelles, open source  
+
+### Audio / Speech
+👉 [LibriSpeech](http://www.openslr.org/12) — Dataset pour reconnaissance vocale, open source  
+👉 [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) — Identification de locuteurs, open source  
+
+---
+
+### Outils Open Source pour l’exploration et la génération de données
+
+- **[Trafilatura](https://github.com/adbar/trafilatura)** : Extraction de texte et métadonnées depuis des pages web.  
+- **[PyMuPDF](https://pymupdf.readthedocs.io/en/latest/)** / **[pdfplumber](https://github.com/jsvine/pdfplumber)** : Conversion et lecture de PDF en texte exploitable.  
+- **[SemHash](https://github.com/MinishLab/semhash)** : Déduplication floue via embeddings pour nettoyer les corpus.  
+- **[Argilla](https://github.com/argilla-io/argilla)** : Annotation collaborative et gestion de datasets NLP.  
+- **[Curator](https://github.com/bespokelabsai/curator/)** : Génération synthétique et pipelines pour LLM.  
+- **[Distilabel](https://github.com/argilla-io/distilabel)** : Augmentation et nettoyage de datasets pour SFT/DPO.   
+- **[Nomic Atlas](https://github.com/nomic-ai/nomic)** : Exploration interactive et stockage d’embeddings pour grands datasets.
+
 
 ## LLM Open Source
 
