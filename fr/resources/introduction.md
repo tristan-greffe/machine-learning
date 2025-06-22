@@ -33,6 +33,23 @@ en Data Science et Machine Learning.
 👉 [Selected Topics in Computer Vision and Deep Learning](/resources/flashcards/selected-topics-in-computer-vision-and-deep-learning.pdf)  
 👉 [Large Language Models and Related](/resources/flashcards/large-language-models-and-related.pdf)
 
+### Paper
+
+:::info arXiv
+[arXiv](https://arxiv.org/) est la bibliothèque mondiale des papers en IA.
+:::
+
+:::warning info 
+| Si le document…                                         | On l’appelle                                      |
+| ------------------------------------------------------- | ------------------------------------------------- |
+| Présente une nouvelle méthode validée expérimentalement | **Paper / Research paper / Article scientifique** |
+| Présente une techno ou une vision produit               | **White paper**                                   |
+| Donne beaucoup de détails techniques                    | **Technical report**                              |
+| Synthétise l’existant                                   | **Survey / Review paper**                         |
+:::
+
+👉 [LTX-Video: Realtime Video Latent Diffusion](/resources/ltx-video-realtime-video-latent-diffusion.pdf) 
+
 ## WebSite
 
 👉 LLM Visualization [https://bbycroft.net/llm](https://bbycroft.net/llm)
