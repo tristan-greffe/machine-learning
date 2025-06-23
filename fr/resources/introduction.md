@@ -48,6 +48,7 @@ en Data Science et Machine Learning.
 | Synthétise l’existant                                   | **Survey / Review paper**                         |
 :::
 
+👉 [A Generative Approach to Global Visual Geolocation](/resources/a-generative-approach-to-global-visual-geolocation.pdf)  
 👉 [LTX-Video: Realtime Video Latent Diffusion](/resources/ltx-video-realtime-video-latent-diffusion.pdf) 
 
 ## WebSite
