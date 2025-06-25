@@ -50,7 +50,8 @@ en Data Science et Machine Learning.
 
 👉 [A Generative Approach to Global Visual Geolocation](/resources/a-generative-approach-to-global-visual-geolocation.pdf)  
 👉 [LTX-Video: Realtime Video Latent Diffusion](/resources/ltx-video-realtime-video-latent-diffusion.pdf)  
-👉 [Open And Advanced Large Scale Video Generative Models](/resources/open-and-advanced-large-scale-video-generative-models.pdf) 
+👉 [Open And Advanced Large Scale Video Generative Models](/resources/open-and-advanced-large-scale-video-generative-models.pdf)  
+👉 [V3D: Video Diffusion Models are Effective 3D Generators](/resources/video-diffusion-models-are-effective-3d-generators.pdf)  
 
 ## WebSite
 
