@@ -1,0 +1,14 @@
+/* Brand color definition */
+:root {
+  --vp-c-brand-1: #132B60;
+  --vp-c-brand-2: #A6A3E2;
+  --vp-c-brand-3: #132B60;
+  --vp-c-default-soft: #c9dff2;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

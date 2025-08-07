@@ -1,0 +1,28 @@
+{
+  "name": "machine-learning",
+  "description": "Machine Learning",
+  "version": "1.0.0",
+  "packageManager": "pnpm@9.1.1",
+  "homepage": "https://github.com/tristan-greffe/machine-learning",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tristan-greffe/machine-learning.git"
+  },
+  "author": {
+    "name": "Tristan Greffe contributors",
+    "url": "https://github.com/tristan-greffe"
+  },
+  "bugs": {
+    "url": "https://github.com/tristan-greffe/machine-learning/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.2.0"
+  }
+}

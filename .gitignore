@@ -1,0 +1,13 @@
+# Visual code
+.vscode
+
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# vitepress
+.vitepress/cache
+.vitepress/dist
