@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid({
   base: '/machine-learning',
   title: 'Machine Learning',
   ignoreDeadLinks: true,
@@ -70,11 +70,35 @@ function getAboutSidebar (lang = 'en') {
 
 function getLearningSidebar () {
   return [
-    { text: 'Stack DevOps', link: '/fr/learning/introduction' },
-    { text: 'Protocoles réseaux',
+    { text: 'Parcours Data Science & Machine Learning', link: '/fr/learning/introduction' },
+    { text: 'Bibliothèques',
       collapsed: true,
       items: [
-        { text: 'Protocole Internet', link: '/fr/learning/network-protocols/internet-protocol' },
+        { text: 'Introduction', link: '/fr/learning/libraries/introduction' },
+        { text: 'NumPy',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/libraries/numpy/introduction' },
+          ]
+        },
+        { text: 'Pandas',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/libraries/pandas/introduction' },
+          ]
+        },
+        { text: 'Matplotlib',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/libraries/matplotlib/introduction' },
+          ]
+        },
+        { text: 'Seaborn',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/libraries/seaborn/introduction' },
+          ]
+        },
       ]
     }
   ]
