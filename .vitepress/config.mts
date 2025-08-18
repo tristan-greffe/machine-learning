@@ -9,6 +9,9 @@ export default withMermaid({
     ['link', { href: 'https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css', rel: 'stylesheet' }],
     ['link', { rel: 'icon', href: '/machine-learning/favicon.ico' }]
   ],
+  markdown: {
+    math: true
+  },
   locales: {
     root: {
       label: 'English',
