@@ -24,7 +24,8 @@ export default withMermaid({
         outline: { label: 'Sur cette page' },
         nav: [
           { text: 'A propos', link: '/fr/about/introduction' },
-          { text: 'Apprentissage', link: '/fr/learning/introduction' }
+          { text: 'Apprentissage', link: '/fr/learning/introduction' },
+          { text: 'Ateliers', link: '/fr/labs/introduction' }
         ],
         sidebar: {
           '/fr/about/': getAboutSidebar('fr'),
@@ -45,7 +46,8 @@ export default withMermaid({
     ],
     nav: [
       { text: 'About', link: '/about/introduction' },
-      { text: 'Learning', link: '/learning/introduction' }
+      { text: 'Learning', link: '/learning/introduction' },
+      { text: 'Labs', link: '/labs/introduction' }
     ],
     sidebar: {
       '/about/': getAboutSidebar()
