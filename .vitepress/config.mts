@@ -76,10 +76,20 @@ function getAboutSidebar (lang = 'en') {
 function getLearningSidebar () {
   return [
     { text: 'Parcours Data Science & Machine Learning', link: '/fr/learning/introduction' },
+    { text: 'Mathématiques',
+      collapsed: true,
+      items: [
+        { text: 'Algèbre linéaire',
+          collapsed: true,
+          items: [
+            { text: 'Introduction', link: '/fr/learning/mathematics/linear-algebra/introduction' },
+          ]
+        }
+      ]
+    },
     { text: 'Bibliothèques',
       collapsed: true,
       items: [
-        { text: 'Introduction', link: '/fr/learning/libraries/introduction' },
         { text: 'NumPy',
           collapsed: true,
           items: [
