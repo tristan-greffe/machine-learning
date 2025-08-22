@@ -79,10 +79,12 @@ function getLearningSidebar () {
     { text: 'Mathématiques',
       collapsed: true,
       items: [
-        { text: 'Algèbre linéaire',
+        { text: 'Introduction', link: '/fr/learning/mathematics/introduction' },
+        { text: 'Vecteurs & Matrices',
           collapsed: true,
           items: [
-            { text: 'Introduction', link: '/fr/learning/mathematics/linear-algebra/introduction' },
+            { text: 'Introduction', link: '/fr/learning/mathematics/vectors-matrices/introduction' },
+            { text: 'Opérations avec les vecteurs', link: '/fr/learning/mathematics/vectors-matrices/vector-operation' },
           ]
         }
       ]
