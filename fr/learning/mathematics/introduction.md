@@ -17,7 +17,7 @@ Un randonneur qui veut descendre dans la vallée a besoin de trois outils :
 * `Le calcul différentiel` : c’est la **pente sous ses pieds**. Elle lui montre dans quelle direction descendre pour arriver le plus vite possible vers le bas (*le gradient*)
 * `L’algèbre linéaire` : c’est la **carte invisible** qui décrit la montagne quand elle devient trop complexe à visualiser. En science des données, ce paysage n’a pas seulement 2 ou 3 dimensions mais parfois des milliers. L’algèbre linéaire fournit **le langage et les outils** pour manipuler efficacement ces espaces
 
-:::tip 👉
+:::tip
 Sans mathématiques, le randonneur avance à l’aveugle dans une montagne infinie.
 Avec elles, il a une boussole (le calcul différentiel), des pas mesurés (les vecteurs) et une carte multidimensionnelle (l’algèbre linéaire).
 C’est ainsi que les modèles de machine learning trouvent leur chemin vers la meilleure solution.
