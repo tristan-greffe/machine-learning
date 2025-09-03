@@ -27,7 +27,7 @@ Un vecteur est une **collection de valeurs organisées** qui décrit une positio
 On peut le représenter de plusieurs façons :
 
 - `géométriquement` : une flèche dans un plan ou un espace
-<img src="/learning/mathematics/vector.svg" alt="vecteur" style="display: block; margin: 0 auto;width: 70px; height: auto;">
+<img src="/learning/mathematics/vectors-matrices/vector.svg" alt="vecteur" style="display: block; margin: 0 auto;width: 70px; height: auto;">
 - `algébriquement` : une liste ordonnée de nombres
 $$
 v = \begin{bmatrix} v_1 \\ v_2 \\ \dots \\ v_n \end{bmatrix}
@@ -37,7 +37,7 @@ $$
 En statistiques, la **loi normale (ou gaussienne)** est utilisée pour décrire des phénomènes naturels comme la **taille des individus dans une population**. 
 
 Il s'agit d'un modèle pour une courbe en forme de cloche, qui ressemble à ceci :
-<img src="/learning/mathematics/population-size-variation.png" alt="variation de la taille de la population" style="display: block; margin: 0 auto;width: 300px; height: auto;">
+<img src="/learning/mathematics/vectors-matrices/population-size-variation.png" alt="variation de la taille de la population" style="display: block; margin: 0 auto;width: 300px; height: auto;">
 
 Sa formule est :
 $$
@@ -91,7 +91,7 @@ Les vecteurs permettent donc de **formaliser les ajustements** que l’on fait p
 ## Ajuster un modèle aux données
 
 En pratique, on veut trouver les paramètres $(\mu, \sigma)$ qui font que la courbe **colle le mieux aux données observées**.  
-<img src="/learning/mathematics/normal-distribution.png" alt="Loi Gaussienne" style="display: block; margin: 0 auto;width: 300px; height: auto;">
+<img src="/learning/mathematics/vectors-matrices/normal-distribution.png" alt="Loi Gaussienne" style="display: block; margin: 0 auto;width: 300px; height: auto;">
 - Si $\mu$ est trop grand ou trop petit → la courbe est décalée.  
 - Si $\sigma$ est trop grand → la courbe est trop aplatie.  
 - Si $\sigma$ est trop petit → la courbe est trop étroite.  
