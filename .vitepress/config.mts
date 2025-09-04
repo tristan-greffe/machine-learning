@@ -84,7 +84,11 @@ function getLearningSidebar () {
           collapsed: true,
           items: [
             { text: 'Introduction', link: '/fr/learning/mathematics/vectors-matrices/introduction' },
-            { text: 'Opérations avec les vecteurs', link: '/fr/learning/mathematics/vectors-matrices/vector-operation' },
+            { text: 'Notions de base', link: '/fr/learning/mathematics/vectors-matrices/basic-concepts' },
+            { text: 'Opérations Fondamentales', link: '/fr/learning/mathematics/vectors-matrices/operation' },
+            { text: 'Produit Scalaire', link: '/fr/learning/mathematics/vectors-matrices/scalar-product' },
+            { text: 'Projection', link: '/fr/learning/mathematics/vectors-matrices/projection' },
+            { text: 'Base vectorielle', link: '/fr/learning/mathematics/vectors-matrices/basis' },
           ]
         }
       ]
