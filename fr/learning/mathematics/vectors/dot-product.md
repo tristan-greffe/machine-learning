@@ -6,7 +6,7 @@ Le **produit scalaire** est une opération entre deux vecteurs qui associe un **
 - S’ils sont **orthogonaux (90°)**, le produit scalaire vaut **0**.  
 - S’ils pointent **dans des directions opposées**, il est **négatif**.
 
-<img src="/learning/mathematics/vectors-matrices/dot-product.png" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
+<img src="/learning/mathematics/vectors/dot-product.png" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
 
 :::tip 👉 Intuition
 Le produit scalaire mesure **l’alignement** entre deux vecteurs, clé en ML pour la similarité cosinus dans les systèmes de recommandation ou la recherche sémantique.
@@ -18,7 +18,7 @@ Le **produit scalaire** de deux vecteurs en dimension $n$ $\vec{r} = (r_1, r_2, 
 
 $$\vec{r} \cdot \vec{s} = r_1 s_1 + r_2 s_2 + \dots + r_n s_n$$
 
-<img src="/learning/mathematics/vectors-matrices/dot-product-2d.png" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
+<img src="/learning/mathematics/vectors/dot-product-2d.png" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
 
 :::tip 📌
 Ce résultat est **un nombre réel** (un *scalaire*), contrairement à l’addition de vecteurs qui donne un vecteur.

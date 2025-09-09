@@ -4,7 +4,7 @@
 
 Une **base** est un ensemble de vecteurs qui permet de décrire **tous les vecteurs** d’un espace vectoriel en utilisant des **combinaisons linéaires** de ces vecteurs. En d'autres termes, une base est comme un "système de coordonnées" pour un espace, permettant de représenter n'importe quel point ou vecteur. Une base fournit un ensemble minimal de directions indépendantes pour naviguer dans l'espace.
 
-<img src="/learning/mathematics/vectors-matrices/vector-space-basis.png" alt="Illustration d'une base vectorielle" style="display: block; margin: 0 auto; width: 300px; height: auto;">
+<img src="/learning/mathematics/vectors/vector-space-basis.png" alt="Illustration d'une base vectorielle" style="display: block; margin: 0 auto; width: 300px; height: auto;">
 
 :::tip 👉 Intuition
 Une base est comme un ensemble minimal de "directions" qui permet de naviguer dans tout l’espace. En ML, changer de base peut simplifier les calculs, comme dans la réduction de dimensionnalité où l'on projette les données sur une base qui capture l'essentiel de l'information.
@@ -145,7 +145,7 @@ Si les vecteurs n'engendrent pas l'espace, ils ne couvrent qu'un sous-espace (e.
 Supposez des points de données alignés approximativement sur une ligne dans $\mathbb{R}^2$. La base optimale serait un vecteur le long de cette ligne (direction de variance maximale) et un perpendiculaire (bruit). Projeter sur la première direction réduit à 1D tout en conservant l'information principale, comme dans PCA.
 :::
 
-<img src="/learning/mathematics/vectors-matrices/pca-fish.png" alt="Illustration de PCA : projection sur axes principaux" style="display: block; margin: 0 auto; width: 500px; height: auto;">
+<img src="/learning/mathematics/vectors/pca-fish.png" alt="Illustration de PCA : projection sur axes principaux" style="display: block; margin: 0 auto; width: 500px; height: auto;">
 
 ## Bases spéciales
 
@@ -154,7 +154,7 @@ Une base est **orthonormée** si :
 - Les vecteurs sont **orthogonaux** deux à deux : $\vec{b_i} \cdot \vec{b_j} = 0$ si $i \neq j$.
 - Les vecteurs sont **unitaires** : $\|\vec{b_i}\| = 1$.
 
-<img src="/learning/mathematics/vectors-matrices/orthogonal-basis.png" alt="Base orthonormée" style="display: block; margin: 0 auto; width: 500px; height: auto;">
+<img src="/learning/mathematics/vectors/orthogonal-basis.png" alt="Base orthonormée" style="display: block; margin: 0 auto; width: 500px; height: auto;">
 
 :::tip 👉 Avantage
 Les bases orthonormées simplifient les calculs en ML, notamment dans les projections (comme dans PCA) ou les transformations (e.g., matrices de rotation dans les réseaux de neurones). Elles ne doivent pas nécessairement être unitaires ou orthogonales, mais c'est plus facile si elles le sont.
@@ -179,7 +179,7 @@ Les bases non orthonormées compliquent les calculs, car les projections nécess
 
 Le **changement de base** consiste à réécrire un vecteur exprimé dans une base $\{\vec{b_1}, \vec{b_2}, \dots, \vec{b_n}\}$ dans une autre base $\{\vec{c_1}, \vec{c_2}, \dots, \vec{c_n}\}$. Cela revient à transformer les coordonnées du vecteur, en préservant les propriétés linéaires : l'espace reste une grille uniformément espacée, sans courbure.
 
-<img src="/learning/mathematics/vectors-matrices/vector-base-change.gif" alt="changement de base vectorielle" style="display: block; margin: 0 auto; width: 500px; height: auto;">
+<img src="/learning/mathematics/vectors/vector-base-change.gif" alt="changement de base vectorielle" style="display: block; margin: 0 auto; width: 500px; height: auto;">
 
 ### Principe
 Soit un vecteur $\vec{v}$ exprimé dans une base $B = \{\vec{b_1}, \vec{b_2}\}$ :

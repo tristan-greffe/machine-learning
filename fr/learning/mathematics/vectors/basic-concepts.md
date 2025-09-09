@@ -15,7 +15,7 @@ En machine learning, les vecteurs représentent souvent des données comme des e
 
 En 2D, on choisit souvent deux vecteurs unitaires orthogonaux $\vec{i}$, $\vec{j}$ :
 
-<img src="/learning/mathematics/vectors-matrices/coordinate-system.jpg" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
+<img src="/learning/mathematics/vectors/coordinate-system.jpg" alt="vecteur" style="display: block; margin: 0 auto;width: 400px; height: auto;">
 
 $$\vec{r} = a \cdot \vec{i} + b \cdot \vec{j}$$
 
@@ -40,7 +40,7 @@ La **longueur** (ou norme) d’un vecteur se calcule avec le théorème de Pytha
 
 $$\|\vec{r}\| = \sqrt{a^2 + b^2}$$
 
-<img src="/learning/mathematics/vectors-matrices/vector-norm.png" alt="Norme d'un vecteur avec théorème de Pythagore" style="display: block; margin: 0 auto; width: 500px; height: auto;">
+<img src="/learning/mathematics/vectors/vector-norm.png" alt="Norme d'un vecteur avec théorème de Pythagore" style="display: block; margin: 0 auto; width: 500px; height: auto;">
 
 :::tip 👉 En dimensions supérieures
 $$\|\vec{r}\| = \sqrt{r_1^2 + r_2^2 + \dots + r_n^2}$$

@@ -3,7 +3,7 @@
 
 ## Addition de vecteurs
 
-<img src="/learning/mathematics/vectors-matrices/sum-vector.svg" alt="addition de vecteurs" style="display: block; margin: 0 auto;width: 300px; height: auto;">
+<img src="/learning/mathematics/vectors/sum-vector.svg" alt="addition de vecteurs" style="display: block; margin: 0 auto;width: 300px; height: auto;">
 
 Soient deux vecteurs :
 
@@ -19,7 +19,7 @@ $$
 
 ## Multiplication par un scalaire
 
-<img src="/learning/mathematics/vectors-matrices/scalar-multiplication-vector.png" alt="multiplication par un scalaire" style="display: block; margin: 0 auto;width: 300px; height: auto;">
+<img src="/learning/mathematics/vectors/scalar-multiplication-vector.png" alt="multiplication par un scalaire" style="display: block; margin: 0 auto;width: 300px; height: auto;">
 
 Multiplier un vecteur par un nombre étire ou rétrécit sa longueur
 

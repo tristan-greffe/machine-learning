@@ -6,7 +6,7 @@ Considérons deux vecteurs $\vec{r}$ et $\vec{s}$. On peut imaginer qu’une lum
 
 Le produit scalaire encode exactement cette idée d’ombre ou de projection.
 
-<img src="/learning/mathematics/vectors-matrices/vector-projection.png" alt="Projection scalaire et vectorielle" style="display: block; margin: 0 auto;width: 400px; height: auto;">
+<img src="/learning/mathematics/vectors/vector-projection.png" alt="Projection scalaire et vectorielle" style="display: block; margin: 0 auto;width: 400px; height: auto;">
 
 :::details Développement mathématique
 On a vu que :
