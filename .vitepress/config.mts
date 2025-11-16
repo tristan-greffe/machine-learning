@@ -90,12 +90,6 @@ function getLearningSidebar () {
             { text: 'Projection', link: '/fr/learning/mathematics/vectors/projection' },
             { text: 'Base vectorielle', link: '/fr/learning/mathematics/vectors/basis' }
           ]
-        },
-        { text: 'Matrices',
-          collapsed: true,
-          items: [
-            { text: 'Introduction', link: '/fr/learning/mathematics/matrices/introduction' },
-          ]
         }
       ]
     },
