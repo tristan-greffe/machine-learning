@@ -19,21 +19,14 @@ jobs:
       pages: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v3
         with:
           version: 9
-
       - name: Build
-        run: pnpm install && pnpm build
-
-      - name: Clean previous gh-pages
         run: |
-          git fetch origin gh-pages || true
-          git branch -D gh-pages || true
-
+          pnpm install && pnpm build
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .vitepress/dist
-          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: ./.vitepress/dist
+          token: ${{ secrets.TOKEN_GITHUB }}
