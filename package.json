@@ -25,6 +25,7 @@
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",
     "mermaid": "^11.9.0",
+    "viewerjs": "^1.11.7",
     "vitepress": "^1.2.0",
     "vitepress-plugin-image-viewer": "^1.1.6",
     "vitepress-plugin-mermaid": "^2.0.17"
