@@ -1,10 +1,21 @@
 name: ci
-on: [ push, workflow_dispatch ]
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      build_docs:
+        description: "Build"
+        default: false
+        required: false
+        type: boolean
 
 jobs:
   build_docs:
     name: Build
-    if: ${{ contains(github.event.head_commit.message, 'build') }}
+    if: ${{
+      github.event_name == 'workflow_dispatch' && inputs.build_docs ||
+      github.event_name == 'push' && contains(github.event.head_commit.message, 'build')
+      }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
