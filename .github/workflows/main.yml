@@ -12,24 +12,28 @@ on:
 jobs:
   build_docs:
     name: Build
-    if: ${{
-      github.event_name == 'workflow_dispatch' && inputs.build_docs ||
-      github.event_name == 'push' && contains(github.event.head_commit.message, 'build')
-      }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.build_docs || github.event_name == 'push' && contains(github.event.head_commit.message, 'build') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       pages: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v3
         with:
           version: 9
+
       - name: Build
+        run: pnpm install && pnpm build
+
+      - name: Clean previous gh-pages
         run: |
-          pnpm install && pnpm build
+          git fetch origin gh-pages || true
+          git branch -D gh-pages || true
+
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
-          folder: ./.vitepress/dist
+          folder: .vitepress/dist
           token: ${{ secrets.GITHUB_TOKEN }}
