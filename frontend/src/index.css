@@ -1,23 +1,172 @@
+/* ── Variables ───────────────────────────────────────────── */
+:root {
+  --brand:        #0891b2;          /* cyan-600 — professional teal */
+  --brand-light:  #06b6d4;          /* cyan-500 */
+  --bg-sidebar:   #ffffff;
+  --bg-panel:     #ffffff;
+  --bg-btn:       #f1f5f9;
+  --bg-btn-hover: #e0f2fe;
+  --bg-btn-active:#bae6fd;
+  --text:         #1e293b;          /* slate-800 */
+  --text-muted:   #94a3b8;          /* slate-400 */
+  --border:       #e2e8f0;          /* slate-200 */
+  --shadow:       0 4px 16px rgba(0, 0, 0, 0.10);
+  --sidebar-w:    56px;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
-body,
-#root {
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, 'Segoe UI', sans-serif;
+  color: var(--text);
+}
+
+/* ── App layout: sidebar + map side by side ──────────────── */
+.app {
+  display: flex;
   width: 100%;
   height: 100%;
 }
 
-/* Map full screen */
-.map-wrapper {
-  width: 100%;
+/* ── Sidebar: slim white column, outside the map ─────────── */
+.sidebar {
+  width: var(--sidebar-w);
   height: 100%;
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+  z-index: 10;
 }
 
+.sidebar-logo-wrap {
+  padding: 4px 0 12px;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.sidebar-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: var(--bg-btn);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sidebar-icon-btn:hover:not(.disabled) {
+  background: var(--bg-btn-hover);
+  border-color: var(--brand-light);
+}
+
+.sidebar-icon-btn.active {
+  background: var(--bg-btn-active);
+  border-color: var(--brand);
+}
+
+.sidebar-icon-btn.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Map area: fills remaining space, panels float inside ─── */
+.map-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-wrapper,
 .map-container {
   width: 100%;
   height: 100%;
+}
+
+/* ── Floating panel ──────────────────────────────────────── */
+.floating-panel {
+  position: absolute;
+  width: 280px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  cursor: grab;
+  user-select: none; /* prevent text selection while dragging */
+}
+
+.panel-header:active {
+  cursor: grabbing;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.panel-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.panel-close:hover {
+  color: var(--text);
+}
+
+.panel-body {
+  padding: 14px;
+}
+
+.panel-placeholder {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
 }
