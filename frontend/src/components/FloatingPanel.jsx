@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from 'react'
+import { X } from 'lucide-react'
 
-function FloatingPanel({ id, title, icon, onClose, children, initialPos }) {
+function FloatingPanel({ id, title, icon: Icon, onClose, children, initialPos }) {
   const [pos, setPos] = useState(initialPos ?? { x: 80, y: 60 })
-  const dragging = useRef(false)   // is the user currently dragging?
-  const offset   = useRef({ x: 0, y: 0 }) // cursor offset from panel corner
+  const dragging = useRef(false)
+  const offset   = useRef({ x: 0, y: 0 })
 
   // Attach mousemove / mouseup on the document so drag works even if cursor
   // moves outside the panel header quickly
@@ -46,9 +47,12 @@ function FloatingPanel({ id, title, icon, onClose, children, initialPos }) {
       {/* Drag handle — mousedown here starts the drag */}
       <div className="panel-header" onMouseDown={handleHeaderMouseDown}>
         <span className="panel-title">
-          <span>{icon}</span> {title}
+          {Icon && <Icon size={15} strokeWidth={2} />}
+          {title}
         </span>
-        <button className="panel-close" onClick={onClose} title="Close">✕</button>
+        <button className="panel-close" onClick={onClose} title="Close">
+          <X size={14} strokeWidth={2} />
+        </button>
       </div>
 
       <div className="panel-body">

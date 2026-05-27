@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { TreePine, Building2 } from 'lucide-react'
 import Map from './components/Map.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import FloatingPanel from './components/FloatingPanel.jsx'
 
 const PANELS = {
-  trees:     { icon: '🌳', title: 'Tree Detection' },
-  buildings: { icon: '🏠', title: 'Building Detection' }
+  trees:     { icon: TreePine,   title: 'Tree Detection' },
+  buildings: { icon: Building2,  title: 'Building Detection' }
 }
 
 function App() {
