@@ -37,8 +37,8 @@ function Map() {
           }
         ]
       },
-      center: [2.3488, 48.8534], // default center: Paris [lng, lat]
-      zoom: 14,
+      center: [2.2137, 46.2276], // default center: France [lng, lat]
+      zoom: 5,
       renderWorldCopies: false  // prevent infinite world repetition on zoom out
     })
 
