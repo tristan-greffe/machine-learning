@@ -38,7 +38,8 @@ function Map() {
         ]
       },
       center: [2.3488, 48.8534], // default center: Paris [lng, lat]
-      zoom: 14
+      zoom: 14,
+      renderWorldCopies: false  // prevent infinite world repetition on zoom out
     })
 
     // Add navigation controls (zoom +/- and compass)
