@@ -170,3 +170,20 @@ html, body, #root {
   line-height: 1.6;
   font-style: italic;
 }
+
+/* ── Coordinates display — bottom left of map ────────────── */
+.map-coords {
+  position: absolute;
+  bottom: 28px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  color: var(--text);
+  pointer-events: none; /* don't block map clicks */
+  z-index: 5;
+}

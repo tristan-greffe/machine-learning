@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
@@ -7,6 +7,8 @@ function Map() {
   const mapContainer = useRef(null)
   // useRef: stores the map instance without triggering re-renders
   const map = useRef(null)
+  // useState: current mouse coordinates (updated on every mousemove)
+  const [coords, setCoords] = useState(null)
 
   useEffect(() => {
     // Prevent double initialization (React StrictMode mounts twice in dev)
@@ -42,6 +44,17 @@ function Map() {
     // Add navigation controls (zoom +/- and compass)
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right')
 
+    // Update coordinates on mouse move — e.lngLat is provided by MapLibre
+    map.current.on('mousemove', (e) => {
+      setCoords({
+        lat: e.lngLat.lat.toFixed(5),
+        lng: e.lngLat.lng.toFixed(5)
+      })
+    })
+
+    // Clear coordinates when mouse leaves the map
+    map.current.on('mouseout', () => setCoords(null))
+
     // Cleanup: destroy map instance when component unmounts
     return () => {
       map.current?.remove()
@@ -53,6 +66,13 @@ function Map() {
     <div className="map-wrapper">
       {/* MapLibre fills this div with a WebGL canvas */}
       <div ref={mapContainer} className="map-container" />
+
+      {/* Live coordinates display — bottom right, like ARLAS */}
+      {coords && (
+        <div className="map-coords">
+          Lat: {coords.lat} &nbsp;·&nbsp; Lng: {coords.lng}
+        </div>
+      )}
     </div>
   )
 }
