@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
 
 function Map() {
   // useRef: points to the DOM <div> where MapLibre will attach
@@ -9,6 +10,8 @@ function Map() {
   const map = useRef(null)
   // useState: current mouse coordinates (updated on every mousemove)
   const [coords, setCoords] = useState(null)
+  // useState: currently active basemap id
+  const [basemap, setBasemap] = useState('satellite')
 
   useEffect(() => {
     // Prevent double initialization (React StrictMode mounts twice in dev)
@@ -19,21 +22,18 @@ function Map() {
       style: {
         version: 8,
         sources: {
-          // ESRI satellite imagery (free, no API key required)
-          'esri-satellite': {
+          'basemap': {
             type: 'raster',
-            tiles: [
-              'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-            ],
+            tiles: BASEMAPS[0].tiles, // satellite by default
             tileSize: 256,
             attribution: 'Tiles © Esri'
           }
         },
         layers: [
           {
-            id: 'satellite',
+            id: 'basemap-layer',
             type: 'raster',
-            source: 'esri-satellite'
+            source: 'basemap'
           }
         ]
       },
@@ -63,12 +63,25 @@ function Map() {
     }
   }, []) // [] = run once on mount
 
+  // Change basemap tiles when user selects a new one
+  function handleBasemapSelect(id) {
+    const selected = BASEMAPS.find((bm) => bm.id === id)
+    if (!selected || !map.current) return
+
+    // MapLibre allows updating a source's tiles on the fly
+    map.current.getSource('basemap').setTiles(selected.tiles)
+    setBasemap(id)
+  }
+
   return (
     <div className="map-wrapper">
       {/* MapLibre fills this div with a WebGL canvas */}
       <div ref={mapContainer} className="map-container" />
 
-      {/* Live coordinates display — bottom right, like ARLAS */}
+      {/* Basemap switcher — positioned below zoom controls (top-right) */}
+      <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
+
+      {/* Live coordinates display — bottom left */}
       {coords && (
         <div className="map-coords">
           Lat: {coords.lat} &nbsp;·&nbsp; Lng: {coords.lng}

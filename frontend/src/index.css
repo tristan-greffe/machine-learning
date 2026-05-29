@@ -171,6 +171,97 @@ html, body, #root {
   font-style: italic;
 }
 
+/* ── Basemap switcher ────────────────────────────────────── */
+.basemap-switcher {
+  position: absolute;
+  top: 100px; /* below MapLibre NavigationControl (~80px) */
+  right: 10px;
+  z-index: 10;
+}
+
+.basemap-toggle {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: background 0.15s;
+}
+
+.basemap-toggle:hover,
+.basemap-toggle.active {
+  background: var(--bg-btn-hover);
+  color: var(--brand);
+}
+
+.basemap-panel {
+  position: absolute;
+  top: 0;
+  right: 38px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  width: 220px;
+}
+
+.basemap-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.basemap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.basemap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 3px;
+  transition: border-color 0.15s;
+}
+
+.basemap-card:hover {
+  border-color: var(--brand-light);
+}
+
+.basemap-card.active {
+  border-color: var(--brand);
+}
+
+.basemap-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  object-fit: cover;
+  display: block;
+}
+
+.basemap-label {
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 500;
+}
+
 /* ── Coordinates display — bottom left of map ────────────── */
 .map-coords {
   position: absolute;
