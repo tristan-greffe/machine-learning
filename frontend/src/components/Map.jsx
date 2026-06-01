@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
 
-function Map() {
+// forwardRef lets App.jsx call map methods (e.g. flyTo) via a ref
+const Map = forwardRef(function Map(props, ref) {
   // useRef: points to the DOM <div> where MapLibre will attach
   const mapContainer = useRef(null)
   // useRef: stores the map instance without triggering re-renders
@@ -12,6 +13,13 @@ function Map() {
   const [coords, setCoords] = useState(null)
   // useState: currently active basemap id
   const [basemap, setBasemap] = useState('satellite')
+
+  // Expose flyTo so parent components can move the map
+  useImperativeHandle(ref, () => ({
+    flyTo: (center, zoom = 14) => {
+      map.current?.flyTo({ center, zoom, duration: 1500 })
+    }
+  }))
 
   useEffect(() => {
     // Prevent double initialization (React StrictMode mounts twice in dev)
@@ -89,6 +97,6 @@ function Map() {
       )}
     </div>
   )
-}
+})
 
 export default Map

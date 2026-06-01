@@ -20,11 +20,6 @@ const MODELS = [
 function Sidebar({ openPanels, onTogglePanel }) {
   return (
     <aside className="sidebar">
-      {/* Logo */}
-      <div className="sidebar-logo-wrap">
-        <img src="/logo.svg" alt="GeoML" width="28" height="32" />
-      </div>
-
       {/* Model icon buttons */}
       <nav className="sidebar-nav">
         {MODELS.map((model) => {
