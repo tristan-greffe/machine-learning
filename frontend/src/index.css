@@ -389,19 +389,50 @@ html, body, #root {
   font-weight: 500;
 }
 
-/* ── Coordinates display — bottom left of map ────────────── */
+/* ── Scale bar (MapLibre built-in) ───────────────────────── */
+.maplibregl-ctrl-bottom-left {
+  bottom: 8px;
+  left: 8px;
+}
+
+.maplibregl-ctrl-scale {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border) !important;
+  border-top: 2px solid var(--text) !important;
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+  color: var(--text);
+  padding: 1px 4px;
+}
+
+/* ── Coordinates display — above scale bar ───────────────── */
 .map-coords {
   position: absolute;
-  bottom: 28px;
-  left: 12px;
+  bottom: 38px; /* sits above the scale bar (~30px tall) */
+  left: 8px;
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(4px);
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 3px 9px;
   font-size: 11px;
   font-family: ui-monospace, monospace;
   color: var(--text);
-  pointer-events: none; /* don't block map clicks */
+  cursor: pointer;          /* clickable to toggle */
+  pointer-events: all;
   z-index: 5;
+  transition: bottom 0.2s ease, opacity 0.2s;
+  user-select: none;
+}
+
+.map-coords:hover {
+  background: var(--bg-btn-hover);
+  border-color: var(--brand-light);
+}
+
+/* When coords are hidden, scale bar fills the space naturally */
+.coords-hidden {
+  opacity: 0.5;
+  bottom: 38px;
 }

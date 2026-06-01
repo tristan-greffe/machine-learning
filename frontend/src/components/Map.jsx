@@ -5,14 +5,11 @@ import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
 
 // forwardRef lets App.jsx call map methods (e.g. flyTo) via a ref
 const Map = forwardRef(function Map(props, ref) {
-  // useRef: points to the DOM <div> where MapLibre will attach
   const mapContainer = useRef(null)
-  // useRef: stores the map instance without triggering re-renders
-  const map = useRef(null)
-  // useState: current mouse coordinates (updated on every mousemove)
-  const [coords, setCoords] = useState(null)
-  // useState: currently active basemap id
-  const [basemap, setBasemap] = useState('satellite')
+  const map          = useRef(null)
+  const [coords, setCoords]       = useState(null)
+  const [showCoords, setShowCoords] = useState(true)  // toggle coords visibility
+  const [basemap, setBasemap]     = useState('satellite')
 
   // Expose flyTo so parent components can move the map
   useImperativeHandle(ref, () => ({
@@ -22,38 +19,34 @@ const Map = forwardRef(function Map(props, ref) {
   }))
 
   useEffect(() => {
-    // Prevent double initialization (React StrictMode mounts twice in dev)
     if (map.current) return
 
     map.current = new maplibregl.Map({
-      container: mapContainer.current, // target <div>
+      container: mapContainer.current,
       style: {
         version: 8,
         sources: {
           'basemap': {
             type: 'raster',
-            tiles: BASEMAPS[0].tiles, // satellite by default
+            tiles: BASEMAPS[0].tiles,
             tileSize: 256,
             attribution: 'Tiles © Esri'
           }
         },
-        layers: [
-          {
-            id: 'basemap-layer',
-            type: 'raster',
-            source: 'basemap'
-          }
-        ]
+        layers: [{ id: 'basemap-layer', type: 'raster', source: 'basemap' }]
       },
-      center: [2.2137, 46.2276], // default center: France [lng, lat]
+      center: [2.2137, 46.2276],
       zoom: 5,
-      renderWorldCopies: false  // prevent infinite world repetition on zoom out
+      renderWorldCopies: false
     })
 
-    // Add navigation controls (zoom +/- and compass)
+    // Navigation controls (zoom +/- and compass)
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right')
 
-    // Update coordinates on mouse move — e.lngLat is provided by MapLibre
+    // Scale bar — metric units, bottom-right
+    map.current.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right')
+
+    // Live coordinates on mouse move
     map.current.on('mousemove', (e) => {
       setCoords({
         lat: e.lngLat.lat.toFixed(5),
@@ -61,38 +54,38 @@ const Map = forwardRef(function Map(props, ref) {
       })
     })
 
-    // Clear coordinates when mouse leaves the map
     map.current.on('mouseout', () => setCoords(null))
 
-    // Cleanup: destroy map instance when component unmounts
     return () => {
       map.current?.remove()
       map.current = null
     }
-  }, []) // [] = run once on mount
+  }, [])
 
-  // Change basemap tiles when user selects a new one
   function handleBasemapSelect(id) {
     const selected = BASEMAPS.find((bm) => bm.id === id)
     if (!selected || !map.current) return
-
-    // MapLibre allows updating a source's tiles on the fly
     map.current.getSource('basemap').setTiles(selected.tiles)
     setBasemap(id)
   }
 
   return (
     <div className="map-wrapper">
-      {/* MapLibre fills this div with a WebGL canvas */}
       <div ref={mapContainer} className="map-container" />
 
-      {/* Basemap switcher — positioned below zoom controls (top-right) */}
       <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
 
-      {/* Live coordinates display — bottom left */}
+      {/* Coordinates — clicking toggles visibility, scale bar adjusts below */}
       {coords && (
-        <div className="map-coords">
-          Lat: {coords.lat} &nbsp;·&nbsp; Lng: {coords.lng}
+        <div
+          className={`map-coords ${showCoords ? '' : 'coords-hidden'}`}
+          onClick={() => setShowCoords((v) => !v)}
+          title={showCoords ? 'Hide coordinates' : 'Show coordinates'}
+        >
+          {showCoords
+            ? `Lat: ${coords.lat} · Lng: ${coords.lng}`
+            : '···'
+          }
         </div>
       )}
     </div>
