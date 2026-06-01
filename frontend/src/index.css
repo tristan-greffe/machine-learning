@@ -1184,20 +1184,19 @@ html, body, #root {
   opacity: 1;
 }
 
-/* ── Catalog panel — fixed right overlay on the map ─────── */
+/* ── Catalog panel — flex sibling to the right of map-area ── */
 .catalog-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
+  position: relative;
   width: 260px;
+  flex-shrink: 0;
+  height: 100%;
   background: #fff;
   border-left: 1px solid var(--border);
-  box-shadow: -3px 0 12px rgba(0, 0, 0, 0.08);
+  box-shadow: -3px 0 12px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   overflow: visible;   /* so the left tab sticks out */
-  z-index: 15;
+  z-index: 5;
 }
 
 .catalog-panel-inner {
@@ -1283,4 +1282,78 @@ html, body, #root {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Group title inside catalog */
+.catalog-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  padding: 10px 14px 4px;
+}
+
+/* ── Run detection button ─────────────────────────────────── */
+.run-detection-wrap {
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.run-detection-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 12px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.run-detection-btn:hover:not(:disabled) {
+  background: var(--brand-light);
+}
+
+.run-detection-btn:disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.run-detection-btn.running {
+  background: var(--brand);
+  opacity: 0.75;
+  cursor: default;
+}
+
+.run-detection-btn.done {
+  background: #16a34a;   /* green-600 */
+}
+
+/* Spinner inside run button */
+.run-spinner {
+  width: 11px;
+  height: 11px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+/* Hint below the run button */
+.run-hint {
+  margin-top: 7px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.4;
+  text-align: center;
 }

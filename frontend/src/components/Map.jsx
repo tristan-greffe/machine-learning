@@ -7,7 +7,7 @@ import GlobeToggle from './GlobeToggle.jsx'
 import DrawToolbar from './DrawToolbar.jsx'
 import DrawToggle from './DrawToggle.jsx'
 import CatalogToggle from './CatalogToggle.jsx'
-import CatalogPanel, { CATALOG_LAYERS } from './CatalogPanel.jsx'
+import { CATALOG_LAYERS } from './CatalogPanel.jsx'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] }
@@ -36,29 +36,38 @@ function makeCircleFeature([lng, lat], radiusKm, steps = 64) {
   return { type: 'Feature', geometry: { type: 'Polygon', coordinates: [coords] }, properties: {} }
 }
 
-const Map = forwardRef(function Map({ onShapesChange }, ref) {
+const Map = forwardRef(function Map(
+  { onShapesChange, showCatalog, onToggleCatalog, onMapStateChange },
+  ref
+) {
   const mapContainer = useRef(null)
   const map          = useRef(null)
   const [coords, setCoords]     = useState(null)
-  const [basemap, setBasemap]   = useState('satellite')
+  const [basemap, setBasemapState] = useState('satellite')
   const [bearing, setBearing]   = useState(0)
   const [isGlobe, setIsGlobe]   = useState(false)
   const [mapSettings, setMapSettings] = useState({ northArrow: true, scale: true, coords: true })
 
   // Draw state
-  const [showDrawToolbar, setShowDrawToolbar]   = useState(false) // toggled by ruler button
-  const [drawMode, setDrawModeState]            = useState(null)  // 'polygon' | 'circle' | null
+  const [showDrawToolbar, setShowDrawToolbar]   = useState(false)
+  const [drawMode, setDrawModeState]            = useState(null)
   const [drawnFeatures, setDrawnFeatures]       = useState([])
   const [pendingPoints, setPendingPointsState]  = useState([])
-
-  // Catalog state
-  const [showCatalog, setShowCatalog]             = useState(false)
-  const [activeCatalogLayers, setActiveCatalogLayers] = useState([])
 
   // Refs so event handlers always read fresh values (no stale closures)
   const drawModeRef      = useRef(null)
   const pendingPointsRef = useRef([])
   const clickTimerRef    = useRef(null)
+  const basemapRef       = useRef('satellite')  // mirror for event handlers
+  const onMapStateRef    = useRef(onMapStateChange)
+
+  // Keep callback ref current
+  useEffect(() => { onMapStateRef.current = onMapStateChange }, [onMapStateChange])
+
+  function setBasemap(id) {
+    basemapRef.current = id
+    setBasemapState(id)
+  }
 
   function setDrawMode(mode) {
     drawModeRef.current = mode
@@ -73,14 +82,33 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
   // Expose methods to parent via ref
   useImperativeHandle(ref, () => ({
     flyTo: (center, zoom = 14) => map.current?.flyTo({ center, zoom, duration: 1500 }),
+
     clearShapes: () => {
       setDrawnFeatures([])
       setPendingPoints([])
       setDrawMode(null)
+    },
+
+    // Add or remove a catalog layer on the MapLibre map
+    // tiles === null → remove the layer
+    toggleCatalogLayer: (id, tiles, attribution) => {
+      const m = map.current
+      if (!m) return
+      const sourceId = `catalog-${id}`
+      const layerId  = `catalog-${id}-layer`
+      if (tiles === null) {
+        if (m.getLayer(layerId))   m.removeLayer(layerId)
+        if (m.getSource(sourceId)) m.removeSource(sourceId)
+      } else {
+        if (!m.getSource(sourceId)) {
+          m.addSource(sourceId, { type: 'raster', tiles, tileSize: 256, attribution })
+          m.addLayer({ id: layerId, type: 'raster', source: sourceId, paint: { 'raster-opacity': 0.8 } })
+        }
+      }
     }
   }))
 
-  // Notify parent when shapes are added / all cleared
+  // Notify parent when shapes change
   useEffect(() => {
     onShapesChange?.(drawnFeatures.length > 0)
   }, [drawnFeatures, onShapesChange])
@@ -91,7 +119,7 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
     if (src) src.setData({ type: 'FeatureCollection', features: drawnFeatures })
   }, [drawnFeatures])
 
-  // Sync in-progress preview (pending points + connecting line)
+  // Sync in-progress preview
   useEffect(() => {
     const src = map.current?.getSource('draw-preview')
     if (!src) return
@@ -139,18 +167,14 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
     m.on('mouseout', () => setCoords(null))
     m.on('rotate', () => setBearing(m.getBearing()))
 
-    // Add draw sources and layers after style loads
     m.on('load', () => {
       m.addSource('draw-shapes',  { type: 'geojson', data: EMPTY_FC })
       m.addSource('draw-preview', { type: 'geojson', data: EMPTY_FC })
 
-      // Completed shapes
       m.addLayer({ id: 'draw-fill',    type: 'fill', source: 'draw-shapes',
         paint: { 'fill-color': '#0891b2', 'fill-opacity': 0.15 } })
       m.addLayer({ id: 'draw-outline', type: 'line', source: 'draw-shapes',
         paint: { 'line-color': '#0891b2', 'line-width': 2 } })
-
-      // In-progress preview — dashed line + vertex dots
       m.addLayer({ id: 'draw-preview-line', type: 'line', source: 'draw-preview',
         filter: ['==', '$type', 'LineString'],
         paint: { 'line-color': '#0891b2', 'line-width': 2, 'line-dasharray': [3, 2] } })
@@ -158,16 +182,23 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
         filter: ['==', '$type', 'Point'],
         paint: { 'circle-radius': 4, 'circle-color': '#fff',
           'circle-stroke-color': '#0891b2', 'circle-stroke-width': 2 } })
+
+      // Notify parent of initial state
+      onMapStateRef.current?.({ zoom: m.getZoom(), basemap: basemapRef.current })
     })
 
-    // ── Click: add polygon vertex or circle center/radius ──
+    // Notify parent when zoom stops
+    m.on('zoomend', () => {
+      onMapStateRef.current?.({ zoom: m.getZoom(), basemap: basemapRef.current })
+    })
+
+    // ── Click: polygon vertex / circle center-radius ──
     m.on('click', (e) => {
       const mode = drawModeRef.current
       if (!mode) return
       const pt = [e.lngLat.lng, e.lngLat.lat]
 
       if (mode === 'polygon') {
-        // 200 ms delay so double-click can cancel before the point is added
         clearTimeout(clickTimerRef.current)
         clickTimerRef.current = setTimeout(() => {
           const updated = [...pendingPointsRef.current, pt]
@@ -176,11 +207,9 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
         }, 200)
       } else if (mode === 'circle') {
         if (pendingPointsRef.current.length === 0) {
-          // First click — store center
           pendingPointsRef.current = [pt]
           setPendingPointsState([pt])
         } else {
-          // Second click — compute radius, close shape
           const radius = haversineKm(pendingPointsRef.current[0], pt)
           const circle = makeCircleFeature(pendingPointsRef.current[0], radius)
           setDrawnFeatures((prev) => [...prev, circle])
@@ -195,7 +224,7 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
     // ── Double-click: close polygon ────────────────────────
     m.on('dblclick', (e) => {
       if (drawModeRef.current !== 'polygon') return
-      e.preventDefault() // prevent map zoom
+      e.preventDefault()
       clearTimeout(clickTimerRef.current)
       const pts = pendingPointsRef.current
       if (pts.length >= 3) {
@@ -224,6 +253,7 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
     if (!selected || !map.current) return
     map.current.getSource('basemap').setTiles(selected.tiles)
     setBasemap(id)
+    onMapStateRef.current?.({ zoom: map.current.getZoom(), basemap: id })
   }
 
   function handleResetNorth() {
@@ -247,50 +277,13 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
   }
 
   function handleSetDrawMode(mode) {
-    setPendingPoints([]) // reset any in-progress shape
+    setPendingPoints([])
     setDrawMode(mode)
-  }
-
-  async function handleCatalogToggleLayer(id) {
-    const m = map.current
-    if (!m) return
-    const layer = CATALOG_LAYERS.find((l) => l.id === id)
-    if (!layer) return
-
-    const sourceId = `catalog-${id}`
-    const layerId  = `catalog-${id}-layer`
-    const isActive = activeCatalogLayers.includes(id)
-
-    if (!isActive) {
-      let tiles = layer.tiles
-      if (id === 'rain') {
-        try {
-          const res  = await fetch('https://api.rainviewer.com/public/weather-maps.json')
-          const data = await res.json()
-          const ts   = data.radar.past.at(-1).time
-          tiles = [`https://tilecache.rainviewer.com/v2/radar/${ts}/256/{z}/{x}/{y}/2/1_1.png`]
-        } catch {
-          tiles = ['https://tilecache.rainviewer.com/v2/coverage/0/256/{z}/{x}/{y}/2/1_1.png']
-        }
-      }
-      if (!m.getSource(sourceId)) {
-        m.addSource(sourceId, { type: 'raster', tiles, tileSize: 256, attribution: layer.attribution })
-        m.addLayer({ id: layerId, type: 'raster', source: sourceId, paint: { 'raster-opacity': 0.8 } })
-      }
-    } else {
-      if (m.getLayer(layerId))  m.removeLayer(layerId)
-      if (m.getSource(sourceId)) m.removeSource(sourceId)
-    }
-
-    setActiveCatalogLayers((prev) =>
-      prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]
-    )
   }
 
   function handleToggleDrawToolbar() {
     const next = !showDrawToolbar
     if (!next) {
-      // Hide toolbar → cancel active draw mode too
       setPendingPoints([])
       setDrawMode(null)
     }
@@ -311,16 +304,7 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
       />
       <MapSettings settings={mapSettings} onChange={handleSettingChange} />
       <GlobeToggle isGlobe={isGlobe} onToggle={handleToggleGlobe} />
-      <CatalogToggle active={showCatalog} onToggle={() => setShowCatalog((v) => !v)} />
-
-      {/* Data catalog — slides in from the right */}
-      {showCatalog && (
-        <CatalogPanel
-          activeLayers={activeCatalogLayers}
-          onToggle={handleCatalogToggleLayer}
-          onClose={() => setShowCatalog(false)}
-        />
-      )}
+      <CatalogToggle active={showCatalog} onToggle={onToggleCatalog} />
 
       {/* North arrow — top-left */}
       {mapSettings.northArrow && (
@@ -332,7 +316,6 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
           />
         </button>
       )}
-
 
       {/* Coordinates — bottom-left */}
       {mapSettings.coords && coords && (
