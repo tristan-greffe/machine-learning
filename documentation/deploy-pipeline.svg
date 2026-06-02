@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" font-family="Liberation Sans, DejaVu Sans, sans-serif">
+  <defs>
+    <filter id="sh" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="1120" height="600" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="560" y="44" text-anchor="middle" font-size="26" font-weight="700" fill="#0f172a">Déploiement — du push à GitHub Pages</text>
+  <text x="560" y="70" text-anchor="middle" font-size="14" fill="#64748b">Un seul site statique · aucun serveur</text>
+
+  <!-- ===== 1 · Dev machine ===== -->
+  <rect x="40" y="160" width="220" height="240" rx="12" fill="#ecfeff" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="150" y="194" text-anchor="middle" font-size="15" font-weight="700" fill="#0e7490">1 · Machine de dev</text>
+
+  <g filter="url(#sh)"><rect x="62" y="214" width="176" height="64" rx="8" fill="#ffffff" stroke="#67e8f9" stroke-width="1.5"/></g>
+  <text x="150" y="242" text-anchor="middle" font-size="13" font-weight="600" fill="#0f172a">commit</text>
+  <text x="150" y="262" text-anchor="middle" font-size="12" fill="#0e7490" font-family="DejaVu Sans Mono, monospace">git push</text>
+
+  <text x="150" y="316" text-anchor="middle" font-size="12" fill="#94a3b8">frontend/</text>
+  <text x="150" y="336" text-anchor="middle" font-size="12" fill="#94a3b8">docs/</text>
+  <text x="150" y="356" text-anchor="middle" font-size="12" fill="#94a3b8">models/*.onnx</text>
+
+  <!-- arrow 1 -->
+  <line x1="262" y1="280" x2="316" y2="280" stroke="#64748b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="289" y="271" text-anchor="middle" font-size="11" font-weight="600" fill="#475569" font-family="DejaVu Sans Mono, monospace">push</text>
+
+  <!-- ===== 2 · GitHub Actions ===== -->
+  <rect x="320" y="100" width="480" height="430" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="340" y="132" font-size="15" font-weight="700" fill="#6d28d9">2 · GitHub Actions (CI)</text>
+  <text x="340" y="152" font-size="12" fill="#a78bfa" font-family="DejaVu Sans Mono, monospace">deploy.yml · on push master · pnpm</text>
+
+  <!-- a Build frontend -->
+  <g filter="url(#sh)"><rect x="340" y="166" width="440" height="62" rx="8" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5"/></g>
+  <text x="356" y="190" font-size="14" font-weight="600" fill="#0f172a">Build frontend</text>
+  <text x="356" y="212" font-size="12" fill="#7c3aed" font-family="DejaVu Sans Mono, monospace">cd frontend &amp;&amp; pnpm install &amp;&amp; pnpm build  → dist/</text>
+
+  <line x1="560" y1="228" x2="560" y2="244" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- b Build docs -->
+  <g filter="url(#sh)"><rect x="340" y="246" width="440" height="62" rx="8" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5"/></g>
+  <text x="356" y="270" font-size="14" font-weight="600" fill="#0f172a">Build docs</text>
+  <text x="356" y="292" font-size="12" fill="#7c3aed" font-family="DejaVu Sans Mono, monospace">cd docs &amp;&amp; pnpm install &amp;&amp; pnpm build  → .vitepress/dist/</text>
+
+  <line x1="560" y1="308" x2="560" y2="324" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- c Combine bundle -->
+  <g filter="url(#sh)"><rect x="340" y="326" width="440" height="96" rx="8" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5"/></g>
+  <text x="356" y="350" font-size="14" font-weight="600" fill="#0f172a">Combine into pages-dist/</text>
+  <text x="356" y="374" font-size="11.5" fill="#7c3aed" font-family="DejaVu Sans Mono, monospace">cp frontend/dist/.        → pages-dist/</text>
+  <text x="356" y="394" font-size="11.5" fill="#7c3aed" font-family="DejaVu Sans Mono, monospace">cp docs/…/dist/.          → pages-dist/documentation/</text>
+  <text x="356" y="412" font-size="11" fill="#94a3b8">la doc devient un sous-dossier du bundle du front</text>
+
+  <line x1="560" y1="422" x2="560" y2="438" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- d deploy -->
+  <g filter="url(#sh)"><rect x="340" y="440" width="440" height="50" rx="8" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5"/></g>
+  <text x="356" y="463" font-size="13" font-weight="600" fill="#0f172a">Deploy → branche gh-pages</text>
+  <text x="356" y="481" font-size="11" fill="#94a3b8" font-family="DejaVu Sans Mono, monospace">JamesIves/github-pages-deploy-action · folder: pages-dist/</text>
+
+  <!-- arrow 2 -->
+  <line x1="802" y1="280" x2="856" y2="280" stroke="#64748b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="829" y="271" text-anchor="middle" font-size="11" font-weight="600" fill="#475569" font-family="DejaVu Sans Mono, monospace">deploy</text>
+
+  <!-- ===== 3 · GitHub Pages ===== -->
+  <rect x="860" y="160" width="220" height="240" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="970" y="194" text-anchor="middle" font-size="15" font-weight="700" fill="#15803d">3 · GitHub Pages</text>
+
+  <g filter="url(#sh)"><rect x="882" y="214" width="176" height="50" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/></g>
+  <text x="970" y="234" text-anchor="middle" font-size="12.5" font-weight="600" fill="#0f172a">SPA React</text>
+  <text x="970" y="252" text-anchor="middle" font-size="11" fill="#16a34a" font-family="DejaVu Sans Mono, monospace">/geo-ml/</text>
+
+  <g filter="url(#sh)"><rect x="882" y="274" width="176" height="50" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/></g>
+  <text x="970" y="294" text-anchor="middle" font-size="12.5" font-weight="600" fill="#0f172a">Doc VitePress</text>
+  <text x="970" y="312" text-anchor="middle" font-size="11" fill="#16a34a" font-family="DejaVu Sans Mono, monospace">/geo-ml/documentation/</text>
+
+  <g filter="url(#sh)"><rect x="882" y="334" width="176" height="50" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/></g>
+  <text x="970" y="354" text-anchor="middle" font-size="12.5" font-weight="600" fill="#0f172a">Modèles ONNX</text>
+  <text x="970" y="372" text-anchor="middle" font-size="11" fill="#16a34a" font-family="DejaVu Sans Mono, monospace">/geo-ml/models/*.onnx</text>
+
+  <!-- footer -->
+  <text x="560" y="566" text-anchor="middle" font-size="12" fill="#64748b">Déclencheurs : push sur master · workflow_dispatch (manuel) — l'URL ne passe live qu'une fois les deux builds réussis</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 250" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="aL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect width="1040" height="250" fill="#f8fafc"/>
+  <text x="520" y="32" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">LeNet-5 — 1998</text>
+  <text x="520" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">Le pionnier : reconnaissance de chiffres manuscrits. 2 blocs Conv+Pool, puis 3 couches denses.</text>
+
+  <!-- boxes -->
+  <g font-size="11">
+    <!-- 1 input -->
+    <rect x="16" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#64748b" stroke-width="2"/>
+    <text x="68" y="108" text-anchor="middle" font-weight="700" fill="#475569">Entrée</text>
+    <text x="68" y="132" text-anchor="middle" fill="#64748b">image</text>
+    <text x="68" y="150" text-anchor="middle" fill="#64748b">32×32×1</text>
+    <!-- 2 conv -->
+    <rect x="144" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+    <text x="196" y="108" text-anchor="middle" font-weight="700" fill="#0e7490">Conv 5×5</text>
+    <text x="196" y="132" text-anchor="middle" fill="#64748b">6 filtres</text>
+    <text x="196" y="150" text-anchor="middle" fill="#64748b">6@28×28</text>
+    <!-- 3 pool -->
+    <rect x="272" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#10b981" stroke-width="2"/>
+    <text x="324" y="108" text-anchor="middle" font-weight="700" fill="#059669">Pooling</text>
+    <text x="324" y="132" text-anchor="middle" fill="#64748b">2×2</text>
+    <text x="324" y="150" text-anchor="middle" fill="#64748b">6@14×14</text>
+    <!-- 4 conv -->
+    <rect x="400" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+    <text x="452" y="108" text-anchor="middle" font-weight="700" fill="#0e7490">Conv 5×5</text>
+    <text x="452" y="132" text-anchor="middle" fill="#64748b">16 filtres</text>
+    <text x="452" y="150" text-anchor="middle" fill="#64748b">16@10×10</text>
+    <!-- 5 pool -->
+    <rect x="528" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#10b981" stroke-width="2"/>
+    <text x="580" y="108" text-anchor="middle" font-weight="700" fill="#059669">Pooling</text>
+    <text x="580" y="132" text-anchor="middle" fill="#64748b">2×2</text>
+    <text x="580" y="150" text-anchor="middle" fill="#64748b">16@5×5</text>
+    <!-- 6 fc -->
+    <rect x="656" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+    <text x="708" y="108" text-anchor="middle" font-weight="700" fill="#4f46e5">Dense</text>
+    <text x="708" y="132" text-anchor="middle" fill="#64748b">flatten →</text>
+    <text x="708" y="150" text-anchor="middle" fill="#64748b">120</text>
+    <!-- 7 fc -->
+    <rect x="784" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+    <text x="836" y="108" text-anchor="middle" font-weight="700" fill="#4f46e5">Dense</text>
+    <text x="836" y="132" text-anchor="middle" fill="#64748b">84</text>
+    <!-- 8 output -->
+    <rect x="912" y="80" width="104" height="92" rx="8" fill="#fff" stroke="#047857" stroke-width="2"/>
+    <text x="964" y="108" text-anchor="middle" font-weight="700" fill="#047857">Softmax</text>
+    <text x="964" y="132" text-anchor="middle" fill="#64748b">10 classes</text>
+    <text x="964" y="150" text-anchor="middle" fill="#64748b">(0–9)</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#94a3b8" stroke-width="1.8">
+    <line x1="120" y1="126" x2="144" y2="126" marker-end="url(#aL)"/>
+    <line x1="248" y1="126" x2="272" y2="126" marker-end="url(#aL)"/>
+    <line x1="376" y1="126" x2="400" y2="126" marker-end="url(#aL)"/>
+    <line x1="504" y1="126" x2="528" y2="126" marker-end="url(#aL)"/>
+    <line x1="632" y1="126" x2="656" y2="126" marker-end="url(#aL)"/>
+    <line x1="760" y1="126" x2="784" y2="126" marker-end="url(#aL)"/>
+    <line x1="888" y1="126" x2="912" y2="126" marker-end="url(#aL)"/>
+  </g>
+
+  <text x="520" y="210" text-anchor="middle" font-size="11.5" fill="#475569">
+    ~60 000 paramètres · activation <tspan font-style="italic">tanh</tspan> à l'époque (avant ReLU) · pose le schéma Conv → Pool → Dense réutilisé partout depuis.
+  </text>
+</svg>

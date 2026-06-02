@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 340" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrowTA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <filter id="shadowTA" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="1140" height="340" fill="#f8fafc"/>
+
+  <text x="570" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">
+    Architecture typique d'un CNN
+  </text>
+  <text x="570" y="56" text-anchor="middle" font-size="13" fill="#64748b">
+    ReLU suit chaque convolution ; le bloc Conv → ReLU → Pooling se répète N fois
+  </text>
+
+  <!-- repeat bracket over Conv / ReLU / Pool -->
+  <path d="M188,84 L188,74 L634,74 L634,84" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="411" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#64748b">bloc répété N fois</text>
+
+  <!-- boxes -->
+  <!-- 1 Input -->
+  <g filter="url(#shadowTA)"><rect x="30" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#64748b" stroke-width="2"/></g>
+  <rect x="30" y="92" width="130" height="24" rx="9" fill="#64748b"/>
+  <rect x="30" y="108" width="130" height="8" fill="#64748b"/>
+  <text x="95" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Entrée</text>
+  <text x="95" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Image</text>
+  <text x="95" y="168" text-anchor="middle" font-size="10.5" fill="#475569">256×256×3</text>
+  <text x="95" y="184" text-anchor="middle" font-size="10.5" fill="#475569">RGB</text>
+
+  <!-- 2 Conv -->
+  <g filter="url(#shadowTA)"><rect x="188" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#0891b2" stroke-width="2"/></g>
+  <rect x="188" y="92" width="130" height="24" rx="9" fill="#0891b2"/>
+  <rect x="188" y="108" width="130" height="8" fill="#0891b2"/>
+  <text x="253" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Convolution</text>
+  <text x="253" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">N filtres 3×3</text>
+  <text x="253" y="168" text-anchor="middle" font-size="10.5" fill="#475569">extrait les motifs</text>
+  <text x="253" y="184" text-anchor="middle" font-size="10.5" fill="#475569">→ N feature maps</text>
+
+  <!-- 3 ReLU -->
+  <g filter="url(#shadowTA)"><rect x="346" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#ea580c" stroke-width="2"/></g>
+  <rect x="346" y="92" width="130" height="24" rx="9" fill="#ea580c"/>
+  <rect x="346" y="108" width="130" height="8" fill="#ea580c"/>
+  <text x="411" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">ReLU</text>
+  <text x="411" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">max(0, x)</text>
+  <text x="411" y="168" text-anchor="middle" font-size="10.5" fill="#475569">non-linéarité</text>
+  <text x="411" y="184" text-anchor="middle" font-size="10.5" fill="#475569">coupe les négatifs</text>
+
+  <!-- 4 Pooling -->
+  <g filter="url(#shadowTA)"><rect x="504" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#10b981" stroke-width="2"/></g>
+  <rect x="504" y="92" width="130" height="24" rx="9" fill="#10b981"/>
+  <rect x="504" y="108" width="130" height="8" fill="#10b981"/>
+  <text x="569" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Pooling</text>
+  <text x="569" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">max 2×2</text>
+  <text x="569" y="168" text-anchor="middle" font-size="10.5" fill="#475569">réduit la résolution</text>
+  <text x="569" y="184" text-anchor="middle" font-size="10.5" fill="#475569">↓ taille / 2</text>
+
+  <!-- 5 Flatten + Dense -->
+  <g filter="url(#shadowTA)"><rect x="662" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#6366f1" stroke-width="2"/></g>
+  <rect x="662" y="92" width="130" height="24" rx="9" fill="#6366f1"/>
+  <rect x="662" y="108" width="130" height="8" fill="#6366f1"/>
+  <text x="727" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Flatten + Dense</text>
+  <text x="727" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">fully connected</text>
+  <text x="727" y="168" text-anchor="middle" font-size="10.5" fill="#475569">aplatit puis connecte</text>
+  <text x="727" y="184" text-anchor="middle" font-size="10.5" fill="#475569">tous les neurones</text>
+
+  <!-- 6 Softmax -->
+  <g filter="url(#shadowTA)"><rect x="820" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#b45309" stroke-width="2"/></g>
+  <rect x="820" y="92" width="130" height="24" rx="9" fill="#b45309"/>
+  <rect x="820" y="108" width="130" height="8" fill="#b45309"/>
+  <text x="885" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Softmax</text>
+  <text x="885" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">probabilités</text>
+  <text x="885" y="168" text-anchor="middle" font-size="10.5" fill="#475569">par classe</text>
+  <text x="885" y="184" text-anchor="middle" font-size="10.5" fill="#475569">somme = 1.0</text>
+
+  <!-- 7 Output -->
+  <g filter="url(#shadowTA)"><rect x="978" y="92" width="130" height="112" rx="9" fill="#fff" stroke="#047857" stroke-width="2"/></g>
+  <rect x="978" y="92" width="130" height="24" rx="9" fill="#047857"/>
+  <rect x="978" y="108" width="130" height="8" fill="#047857"/>
+  <text x="1043" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Sortie</text>
+  <text x="1043" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">classe prédite</text>
+  <text x="1043" y="168" text-anchor="middle" font-size="10.5" fill="#475569">ex. « chat »</text>
+  <text x="1043" y="184" text-anchor="middle" font-size="10.5" fill="#475569">+ score 0.72</text>
+
+  <!-- arrows -->
+  <line x1="160" y1="148" x2="188" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+  <line x1="318" y1="148" x2="346" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+  <line x1="476" y1="148" x2="504" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+  <line x1="634" y1="148" x2="662" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+  <line x1="792" y1="148" x2="820" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+  <line x1="950" y1="148" x2="978" y2="148" stroke="#475569" stroke-width="2" marker-end="url(#arrowTA)"/>
+
+  <!-- footer note -->
+  <text x="570" y="246" text-anchor="middle" font-size="12" fill="#475569">
+    <tspan font-weight="700" fill="#0f172a">Extraction de features</tspan> (Convolution → ReLU → Pooling, à gauche)
+    puis <tspan font-weight="700" fill="#0f172a">classification</tspan> (Dense → Softmax, à droite).
+  </text>
+  <text x="570" y="268" text-anchor="middle" font-size="11" fill="#64748b">
+    Pour la segmentation (U-Net), la partie classification est remplacée par un décodeur qui reconstruit une image.
+  </text>
+</svg>
