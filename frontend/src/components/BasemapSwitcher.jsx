@@ -43,7 +43,7 @@ function BasemapSwitcher({ current, onSelect }) {
       <button
         className={`basemap-toggle ${open ? 'active' : ''}`}
         onClick={() => setOpen((v) => !v)}
-        title="Change basemap"
+        title="Manage basemap layers"
       >
         <Layers size={18} strokeWidth={1.5} />
       </button>

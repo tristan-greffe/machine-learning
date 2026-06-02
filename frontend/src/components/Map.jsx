@@ -2,14 +2,16 @@ import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 're
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
+import northArrowSvg from '../assets/north-arrow.svg'
 
 // forwardRef lets App.jsx call map methods (e.g. flyTo) via a ref
 const Map = forwardRef(function Map(props, ref) {
   const mapContainer = useRef(null)
   const map          = useRef(null)
-  const [coords, setCoords]       = useState(null)
-  const [showCoords, setShowCoords] = useState(true)  // toggle coords visibility
-  const [basemap, setBasemap]     = useState('satellite')
+  const [coords, setCoords]         = useState(null)
+  const [showCoords, setShowCoords] = useState(true)
+  const [basemap, setBasemap]       = useState('satellite')
+  const [bearing, setBearing]       = useState(0)   // map rotation in degrees
 
   // Expose flyTo so parent components can move the map
   useImperativeHandle(ref, () => ({
@@ -43,8 +45,8 @@ const Map = forwardRef(function Map(props, ref) {
     // Navigation controls (zoom +/- and compass)
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right')
 
-    // Scale bar — metric units, bottom-right
-    map.current.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right')
+    // Scale bar — metric units, bottom-left
+    map.current.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-left')
 
     // Live coordinates on mouse move
     map.current.on('mousemove', (e) => {
@@ -55,6 +57,9 @@ const Map = forwardRef(function Map(props, ref) {
     })
 
     map.current.on('mouseout', () => setCoords(null))
+
+    // Track map rotation to rotate the north arrow accordingly
+    map.current.on('rotate', () => setBearing(map.current.getBearing()))
 
     return () => {
       map.current?.remove()
@@ -69,13 +74,31 @@ const Map = forwardRef(function Map(props, ref) {
     setBasemap(id)
   }
 
+  // Click on north arrow resets map rotation to north
+  function handleResetNorth() {
+    map.current?.rotateTo(0, { duration: 500 })
+  }
+
   return (
     <div className="map-wrapper">
       <div ref={mapContainer} className="map-container" />
 
       <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
 
-      {/* Coordinates — clicking toggles visibility, scale bar adjusts below */}
+      {/* North arrow — top-left, rotates with map, click to reset north */}
+      <button
+        className="north-arrow"
+        onClick={handleResetNorth}
+        title="Reset north"
+      >
+        <img
+          src={northArrowSvg}
+          alt="North arrow"
+          style={{ transform: `rotate(${-bearing}deg)`, transition: 'transform 0.1s' }}
+        />
+      </button>
+
+      {/* Coordinates — clicking toggles visibility */}
       {coords && (
         <div
           className={`map-coords ${showCoords ? '' : 'coords-hidden'}`}
