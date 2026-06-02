@@ -43,10 +43,16 @@ function BasemapSwitcher({ current, onSelect }) {
       <button
         className={`basemap-toggle ${open ? 'active' : ''}`}
         onClick={() => setOpen((v) => !v)}
-        title="Manage basemap layers"
       >
         <Layers size={18} strokeWidth={1.5} />
       </button>
+
+      {/* Custom tooltip — hidden when panel is open */}
+      {!open && (
+        <span className="basemap-tooltip">
+          Manage basemap layers
+        </span>
+      )}
 
       {/* Basemap selection panel */}
       {open && (

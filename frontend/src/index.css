@@ -327,6 +327,41 @@ html, body, #root {
   color: var(--brand);
 }
 
+/* Custom tooltip — appears to the left of the toggle button on hover */
+.basemap-tooltip {
+  position: absolute;
+  right: 38px;             /* left of the 30px button + 8px gap */
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e293b;     /* slate-800 — same dark as ARLAS */
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 20;
+}
+
+/* Small right-pointing arrow */
+.basemap-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #1e293b;
+}
+
+/* Show tooltip when switcher container is hovered */
+.basemap-switcher:hover .basemap-tooltip {
+  opacity: 1;
+}
+
 .basemap-panel {
   position: absolute;
   top: 0;
