@@ -4,10 +4,8 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
 import MapSettings from './MapSettings.jsx'
 import GlobeToggle from './GlobeToggle.jsx'
-import DrawToolbar from './DrawToolbar.jsx'
 import DrawToggle from './DrawToggle.jsx'
 import CatalogToggle from './CatalogToggle.jsx'
-import { CATALOG_LAYERS } from './CatalogPanel.jsx'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] }
