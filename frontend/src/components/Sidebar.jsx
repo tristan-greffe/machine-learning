@@ -11,15 +11,13 @@ const MODELS = [
     id: 'buildings',
     icon: Building2,
     label: 'Building Detection',
-    description: 'Outlines buildings — count, area, type.',
-    disabled: true
+    description: 'Outlines buildings — count, area, type.'
   },
   {
     id: 'pools',
     icon: Waves,
     label: 'Pool Detection',
-    description: 'Detects swimming pools from aerial imagery.',
-    disabled: true
+    description: 'Detects swimming pools from aerial imagery.'
   }
 ]
 
