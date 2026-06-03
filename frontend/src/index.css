@@ -503,3 +503,155 @@ html, body, #root {
   height: 100%;
   display: block;
 }
+
+/* ── Map settings button — below basemap switcher ────────── */
+.map-settings {
+  position: absolute;
+  top: 140px;   /* basemap top (100px) + button (30px) + gap (10px) */
+  right: 10px;
+  z-index: 10;
+}
+
+.settings-toggle {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: background 0.15s;
+}
+
+.settings-toggle:hover,
+.settings-toggle.active {
+  background: var(--bg-btn-hover);
+  color: var(--brand);
+}
+
+/* Tooltip — same pattern as basemap */
+.settings-tooltip {
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e293b;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 20;
+}
+
+.settings-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #1e293b;
+}
+
+.map-settings:hover .settings-tooltip {
+  opacity: 1;
+}
+
+/* Settings panel — opens to the left */
+.settings-panel {
+  position: absolute;
+  top: 0;
+  right: 38px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 10px 12px;
+  width: 175px;
+}
+
+.settings-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.settings-row + .settings-row {
+  border-top: 1px solid var(--border);
+}
+
+.settings-label {
+  font-size: 12px;
+  color: var(--text);
+  user-select: none;
+}
+
+/* ── Toggle switch ───────────────────────────────────────── */
+.toggle-switch {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--brand);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(14px);
+}
+
+/* Hide MapLibre scale control when scale is disabled */
+.hide-scale .maplibregl-ctrl-bottom-left {
+  visibility: hidden;
+}

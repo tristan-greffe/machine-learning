@@ -2,16 +2,23 @@ import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 're
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
+import MapSettings from './MapSettings.jsx'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 // forwardRef lets App.jsx call map methods (e.g. flyTo) via a ref
 const Map = forwardRef(function Map(props, ref) {
   const mapContainer = useRef(null)
   const map          = useRef(null)
-  const [coords, setCoords]         = useState(null)
-  const [showCoords, setShowCoords] = useState(true)
-  const [basemap, setBasemap]       = useState('satellite')
-  const [bearing, setBearing]       = useState(0)   // map rotation in degrees
+  const [coords, setCoords]   = useState(null)
+  const [basemap, setBasemap] = useState('satellite')
+  const [bearing, setBearing] = useState(0)   // map rotation in degrees
+
+  // Visibility settings controlled by the gear panel
+  const [mapSettings, setMapSettings] = useState({
+    northArrow: true,
+    scale:      true,
+    coords:     true
+  })
 
   // Expose flyTo so parent components can move the map
   useImperativeHandle(ref, () => ({
@@ -79,36 +86,37 @@ const Map = forwardRef(function Map(props, ref) {
     map.current?.rotateTo(0, { duration: 500 })
   }
 
+  function handleSettingChange(key, value) {
+    setMapSettings((prev) => ({ ...prev, [key]: value }))
+  }
+
   return (
-    <div className="map-wrapper">
+    // hide-scale class toggles the MapLibre scale control via CSS
+    <div className={`map-wrapper${mapSettings.scale ? '' : ' hide-scale'}`}>
       <div ref={mapContainer} className="map-container" />
 
       <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
+      <MapSettings settings={mapSettings} onChange={handleSettingChange} />
 
       {/* North arrow — top-left, rotates with map, click to reset north */}
-      <button
-        className="north-arrow"
-        onClick={handleResetNorth}
-        title="Reset north"
-      >
-        <img
-          src={northArrowSvg}
-          alt="North arrow"
-          style={{ transform: `rotate(${-bearing}deg)`, transition: 'transform 0.1s' }}
-        />
-      </button>
-
-      {/* Coordinates — clicking toggles visibility */}
-      {coords && (
-        <div
-          className={`map-coords ${showCoords ? '' : 'coords-hidden'}`}
-          onClick={() => setShowCoords((v) => !v)}
-          title={showCoords ? 'Hide coordinates' : 'Show coordinates'}
+      {mapSettings.northArrow && (
+        <button
+          className="north-arrow"
+          onClick={handleResetNorth}
+          title="Reset north"
         >
-          {showCoords
-            ? `Lat: ${coords.lat} · Lng: ${coords.lng}`
-            : '···'
-          }
+          <img
+            src={northArrowSvg}
+            alt="North arrow"
+            style={{ transform: `rotate(${-bearing}deg)`, transition: 'transform 0.1s' }}
+          />
+        </button>
+      )}
+
+      {/* Coordinates — bottom-left, hidden via settings panel */}
+      {mapSettings.coords && coords && (
+        <div className="map-coords">
+          {`Lat: ${coords.lat} · Lng: ${coords.lng}`}
         </div>
       )}
     </div>
