@@ -1,29 +1,17 @@
 import { useState, useRef } from 'react'
-import { TreePine, Building2 } from 'lucide-react'
 import Map from './components/Map.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import TopBar from './components/TopBar.jsx'
-import FloatingPanel from './components/FloatingPanel.jsx'
-
-const PANELS = {
-  trees:     { icon: TreePine,  title: 'Tree Detection' },
-  buildings: { icon: Building2, title: 'Building Detection' }
-}
+import SidePanel from './components/SidePanel.jsx'
 
 function App() {
   const mapRef = useRef(null)
 
-  // List of currently open panel ids (e.g. ['trees'])
-  const [openPanels, setOpenPanels] = useState([])
+  // Single active panel id, or null when closed
+  const [activePanel, setActivePanel] = useState(null)
 
   function handleTogglePanel(id) {
-    setOpenPanels((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
-    )
-  }
-
-  function handleClosePanel(id) {
-    setOpenPanels((prev) => prev.filter((p) => p !== id))
+    setActivePanel((prev) => (prev === id ? null : id))
   }
 
   // Called by TopBar when user selects an address
@@ -36,28 +24,19 @@ function App() {
       {/* Top bar — full width, above everything */}
       <TopBar onFlyTo={handleFlyTo} />
 
-      {/* Body: sidebar + map side by side */}
+      {/* Body: sidebar | side-panel (optional) | map */}
       <div className="app-body">
-        <Sidebar openPanels={openPanels} onTogglePanel={handleTogglePanel} />
+        <Sidebar activePanel={activePanel} onTogglePanel={handleTogglePanel} />
 
-        {/* Map area fills remaining space; panels float inside it */}
+        {activePanel && (
+          <SidePanel
+            modelId={activePanel}
+            onClose={() => setActivePanel(null)}
+          />
+        )}
+
         <div className="map-area">
           <Map ref={mapRef} />
-
-          {openPanels.map((id, i) => (
-            <FloatingPanel
-              key={id}
-              id={id}
-              icon={PANELS[id].icon}
-              title={PANELS[id].title}
-              onClose={() => handleClosePanel(id)}
-              initialPos={{ x: 24 + i * 32, y: 24 + i * 32 }}
-            >
-              <p className="panel-placeholder">
-                Detection results will appear here.
-              </p>
-            </FloatingPanel>
-          ))}
         </div>
       </div>
     </div>

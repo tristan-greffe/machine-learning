@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
 import MapSettings from './MapSettings.jsx'
+import GlobeToggle from './GlobeToggle.jsx'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 // forwardRef lets App.jsx call map methods (e.g. flyTo) via a ref
@@ -12,6 +13,7 @@ const Map = forwardRef(function Map(props, ref) {
   const [coords, setCoords]   = useState(null)
   const [basemap, setBasemap] = useState('satellite')
   const [bearing, setBearing] = useState(0)   // map rotation in degrees
+  const [isGlobe, setIsGlobe] = useState(false)
 
   // Visibility settings controlled by the gear panel
   const [mapSettings, setMapSettings] = useState({
@@ -90,6 +92,21 @@ const Map = forwardRef(function Map(props, ref) {
     setMapSettings((prev) => ({ ...prev, [key]: value }))
   }
 
+  // Toggle between 2D (mercator) and 3D (globe) projection
+  // MapLibre v5 requires an object { type } — strings alone are ignored
+  function handleToggleGlobe() {
+    if (!map.current) return
+    const next = !isGlobe
+    map.current.setProjection({ type: next ? 'globe' : 'mercator' })
+    // Zoom out enough to see the globe sphere
+    if (next) {
+      map.current.flyTo({ zoom: 2, duration: 1200 })
+    } else {
+      map.current.flyTo({ zoom: 5, center: [2.2137, 46.2276], duration: 1200 })
+    }
+    setIsGlobe(next)
+  }
+
   return (
     // hide-scale class toggles the MapLibre scale control via CSS
     <div className={`map-wrapper${mapSettings.scale ? '' : ' hide-scale'}`}>
@@ -97,6 +114,7 @@ const Map = forwardRef(function Map(props, ref) {
 
       <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
       <MapSettings settings={mapSettings} onChange={handleSettingChange} />
+      <GlobeToggle isGlobe={isGlobe} onToggle={handleToggleGlobe} />
 
       {/* North arrow — top-left, rotates with map, click to reset north */}
       {mapSettings.northArrow && (

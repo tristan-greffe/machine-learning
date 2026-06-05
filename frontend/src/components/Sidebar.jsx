@@ -16,11 +16,10 @@ const MODELS = [
   }
 ]
 
-// Slim icon-only sidebar — clicking an icon toggles its floating panel
-function Sidebar({ openPanels, onTogglePanel }) {
+// Slim icon-only sidebar — clicking an icon toggles the side panel
+function Sidebar({ activePanel, onTogglePanel }) {
   return (
     <aside className="sidebar">
-      {/* Model icon buttons */}
       <nav className="sidebar-nav">
         {MODELS.map((model) => {
           const Icon = model.icon
@@ -29,7 +28,7 @@ function Sidebar({ openPanels, onTogglePanel }) {
               key={model.id}
               className={[
                 'sidebar-icon-btn',
-                openPanels.includes(model.id) ? 'active' : '',
+                activePanel === model.id ? 'active' : '',
                 model.disabled ? 'disabled' : ''
               ].join(' ')}
               onClick={() => !model.disabled && onTogglePanel(model.id)}
