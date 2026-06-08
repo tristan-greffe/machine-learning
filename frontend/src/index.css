@@ -340,6 +340,13 @@ html, body, #root {
 .map-container {
   width: 100%;
   height: 100%;
+  background: #fafafa;   /* globe mode: background behind the sphere */
+}
+
+/* Canvas inherits the same background so no white flash */
+.maplibregl-canvas-container,
+.maplibregl-canvas {
+  background: #fafafa;
 }
 
 /* ── Floating panel (kept for reference) ─────────────────── */

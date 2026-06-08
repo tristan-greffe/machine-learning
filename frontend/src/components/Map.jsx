@@ -44,7 +44,11 @@ const Map = forwardRef(function Map(props, ref) {
             attribution: 'Tiles © Esri'
           }
         },
-        layers: [{ id: 'basemap-layer', type: 'raster', source: 'basemap' }]
+        layers: [
+          // Background behind the globe (visible in 3D globe mode)
+          { id: 'background', type: 'background', paint: { 'background-color': '#fafafa' } },
+          { id: 'basemap-layer', type: 'raster', source: 'basemap' }
+        ]
       },
       center: [2.2137, 46.2276],
       zoom: 5,
