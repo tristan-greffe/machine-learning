@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 270" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect width="1040" height="270" fill="#f8fafc"/>
+  <text x="520" y="32" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">VGG-16 — 2014</text>
+  <text x="520" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">Uniquement des filtres 3×3, empilés en profondeur. Le nombre de canaux double à chaque bloc.</text>
+
+  <g font-size="11">
+    <!-- input -->
+    <rect x="16" y="80" width="96" height="96" rx="8" fill="#fff" stroke="#64748b" stroke-width="2"/>
+    <text x="64" y="106" text-anchor="middle" font-weight="700" fill="#475569">Entrée</text>
+    <text x="64" y="130" text-anchor="middle" fill="#64748b">224×224×3</text>
+
+    <!-- block 1 -->
+    <rect x="132" y="80" width="96" height="96" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="180" y="104" text-anchor="middle" font-weight="700" fill="#0e7490">Conv ×2</text>
+    <text x="180" y="126" text-anchor="middle" fill="#64748b">64 canaux</text>
+    <text x="180" y="156" text-anchor="middle" font-size="10" fill="#059669">+ pool ↓</text>
+    <!-- block 2 -->
+    <rect x="248" y="80" width="96" height="96" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="296" y="104" text-anchor="middle" font-weight="700" fill="#0e7490">Conv ×2</text>
+    <text x="296" y="126" text-anchor="middle" fill="#64748b">128 canaux</text>
+    <text x="296" y="156" text-anchor="middle" font-size="10" fill="#059669">+ pool ↓</text>
+    <!-- block 3 -->
+    <rect x="364" y="80" width="96" height="96" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="412" y="104" text-anchor="middle" font-weight="700" fill="#0e7490">Conv ×3</text>
+    <text x="412" y="126" text-anchor="middle" fill="#64748b">256 canaux</text>
+    <text x="412" y="156" text-anchor="middle" font-size="10" fill="#059669">+ pool ↓</text>
+    <!-- block 4 -->
+    <rect x="480" y="80" width="96" height="96" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="528" y="104" text-anchor="middle" font-weight="700" fill="#0e7490">Conv ×3</text>
+    <text x="528" y="126" text-anchor="middle" fill="#64748b">512 canaux</text>
+    <text x="528" y="156" text-anchor="middle" font-size="10" fill="#059669">+ pool ↓</text>
+    <!-- block 5 -->
+    <rect x="596" y="80" width="96" height="96" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="644" y="104" text-anchor="middle" font-weight="700" fill="#0e7490">Conv ×3</text>
+    <text x="644" y="126" text-anchor="middle" fill="#64748b">512 canaux</text>
+    <text x="644" y="156" text-anchor="middle" font-size="10" fill="#059669">+ pool ↓</text>
+
+    <!-- FC 1 -->
+    <rect x="712" y="80" width="96" height="96" rx="8" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+    <text x="760" y="106" text-anchor="middle" font-weight="700" fill="#4f46e5">Dense</text>
+    <text x="760" y="130" text-anchor="middle" fill="#64748b">4096</text>
+    <!-- FC 2 -->
+    <rect x="828" y="80" width="96" height="96" rx="8" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+    <text x="876" y="106" text-anchor="middle" font-weight="700" fill="#4f46e5">Dense</text>
+    <text x="876" y="130" text-anchor="middle" fill="#64748b">4096</text>
+    <!-- output -->
+    <rect x="944" y="80" width="80" height="96" rx="8" fill="#fff" stroke="#047857" stroke-width="2"/>
+    <text x="984" y="106" text-anchor="middle" font-weight="700" fill="#047857">Softmax</text>
+    <text x="984" y="130" text-anchor="middle" fill="#64748b">1000</text>
+  </g>
+
+  <g stroke="#94a3b8" stroke-width="1.6">
+    <line x1="112" y1="128" x2="132" y2="128" marker-end="url(#aV)"/>
+    <line x1="228" y1="128" x2="248" y2="128" marker-end="url(#aV)"/>
+    <line x1="344" y1="128" x2="364" y2="128" marker-end="url(#aV)"/>
+    <line x1="460" y1="128" x2="480" y2="128" marker-end="url(#aV)"/>
+    <line x1="576" y1="128" x2="596" y2="128" marker-end="url(#aV)"/>
+    <line x1="692" y1="128" x2="712" y2="128" marker-end="url(#aV)"/>
+    <line x1="808" y1="128" x2="828" y2="128" marker-end="url(#aV)"/>
+    <line x1="924" y1="128" x2="944" y2="128" marker-end="url(#aV)"/>
+  </g>
+
+  <text x="520" y="228" text-anchor="middle" font-size="11.5" fill="#475569">
+    Idée clé : deux conv 3×3 empilées « voient » autant qu'une 5×5, avec moins de paramètres et une non-linéarité de plus.
+  </text>
+  <text x="520" y="248" text-anchor="middle" font-size="11" fill="#94a3b8">~138 M paramètres — surtout dans les couches denses.</text>
+</svg>

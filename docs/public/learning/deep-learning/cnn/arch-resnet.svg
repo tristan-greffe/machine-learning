@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 340" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="aRskip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <rect width="1040" height="340" fill="#f8fafc"/>
+  <text x="520" y="32" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">ResNet — 2015 : le bloc résiduel</text>
+  <text x="520" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">Une « autoroute » (skip connection) additionne l'entrée à la sortie du bloc. Empilable jusqu'à 152 couches.</text>
+
+  <!-- main path -->
+  <g font-size="11.5">
+    <!-- x input -->
+    <circle cx="120" cy="170" r="26" fill="#fff" stroke="#64748b" stroke-width="2"/>
+    <text x="120" y="166" text-anchor="middle" font-weight="700" fill="#475569">x</text>
+    <text x="120" y="182" text-anchor="middle" font-size="9.5" fill="#64748b">entrée</text>
+
+    <!-- conv1 -->
+    <rect x="220" y="140" width="120" height="60" rx="8" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+    <text x="280" y="166" text-anchor="middle" font-weight="700" fill="#0e7490">Conv 3×3</text>
+    <text x="280" y="184" text-anchor="middle" font-size="10" fill="#64748b">+ ReLU</text>
+
+    <!-- conv2 -->
+    <rect x="380" y="140" width="120" height="60" rx="8" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+    <text x="440" y="170" text-anchor="middle" font-weight="700" fill="#0e7490">Conv 3×3</text>
+
+    <!-- add -->
+    <circle cx="600" cy="170" r="26" fill="#fff" stroke="#ea580c" stroke-width="2.5"/>
+    <text x="600" y="178" text-anchor="middle" font-size="22" font-weight="700" fill="#ea580c">+</text>
+
+    <!-- relu out -->
+    <rect x="700" y="140" width="120" height="60" rx="8" fill="#fff" stroke="#ea580c" stroke-width="2"/>
+    <text x="760" y="175" text-anchor="middle" font-weight="700" fill="#c2410c">ReLU</text>
+
+    <!-- output -->
+    <circle cx="920" cy="170" r="26" fill="#fff" stroke="#047857" stroke-width="2"/>
+    <text x="920" y="166" text-anchor="middle" font-weight="700" fill="#047857">y</text>
+    <text x="920" y="182" text-anchor="middle" font-size="9.5" fill="#64748b">sortie</text>
+  </g>
+
+  <!-- main arrows -->
+  <g stroke="#94a3b8" stroke-width="1.8">
+    <line x1="146" y1="170" x2="220" y2="170" marker-end="url(#aR)"/>
+    <line x1="340" y1="170" x2="380" y2="170" marker-end="url(#aR)"/>
+    <line x1="500" y1="170" x2="574" y2="170" marker-end="url(#aR)"/>
+    <line x1="626" y1="170" x2="700" y2="170" marker-end="url(#aR)"/>
+    <line x1="820" y1="170" x2="894" y2="170" marker-end="url(#aR)"/>
+  </g>
+
+  <!-- skip connection (curved over the top) -->
+  <path d="M120,144 C120,80 600,80 600,144" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#aRskip)"/>
+  <text x="360" y="78" text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c">skip connection : on recopie x tel quel</text>
+
+  <!-- formula -->
+  <text x="600" y="240" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">sortie = ReLU( F(x) + x )</text>
+  <text x="600" y="262" text-anchor="middle" font-size="11.5" fill="#475569">F(x) = ce que les deux convolutions apprennent (le « résidu »)</text>
+
+  <!-- note -->
+  <g>
+    <rect x="160" y="284" width="720" height="44" rx="9" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="520" y="305" text-anchor="middle" font-size="11.5" fill="#9a3412">Pourquoi ça change tout : le gradient passe directement par la skip connection.</text>
+    <text x="520" y="322" text-anchor="middle" font-size="11.5" fill="#9a3412">Empiler 50 à 152 couches devient entraînable, là où un réseau « plat » se dégradait.</text>
+  </g>
+</svg>

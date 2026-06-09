@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="aRe" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect width="820" height="320" fill="#f8fafc"/>
+  <text x="410" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">ReLU — la non-linéarité</text>
+  <text x="410" y="55" text-anchor="middle" font-size="13" fill="#64748b">Remet à zéro tout ce qui est négatif, laisse passer le positif tel quel.</text>
+
+  <!-- Left: function plot -->
+  <text x="180" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#ea580c">f(x) = max(0, x)</text>
+  <!-- axes -->
+  <line x1="60" y1="270" x2="300" y2="270" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#aRe)"/>
+  <line x1="180" y1="285" x2="180" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#aRe)"/>
+  <text x="305" y="274" font-size="11" fill="#64748b">x</text>
+  <text x="168" y="116" font-size="11" fill="#64748b">f(x)</text>
+  <!-- relu curve: flat then diagonal -->
+  <polyline points="70,270 180,270 280,170" fill="none" stroke="#ea580c" stroke-width="3"/>
+  <text x="110" y="262" font-size="10" fill="#9a3412">= 0</text>
+  <text x="238" y="205" font-size="10" fill="#9a3412">= x</text>
+
+  <!-- Right: before -> after example -->
+  <text x="600" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Sur une feature map</text>
+
+  <!-- before grid 3x3 -->
+  <text x="500" y="120" text-anchor="middle" font-size="11" fill="#64748b">avant</text>
+  <g font-size="12" text-anchor="middle">
+    <rect x="450" y="130" width="34" height="34" fill="#dbeafe" stroke="#fff" stroke-width="2"/><text x="467" y="152" fill="#1e40af">-2</text>
+    <rect x="484" y="130" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="501" y="152" fill="#b91c1c">5</text>
+    <rect x="518" y="130" width="34" height="34" fill="#dbeafe" stroke="#fff" stroke-width="2"/><text x="535" y="152" fill="#1e40af">-1</text>
+    <rect x="450" y="164" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="467" y="186" fill="#b91c1c">3</text>
+    <rect x="484" y="164" width="34" height="34" fill="#dbeafe" stroke="#fff" stroke-width="2"/><text x="501" y="186" fill="#1e40af">-4</text>
+    <rect x="518" y="164" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="535" y="186" fill="#b91c1c">1</text>
+    <rect x="450" y="198" width="34" height="34" fill="#dbeafe" stroke="#fff" stroke-width="2"/><text x="467" y="220" fill="#1e40af">-3</text>
+    <rect x="484" y="198" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="501" y="220" fill="#b91c1c">2</text>
+    <rect x="518" y="198" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="535" y="220" fill="#b91c1c">6</text>
+  </g>
+
+  <!-- arrow -->
+  <line x1="566" y1="181" x2="606" y2="181" stroke="#ea580c" stroke-width="2.5" marker-end="url(#aRe)"/>
+  <text x="586" y="172" text-anchor="middle" font-size="10" fill="#ea580c">ReLU</text>
+
+  <!-- after grid 3x3 -->
+  <text x="690" y="120" text-anchor="middle" font-size="11" fill="#64748b">après</text>
+  <g font-size="12" text-anchor="middle">
+    <rect x="640" y="130" width="34" height="34" fill="#f1f5f9" stroke="#fff" stroke-width="2"/><text x="657" y="152" fill="#94a3b8">0</text>
+    <rect x="674" y="130" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="691" y="152" fill="#b91c1c">5</text>
+    <rect x="708" y="130" width="34" height="34" fill="#f1f5f9" stroke="#fff" stroke-width="2"/><text x="725" y="152" fill="#94a3b8">0</text>
+    <rect x="640" y="164" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="657" y="186" fill="#b91c1c">3</text>
+    <rect x="674" y="164" width="34" height="34" fill="#f1f5f9" stroke="#fff" stroke-width="2"/><text x="691" y="186" fill="#94a3b8">0</text>
+    <rect x="708" y="164" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="725" y="186" fill="#b91c1c">1</text>
+    <rect x="640" y="198" width="34" height="34" fill="#f1f5f9" stroke="#fff" stroke-width="2"/><text x="657" y="220" fill="#94a3b8">0</text>
+    <rect x="674" y="198" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="691" y="220" fill="#b91c1c">2</text>
+    <rect x="708" y="198" width="34" height="34" fill="#fee2e2" stroke="#fff" stroke-width="2"/><text x="725" y="220" fill="#b91c1c">6</text>
+  </g>
+
+  <text x="410" y="296" text-anchor="middle" font-size="11.5" fill="#475569">Sans cette non-linéarité, empiler des couches reviendrait à une seule transformation linéaire — le réseau n'apprendrait rien de complexe.</text>
+</svg>
