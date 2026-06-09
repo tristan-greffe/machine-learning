@@ -7,36 +7,34 @@ import SidePanel from './components/SidePanel.jsx'
 function App() {
   const mapRef = useRef(null)
 
-  // Single active panel id, or null when closed
   const [activePanel, setActivePanel] = useState(null)
+  const [hasShapes, setHasShapes]     = useState(false)
 
   function handleTogglePanel(id) {
     setActivePanel((prev) => (prev === id ? null : id))
   }
 
-  // Called by TopBar when user selects an address
   function handleFlyTo(center) {
     mapRef.current?.flyTo(center)
   }
 
+  function handleClear() {
+    mapRef.current?.clearShapes()
+  }
+
   return (
     <div className="app">
-      {/* Top bar — full width, above everything */}
-      <TopBar onFlyTo={handleFlyTo} />
+      <TopBar onFlyTo={handleFlyTo} hasShapes={hasShapes} onClear={handleClear} />
 
-      {/* Body: sidebar | side-panel (optional) | map */}
       <div className="app-body">
         <Sidebar activePanel={activePanel} onTogglePanel={handleTogglePanel} />
 
         {activePanel && (
-          <SidePanel
-            modelId={activePanel}
-            onClose={() => setActivePanel(null)}
-          />
+          <SidePanel modelId={activePanel} onClose={() => setActivePanel(null)} />
         )}
 
         <div className="map-area">
-          <Map ref={mapRef} />
+          <Map ref={mapRef} onShapesChange={setHasShapes} />
         </div>
       </div>
     </div>

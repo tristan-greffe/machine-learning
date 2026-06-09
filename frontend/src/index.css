@@ -618,10 +618,79 @@ html, body, #root {
   display: block;
 }
 
-/* ── Map settings button — below basemap switcher ────────── */
-.map-settings {
+/* ── Draw toggle (ruler) — between basemap and settings ──── */
+.draw-toggle-wrap {
   position: absolute;
   top: 140px;   /* basemap top (100px) + button (30px) + gap (10px) */
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;   /* tool buttons grow to the LEFT of the ruler */
+  align-items: center;
+  gap: 4px;
+}
+
+.draw-toggle-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.draw-toggle-btn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--brand);
+}
+
+.draw-toggle-btn.active {
+  background: var(--bg-btn-active);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.draw-toggle-tooltip {
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e293b;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 20;
+}
+
+.draw-toggle-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #1e293b;
+}
+
+.draw-toggle-wrap:hover .draw-toggle-tooltip {
+  opacity: 1;
+}
+
+/* ── Map settings button — below draw toggle ─────────────── */
+.map-settings {
+  position: absolute;
+  top: 180px;   /* draw-toggle top (140px) + button (30px) + gap (10px) */
   right: 10px;
   z-index: 10;
 }
@@ -773,7 +842,7 @@ html, body, #root {
 /* ── Globe toggle — below map settings ───────────────────── */
 .globe-toggle-wrap {
   position: absolute;
-  top: 180px;   /* map-settings top (140px) + button (30px) + gap (10px) */
+  top: 220px;   /* map-settings top (180px) + button (30px) + gap (10px) */
   right: 10px;
   z-index: 10;
 }
@@ -835,4 +904,104 @@ html, body, #root {
 
 .globe-toggle-wrap:hover .globe-tooltip {
   opacity: 1;
+}
+
+/* ── Draw toolbar — inline to the left of the ruler button ── */
+.draw-toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.draw-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.draw-btn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--brand);
+  border-color: var(--brand-light);
+}
+
+.draw-btn.active {
+  background: var(--bg-btn-active);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+/* Tooltip wrapper — enables absolute positioning of the tooltip */
+.draw-btn-wrap {
+  position: relative;
+}
+
+/* Tooltip above the button — same dark style as other map controls */
+.draw-btn-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 30;
+  text-align: center;
+}
+
+/* Arrow pointing down */
+.draw-btn-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1e293b;
+}
+
+.draw-btn-hint {
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+.draw-btn-wrap:hover .draw-btn-tooltip {
+  opacity: 1;
+}
+
+/* ── Topbar clear button — appears when drawn shapes exist ── */
+.topbar-clear {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.topbar-clear:hover {
+  background: #fecaca;
 }

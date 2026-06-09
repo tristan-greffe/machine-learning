@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
-import { MapPin } from 'lucide-react'
+import { MapPin, Trash2 } from 'lucide-react'
 
-function TopBar({ onFlyTo }) {
+function TopBar({ onFlyTo, hasShapes, onClear }) {
   const [query, setQuery]     = useState('')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
@@ -24,16 +24,13 @@ function TopBar({ onFlyTo }) {
   }
 
   function handleSelect(result) {
-    // Fly the map to the selected location
     onFlyTo([parseFloat(result.lon), parseFloat(result.lat)])
-    // Show only the first part of the address in the input
     setQuery(result.display_name.split(',')[0])
     setResults([])
     inputRef.current?.blur()
   }
 
   function handleBlur() {
-    // Delay so click on result fires before clearing
     setTimeout(() => setResults([]), 150)
   }
 
@@ -44,6 +41,14 @@ function TopBar({ onFlyTo }) {
         <img src="/logo.svg" alt="GeoML" width="22" height="25" />
         <span className="topbar-title">GeoML</span>
       </div>
+
+      {/* Clear button — appears only when drawn shapes exist */}
+      {hasShapes && (
+        <button className="topbar-clear" onClick={onClear}>
+          <Trash2 size={13} />
+          <span>Clear</span>
+        </button>
+      )}
 
       {/* Address search — right side */}
       <div className="topbar-search-wrap">
@@ -60,7 +65,6 @@ function TopBar({ onFlyTo }) {
           {loading && <span className="search-spinner" />}
         </form>
 
-        {/* Results dropdown */}
         {results.length > 0 && (
           <ul className="search-results">
             {results.map((r) => (
