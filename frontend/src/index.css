@@ -24,6 +24,7 @@
 html, body, #root {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   font-family: system-ui, 'Segoe UI', sans-serif;
   color: var(--text);
 }
@@ -160,6 +161,80 @@ html, body, #root {
   color: var(--brand);
   flex-shrink: 0;
   margin-top: 2px;
+}
+
+/* Search row: form + locate button side by side */
+.topbar-search-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Locate (my location) button */
+.locate-btn-wrap {
+  position: relative;
+}
+
+.locate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--bg-btn);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.locate-btn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--brand);
+  border-color: var(--brand-light);
+}
+
+.locate-btn.locating {
+  color: var(--brand);
+  border-color: var(--brand-light);
+}
+
+.locate-btn:disabled {
+  cursor: default;
+}
+
+/* Tooltip below locate button */
+.locate-btn-wrap:hover .locate-tooltip {
+  opacity: 1;
+}
+
+.locate-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 60;
+}
+
+.locate-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-bottom-color: #1e293b;
 }
 
 /* ── Sidebar: slim white column, outside the map ─────────── */

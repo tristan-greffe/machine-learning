@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react'
-import { MapPin, Trash2 } from 'lucide-react'
+import { MapPin, Trash2, LocateFixed } from 'lucide-react'
 
 function TopBar({ onFlyTo, hasShapes, onClear }) {
-  const [query, setQuery]     = useState('')
-  const [results, setResults] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [query, setQuery]       = useState('')
+  const [results, setResults]   = useState([])
+  const [loading, setLoading]   = useState(false)
+  const [locating, setLocating] = useState(false)
   const inputRef = useRef(null)
 
   // Search via Nominatim (OpenStreetMap geocoder — free, no API key)
@@ -34,6 +35,18 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
     setTimeout(() => setResults([]), 150)
   }
 
+  function handleLocate() {
+    if (!navigator.geolocation) return
+    setLocating(true)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        onFlyTo([pos.coords.longitude, pos.coords.latitude])
+        setLocating(false)
+      },
+      () => setLocating(false)
+    )
+  }
+
   return (
     <header className="topbar">
       {/* Brand */}
@@ -50,20 +63,37 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
         </button>
       )}
 
-      {/* Address search — right side */}
+      {/* Address search + locate button — right side */}
       <div className="topbar-search-wrap">
-        <form className="topbar-search" onSubmit={handleSearch}>
-          <MapPin size={14} className="search-pin-icon" />
-          <input
-            ref={inputRef}
-            className="search-input"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onBlur={handleBlur}
-            placeholder="Search address…"
-          />
-          {loading && <span className="search-spinner" />}
-        </form>
+        <div className="topbar-search-row">
+          <form className="topbar-search" onSubmit={handleSearch}>
+            <MapPin size={14} className="search-pin-icon" />
+            <input
+              ref={inputRef}
+              className="search-input"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onBlur={handleBlur}
+              placeholder="Search address…"
+            />
+            {loading && <span className="search-spinner" />}
+          </form>
+
+          {/* My location button */}
+          <div className="locate-btn-wrap">
+            <button
+              className={`locate-btn${locating ? ' locating' : ''}`}
+              type="button"
+              onClick={handleLocate}
+              disabled={locating}
+            >
+              {locating
+                ? <span className="search-spinner" />
+                : <LocateFixed size={14} strokeWidth={1.5} />}
+            </button>
+            <span className="locate-tooltip">My location</span>
+          </div>
+        </div>
 
         {results.length > 0 && (
           <ul className="search-results">
