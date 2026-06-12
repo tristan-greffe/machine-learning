@@ -1,4 +1,4 @@
-import { TreePine, Building2 } from 'lucide-react'
+import { TreePine, Building2, Waves } from 'lucide-react'
 
 const MODELS = [
   {
@@ -13,6 +13,13 @@ const MODELS = [
     label: 'Building Detection',
     description: 'Outlines buildings — count, area, type.',
     disabled: true
+  },
+  {
+    id: 'pools',
+    icon: Waves,
+    label: 'Pool Detection',
+    description: 'Detects swimming pools from aerial imagery.',
+    disabled: true
   }
 ]
 
@@ -24,18 +31,21 @@ function Sidebar({ activePanel, onTogglePanel }) {
         {MODELS.map((model) => {
           const Icon = model.icon
           return (
-            <button
-              key={model.id}
-              className={[
-                'sidebar-icon-btn',
-                activePanel === model.id ? 'active' : '',
-                model.disabled ? 'disabled' : ''
-              ].join(' ')}
-              onClick={() => !model.disabled && onTogglePanel(model.id)}
-              title={model.disabled ? `${model.label} — coming soon` : model.label}
-            >
-              <Icon size={20} strokeWidth={1.5} />
-            </button>
+            <div key={model.id} className="sidebar-btn-wrap">
+              <button
+                className={[
+                  'sidebar-icon-btn',
+                  activePanel === model.id ? 'active' : '',
+                  model.disabled ? 'disabled' : ''
+                ].join(' ')}
+                onClick={() => !model.disabled && onTogglePanel(model.id)}
+              >
+                <Icon size={20} strokeWidth={1.5} />
+              </button>
+              <span className="sidebar-tooltip">
+                {model.disabled ? `${model.label} — coming soon` : model.label}
+              </span>
+            </div>
           )
         })}
       </nav>
