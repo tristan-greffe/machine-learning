@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" font-family="system-ui, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1836"/>
+      <stop offset="1" stop-color="#2e2a5e"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b3770"/>
+      <stop offset="1" stop-color="#211e44"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="400" fill="url(#bg)"/>
+
+  <!-- subtle grid -->
+  <g stroke="#ffffff" stroke-width="1" opacity="0.04">
+    <line x1="0" y1="100" x2="1600" y2="100"/>
+    <line x1="0" y1="200" x2="1600" y2="200"/>
+    <line x1="0" y1="300" x2="1600" y2="300"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="1200" y1="0" x2="1200" y2="400"/>
+  </g>
+
+  <!-- ===== Left: logo + wordmark ===== -->
+  <g transform="translate(120, 150) scale(3.2)">
+    <polygon points="2,35 20,35 28,30 10,30" fill="#1a1836"/>
+    <polygon points="2,29 20,29 28,24 10,24" fill="#2e2a5e"/>
+    <polygon points="2,23 20,23 28,18 10,18" fill="#474379"/>
+    <polygon points="2,17 20,17 28,12 10,12" fill="#7673b0"/>
+    <polygon points="2,11 20,11 28,6 10,6" fill="#A6A3E2"/>
+    <circle cx="12" cy="8" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="18" cy="8" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="24" cy="7" r="1.5" fill="white" opacity="0.9"/>
+    <line x1="12" y1="8" x2="18" y2="8" stroke="white" stroke-width="0.8" opacity="0.5"/>
+    <line x1="18" y1="8" x2="24" y2="7" stroke="white" stroke-width="0.8" opacity="0.5"/>
+  </g>
+
+  <text x="245" y="200" font-size="76" font-weight="800" fill="#ffffff" letter-spacing="1">GeoML</text>
+  <text x="247" y="246" font-size="25" font-weight="500" fill="#A6A3E2">Building &amp; pool detection · YOLO · ONNX</text>
+  <text x="247" y="280" font-size="18" font-weight="400" fill="#8b88c2">Object detection on aerial imagery, running in your browser</text>
+
+  <!-- ===== Right: orthophoto mock with detections ===== -->
+  <g transform="translate(1090, 70)">
+    <rect x="0" y="0" width="400" height="260" rx="10" fill="url(#sky)" stroke="#A6A3E2" stroke-width="1.5" opacity="0.95"/>
+
+    <!-- mock ground: blocks + greenery -->
+    <rect x="0" y="0" width="400" height="260" rx="10" fill="#2a2752"/>
+    <rect x="24" y="30"  width="70" height="55" rx="3" fill="#5c5890"/>
+    <rect x="120" y="22" width="90" height="60" rx="3" fill="#6b6799"/>
+    <rect x="250" y="40" width="64" height="50" rx="3" fill="#5c5890"/>
+    <rect x="40" y="150" width="80" height="60" rx="3" fill="#6b6799"/>
+    <rect x="300" y="160" width="70" height="64" rx="3" fill="#5c5890"/>
+    <ellipse cx="200" cy="170" rx="26" ry="18" fill="#2563eb" opacity="0.85"/>
+    <ellipse cx="150" cy="110" rx="18" ry="13" fill="#2563eb" opacity="0.85"/>
+    <path d="M0 110 H400 M210 0 V260" stroke="#1d1b3a" stroke-width="6" opacity="0.7"/>
+
+    <!-- detection boxes: buildings (orange) -->
+    <g fill="none" stroke="#f97316" stroke-width="3">
+      <rect x="20" y="26"  width="78" height="63" rx="2"/>
+      <rect x="116" y="18" width="98" height="68" rx="2"/>
+      <rect x="246" y="36" width="72" height="58" rx="2"/>
+      <rect x="36" y="146" width="88" height="68" rx="2"/>
+      <rect x="296" y="156" width="78" height="72" rx="2"/>
+    </g>
+    <!-- detection boxes: pools (cyan) -->
+    <g fill="none" stroke="#0ea5e9" stroke-width="3">
+      <rect x="171" y="150" width="58" height="40" rx="2"/>
+      <rect x="129" y="95"  width="42" height="30" rx="2"/>
+    </g>
+    <!-- centre markers -->
+    <circle cx="59" cy="57" r="4" fill="#f97316" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="200" cy="170" r="4" fill="#0ea5e9" stroke="#fff" stroke-width="1.5"/>
+
+    <!-- legend -->
+    <rect x="14" y="232" width="12" height="12" rx="2" fill="none" stroke="#f97316" stroke-width="2.5"/>
+    <text x="32" y="242" font-size="13" fill="#e6e4ff">Building</text>
+    <rect x="120" y="232" width="12" height="12" rx="2" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
+    <text x="138" y="242" font-size="13" fill="#e6e4ff">Pool</text>
+  </g>
+</svg>
