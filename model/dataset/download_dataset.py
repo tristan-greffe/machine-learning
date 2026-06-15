@@ -1,6 +1,14 @@
 import os
 from pathlib import Path
 
+# ============================================================
+# Constants / Configuration
+# ============================================================
+
+DATASET_DIR = "./data"
+IMAGE_SIZE = 512
+MAX_DOWNLOADS = 1000
+
 
 # ============================================================
 # Utility Functions
