@@ -6,6 +6,8 @@ import MapSettings from './MapSettings.jsx'
 import GlobeToggle from './GlobeToggle.jsx'
 import DrawToolbar from './DrawToolbar.jsx'
 import DrawToggle from './DrawToggle.jsx'
+import CatalogToggle from './CatalogToggle.jsx'
+import CatalogPanel, { CATALOG_LAYERS } from './CatalogPanel.jsx'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] }
@@ -48,6 +50,10 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
   const [drawMode, setDrawModeState]            = useState(null)  // 'polygon' | 'circle' | null
   const [drawnFeatures, setDrawnFeatures]       = useState([])
   const [pendingPoints, setPendingPointsState]  = useState([])
+
+  // Catalog state
+  const [showCatalog, setShowCatalog]             = useState(false)
+  const [activeCatalogLayers, setActiveCatalogLayers] = useState([])
 
   // Refs so event handlers always read fresh values (no stale closures)
   const drawModeRef      = useRef(null)
@@ -245,6 +251,42 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
     setDrawMode(mode)
   }
 
+  async function handleCatalogToggleLayer(id) {
+    const m = map.current
+    if (!m) return
+    const layer = CATALOG_LAYERS.find((l) => l.id === id)
+    if (!layer) return
+
+    const sourceId = `catalog-${id}`
+    const layerId  = `catalog-${id}-layer`
+    const isActive = activeCatalogLayers.includes(id)
+
+    if (!isActive) {
+      let tiles = layer.tiles
+      if (id === 'rain') {
+        try {
+          const res  = await fetch('https://api.rainviewer.com/public/weather-maps.json')
+          const data = await res.json()
+          const ts   = data.radar.past.at(-1).time
+          tiles = [`https://tilecache.rainviewer.com/v2/radar/${ts}/256/{z}/{x}/{y}/2/1_1.png`]
+        } catch {
+          tiles = ['https://tilecache.rainviewer.com/v2/coverage/0/256/{z}/{x}/{y}/2/1_1.png']
+        }
+      }
+      if (!m.getSource(sourceId)) {
+        m.addSource(sourceId, { type: 'raster', tiles, tileSize: 256, attribution: layer.attribution })
+        m.addLayer({ id: layerId, type: 'raster', source: sourceId, paint: { 'raster-opacity': 0.8 } })
+      }
+    } else {
+      if (m.getLayer(layerId))  m.removeLayer(layerId)
+      if (m.getSource(sourceId)) m.removeSource(sourceId)
+    }
+
+    setActiveCatalogLayers((prev) =>
+      prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]
+    )
+  }
+
   function handleToggleDrawToolbar() {
     const next = !showDrawToolbar
     if (!next) {
@@ -269,6 +311,16 @@ const Map = forwardRef(function Map({ onShapesChange }, ref) {
       />
       <MapSettings settings={mapSettings} onChange={handleSettingChange} />
       <GlobeToggle isGlobe={isGlobe} onToggle={handleToggleGlobe} />
+      <CatalogToggle active={showCatalog} onToggle={() => setShowCatalog((v) => !v)} />
+
+      {/* Data catalog — slides in from the right */}
+      {showCatalog && (
+        <CatalogPanel
+          activeLayers={activeCatalogLayers}
+          onToggle={handleCatalogToggleLayer}
+          onClose={() => setShowCatalog(false)}
+        />
+      )}
 
       {/* North arrow — top-left */}
       {mapSettings.northArrow && (
