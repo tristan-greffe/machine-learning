@@ -1,4 +1,5 @@
 import requests
+from model.dataset.config import POOL_ZONES
 
 # ============================================================
 # Constants / Configuration
@@ -31,10 +32,21 @@ def fetch_pool_polygons(bounds, session):
 # Main
 # ============================================================
 
-# 1. Download tiles → mosaic centred on the zone → bounds
+# 1. Compute zone bounds from (latitude, longitude, half_extent_deg)
 # 2. Fetch pool polygons from OSM Overpass (leisure=swimming_pool) for those bounds
-# 3. Convert GPS polygons → pixel bounding boxes
+# 3. For each pool: download mosaic centred on that pool
 # 4. Crop a 640×640 window with jitter and write labels
 def prepare_pools():
     session = requests.Session()
-    pass
+    for name, (latitude, longitude, half) in POOL_ZONES.items():
+        print(f"  zone {name} ({latitude}, {longitude}) half={half}°")
+
+        # Step 1: compute zone bounds from half_extent_deg
+        bounds = (latitude + half, longitude - half, latitude - half, longitude + half)
+
+        # Step 2: fetch pool polygons for those bounds
+        elements = fetch_pool_polygons(bounds, session)
+        print(f"  {len(elements)} pools")
+
+        # Step 3: for each pool → download mosaic centred on that pool
+        # Step 4: crop 640×640 window with jitter and write labels

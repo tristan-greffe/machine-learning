@@ -1,4 +1,6 @@
 import requests
+from model.dataset.config import BUILDING_ZONES
+from model.dataset.utils import download_mosaic
 
 
 # ============================================================
@@ -40,4 +42,20 @@ def fetch_building_polygons(bounds, session):
 # 4. Slide 640×640 windows over the mosaic and write labels
 def prepare_buildings():
     session = requests.Session()
-    pass
+    for name, (latitude, longitude, grid) in BUILDING_ZONES.items():
+        print(f"  zone {name} ({latitude}, {longitude}) grid={grid}")
+
+        # Step 1: download tiles → mosaic + bounds
+        result = download_mosaic(latitude, longitude, grid, session)
+        if result is None:
+            print(f"  tiles unavailable, skipping")
+            continue
+        mosaic, bounds = result
+        print(f"  mosaic {mosaic.size[0]}×{mosaic.size[1]} px")
+
+        # Step 2: fetch building polygons for those bounds
+        features = fetch_building_polygons(bounds, session)
+        print(f"  {len(features)} features")
+
+        # Step 3: convert GPS polygons → pixel bounding boxes
+        # Step 4: slide 640×640 windows over the mosaic and write labels
