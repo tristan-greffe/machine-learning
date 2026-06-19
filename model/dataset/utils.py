@@ -98,3 +98,99 @@ def download_mosaic(latitude, longitude, grid, session):
     north, west = tile_to_latitude_longitude(top_left_x, top_left_y, ZOOM)
     south, east = tile_to_latitude_longitude(top_left_x + grid, top_left_y + grid, ZOOM)
     return mosaic, (north, west, south, east)
+
+
+# ============================================================
+# GPS → pixel conversion
+# ============================================================
+
+# Convert a (longitude, latitude) GPS point to (pixel_x, pixel_y) within the mosaic
+def longitude_latitude_to_pixel(longitude, latitude, bounds, image_width, image_height):
+    north, west, south, east = bounds
+    pixel_x = (longitude - west)  / (east - west)  * image_width
+    pixel_y = (north - latitude) / (north - south) * image_height
+    return pixel_x, pixel_y
+
+
+# Convert a GPS polygon ring [(lon, lat), ...] to a pixel bounding box (x0, y0, x1, y1)
+def polygon_to_pixel_bbox(polygon_points_lon_lat, bounds, image_width, image_height):
+    pixel_xs, pixel_ys = [], []
+    for longitude, latitude in polygon_points_lon_lat:
+        pixel_x, pixel_y = longitude_latitude_to_pixel(longitude, latitude, bounds, image_width, image_height)
+        pixel_xs.append(pixel_x)
+        pixel_ys.append(pixel_y)
+    return min(pixel_xs), min(pixel_ys), max(pixel_xs), max(pixel_ys)
+
+
+# Group polygon rings that share at least one GPS vertex (within tolerance degrees).
+# BD TOPO splits large buildings into multiple features with shared edge vertices —
+# this clusters them so each building gets a single bounding box.
+# Returns a list of lists of ring indices, one group per connected component.
+def group_touching_polygons(rings, tolerance=1e-5):
+    number_of_rings = len(rings)
+    if number_of_rings == 0:
+        return []
+
+    def snap(vertex):
+        return (round(vertex[0] / tolerance) * tolerance,
+                round(vertex[1] / tolerance) * tolerance)
+
+    snapped = [frozenset(snap(vertex) for vertex in ring) for ring in rings]
+    parent = list(range(number_of_rings))
+
+    def find(index):
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a != b:
+            parent[b] = a
+
+    for i in range(number_of_rings):
+        for j in range(i + 1, number_of_rings):
+            if snapped[i] & snapped[j]:
+                union(i, j)
+
+    groups = {}
+    for i in range(number_of_rings):
+        root = find(i)
+        groups.setdefault(root, []).append(i)
+    return list(groups.values())
+
+
+# Merge pixel bounding boxes whose intersection covers at least minimum_overlap
+# of the smaller box area. Adjacent boxes (touching edges, zero intersection) are NOT merged.
+# boxes: list of (class_id, x0, y0, x1, y1). Returns the same format with fewer entries.
+def merge_overlapping_boxes(boxes, minimum_overlap=0.1):
+    changed = True
+    while changed:
+        changed = False
+        used = [False] * len(boxes)
+        result = []
+        for i in range(len(boxes)):
+            if used[i]:
+                continue
+            class_id, x0, y0, x1, y1 = boxes[i]
+            for j in range(i + 1, len(boxes)):
+                if used[j]:
+                    continue
+                _, x0j, y0j, x1j, y1j = boxes[j]
+                intersection_x0, intersection_y0 = max(x0, x0j), max(y0, y0j)
+                intersection_x1, intersection_y1 = min(x1, x1j), min(y1, y1j)
+                if intersection_x0 >= intersection_x1 or intersection_y0 >= intersection_y1:
+                    continue
+                intersection_area = (intersection_x1 - intersection_x0) * (intersection_y1 - intersection_y0)
+                area_i = (x1 - x0) * (y1 - y0)
+                area_j = (x1j - x0j) * (y1j - y0j)
+                if intersection_area / max(min(area_i, area_j), 1) >= minimum_overlap:
+                    x0, y0 = min(x0, x0j), min(y0, y0j)
+                    x1, y1 = max(x1, x1j), max(y1, y1j)
+                    used[j] = True
+                    changed = True
+            result.append((class_id, x0, y0, x1, y1))
+            used[i] = True
+        boxes = result
+    return boxes

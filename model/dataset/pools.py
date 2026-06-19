@@ -1,5 +1,6 @@
 import requests
 from model.dataset.config import POOL_ZONES
+from model.dataset.utils import download_mosaic, polygon_to_pixel_bbox
 
 # ============================================================
 # Constants / Configuration
@@ -7,6 +8,8 @@ from model.dataset.config import POOL_ZONES
 
 # https://wiki.openstreetmap.org/wiki/Overpass_API
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+# 4×4 tiles = 1024px mosaic — enough room to crop a 640×640 window with jitter
+POOL_GRID = 4
 
 
 # ============================================================
@@ -48,5 +51,22 @@ def prepare_pools():
         elements = fetch_pool_polygons(bounds, session)
         print(f"  {len(elements)} pools")
 
-        # Step 3: for each pool → download mosaic centred on that pool
-        # Step 4: crop 640×640 window with jitter and write labels
+        # Step 3: for each pool → download mosaic centred on that pool + pixel bbox
+        for element in elements:
+            geometry_points = element.get("geometry", [])
+            if len(geometry_points) < 3:
+                continue
+            pool_latitude = sum(p["lat"] for p in geometry_points) / len(geometry_points)
+            pool_longitude = sum(p["lon"] for p in geometry_points) / len(geometry_points)
+
+            pool_result = download_mosaic(pool_latitude, pool_longitude, POOL_GRID, session)
+            if pool_result is None:
+                continue
+            pool_mosaic, pool_bounds = pool_result
+            image_width, image_height = pool_mosaic.size
+
+            polygon_lon_lat = [(p["lon"], p["lat"]) for p in geometry_points]
+            x0, y0, x1, y1 = polygon_to_pixel_bbox(polygon_lon_lat, pool_bounds, image_width, image_height)
+            pool_box = (0, x0, y0, x1, y1)
+
+            # Step 4: crop 640×640 window with jitter and write labels

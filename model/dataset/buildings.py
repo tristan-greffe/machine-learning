@@ -1,6 +1,9 @@
 import requests
 from model.dataset.config import BUILDING_ZONES
-from model.dataset.utils import download_mosaic
+from model.dataset.utils import (
+    download_mosaic, polygon_to_pixel_bbox,
+    group_touching_polygons, merge_overlapping_boxes,
+)
 
 
 # ============================================================
@@ -58,4 +61,30 @@ def prepare_buildings():
         print(f"  {len(features)} features")
 
         # Step 3: convert GPS polygons → pixel bounding boxes
+        image_width, image_height = mosaic.size
+        all_rings = []
+        for feature in features:
+            geometry = feature.get("geometry", {})
+            geometry_type = geometry.get("type", "")
+            coordinates = geometry.get("coordinates", [])
+            if geometry_type == "Polygon":
+                raw_rings = [coordinates[0]] if coordinates else []
+            elif geometry_type == "MultiPolygon":
+                raw_rings = [polygon[0] for polygon in coordinates if polygon]
+            else:
+                continue
+            for ring in raw_rings:
+                points = [(c[0], c[1]) for c in ring]
+                if len(points) >= 3:
+                    all_rings.append(points)
+
+        groups = group_touching_polygons(all_rings)
+        boxes = []
+        for group_indices in groups:
+            all_points = [point for index in group_indices for point in all_rings[index]]
+            x0, y0, x1, y1 = polygon_to_pixel_bbox(all_points, bounds, image_width, image_height)
+            boxes.append((0, x0, y0, x1, y1))
+        boxes = merge_overlapping_boxes(boxes)
+        print(f"  {len(boxes)} bounding boxes after grouping/merging")
+
         # Step 4: slide 640×640 windows over the mosaic and write labels
