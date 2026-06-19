@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import BasemapSwitcher, { BASEMAPS } from './BasemapSwitcher.jsx'
-import MapSettings from './MapSettings.jsx'
-import GlobeToggle from './GlobeToggle.jsx'
-import DrawToggle from './DrawToggle.jsx'
-import CatalogToggle from './CatalogToggle.jsx'
+import BasemapSwitcher from './map-controls/BasemapSwitcher.jsx'
+import MapSettings from './map-controls/MapSettings.jsx'
+import GlobeToggle from './map-controls/GlobeToggle.jsx'
+import DrawToggle from './map-controls/DrawToggle.jsx'
+import CatalogToggle from './map-controls/CatalogToggle.jsx'
+import { BASEMAPS, DEFAULT_DISPLAY_SETTINGS, MAP_DEFAULTS } from '../config.js'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] }
@@ -44,7 +45,7 @@ const Map = forwardRef(function Map(
   const [basemap, setBasemapState] = useState('satellite')
   const [bearing, setBearing]   = useState(0)
   const [isGlobe, setIsGlobe]   = useState(false)
-  const [mapSettings, setMapSettings] = useState({ northArrow: true, scale: true, coords: true })
+  const [mapSettings, setMapSettings] = useState(DEFAULT_DISPLAY_SETTINGS)
 
   // Draw state
   const [showDrawToolbar, setShowDrawToolbar]   = useState(false)
@@ -153,8 +154,8 @@ const Map = forwardRef(function Map(
           { id: 'basemap-layer', type: 'raster',     source: 'basemap' }
         ]
       },
-      center: [2.2137, 46.2276],
-      zoom: 5,
+      center: MAP_DEFAULTS.center,
+      zoom: MAP_DEFAULTS.zoom,
       renderWorldCopies: false
     })
     map.current = m
@@ -269,7 +270,7 @@ const Map = forwardRef(function Map(
     if (next) {
       map.current.flyTo({ zoom: 2, duration: 1200 })
     } else {
-      map.current.flyTo({ zoom: 5, center: [2.2137, 46.2276], duration: 1200 })
+      map.current.flyTo({ zoom: MAP_DEFAULTS.zoom, center: MAP_DEFAULTS.center, duration: 1200 })
     }
     setIsGlobe(next)
   }

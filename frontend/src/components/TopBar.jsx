@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'
 import { MapPin, Trash2, LocateFixed } from 'lucide-react'
 
+// Top-of-app content — brand, clear button (when shapes exist),
+// address search and "my location" button. Mounted inside <TopPane>.
 function TopBar({ onFlyTo, hasShapes, onClear }) {
   const [query, setQuery]       = useState('')
   const [results, setResults]   = useState([])
@@ -48,14 +50,12 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
   }
 
   return (
-    <header className="topbar">
-      {/* Brand */}
+    <>
       <div className="topbar-brand">
         <img src="/logo.svg" alt="GeoML" width="22" height="25" />
         <span className="topbar-title">GeoML</span>
       </div>
 
-      {/* Clear button — appears only when drawn shapes exist */}
       {hasShapes && (
         <button className="topbar-clear" onClick={onClear}>
           <Trash2 size={13} />
@@ -63,7 +63,6 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
         </button>
       )}
 
-      {/* Address search + locate button — right side */}
       <div className="topbar-search-wrap">
         <div className="topbar-search-row">
           <form className="topbar-search" onSubmit={handleSearch}>
@@ -79,7 +78,6 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
             {loading && <span className="search-spinner" />}
           </form>
 
-          {/* My location button */}
           <div className="locate-btn-wrap">
             <button
               className={`locate-btn${locating ? ' locating' : ''}`}
@@ -111,7 +109,7 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
           </ul>
         )}
       </div>
-    </header>
+    </>
   )
 }
 

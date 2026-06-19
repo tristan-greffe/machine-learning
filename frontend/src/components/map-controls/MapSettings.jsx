@@ -1,18 +1,12 @@
 import { useState } from 'react'
 import { Settings } from 'lucide-react'
-
-const DISPLAY_OPTIONS = [
-  { key: 'northArrow', label: 'North arrow' },
-  { key: 'scale',      label: 'Scale bar' },
-  { key: 'coords',     label: 'Coordinates' }
-]
+import { DISPLAY_OPTIONS } from '../../config.js'
 
 function MapSettings({ settings, onChange }) {
   const [open, setOpen] = useState(false)
 
   return (
     <div className="map-settings">
-      {/* Gear button — below basemap switcher */}
       <button
         className={`settings-toggle ${open ? 'active' : ''}`}
         onClick={() => setOpen((v) => !v)}
@@ -20,10 +14,8 @@ function MapSettings({ settings, onChange }) {
         <Settings size={18} strokeWidth={1.5} />
       </button>
 
-      {/* Tooltip — hidden when panel is open */}
       {!open && <span className="settings-tooltip">Map settings</span>}
 
-      {/* Settings panel — opens to the left */}
       {open && (
         <div className="settings-panel">
           <p className="settings-panel-title">Display</p>

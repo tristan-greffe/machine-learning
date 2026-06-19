@@ -1,27 +1,6 @@
-import { TreePine, Building2, Waves } from 'lucide-react'
+import { MODELS } from '../config.js'
 
-const MODELS = [
-  {
-    id: 'trees',
-    icon: TreePine,
-    label: 'Tree Detection',
-    description: 'Outlines individual tree crowns — count, area, type.'
-  },
-  {
-    id: 'buildings',
-    icon: Building2,
-    label: 'Building Detection',
-    description: 'Outlines buildings — count, area, type.'
-  },
-  {
-    id: 'pools',
-    icon: Waves,
-    label: 'Pool Detection',
-    description: 'Detects swimming pools from aerial imagery.'
-  }
-]
-
-// Slim icon-only sidebar — clicking an icon toggles the side panel
+// Slim icon-only sidebar — clicking an icon toggles the model panel.
 function Sidebar({ activePanel, onTogglePanel }) {
   return (
     <aside className="sidebar">

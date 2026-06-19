@@ -1,33 +1,6 @@
 import { useState } from 'react'
 import { Layers } from 'lucide-react'
-
-// Available basemaps — tiles + thumbnail (real tile at zoom 5 over France)
-export const BASEMAPS = [
-  {
-    id: 'satellite',
-    label: 'Satellite',
-    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
-    thumbnail: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/11/16'
-  },
-  {
-    id: 'streets',
-    label: 'Streets',
-    tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-    thumbnail: 'https://tile.openstreetmap.org/5/16/11.png'
-  },
-  {
-    id: 'light',
-    label: 'Light',
-    tiles: ['https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'],
-    thumbnail: 'https://a.basemaps.cartocdn.com/light_all/5/16/11.png'
-  },
-  {
-    id: 'dark',
-    label: 'Dark',
-    tiles: ['https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'],
-    thumbnail: 'https://a.basemaps.cartocdn.com/dark_all/5/16/11.png'
-  }
-]
+import { BASEMAPS } from '../../config.js'
 
 function BasemapSwitcher({ current, onSelect }) {
   const [open, setOpen] = useState(false)
@@ -39,7 +12,6 @@ function BasemapSwitcher({ current, onSelect }) {
 
   return (
     <div className="basemap-switcher">
-      {/* Toggle button — positioned below zoom controls */}
       <button
         className={`basemap-toggle ${open ? 'active' : ''}`}
         onClick={() => setOpen((v) => !v)}
@@ -47,14 +19,12 @@ function BasemapSwitcher({ current, onSelect }) {
         <Layers size={18} strokeWidth={1.5} />
       </button>
 
-      {/* Custom tooltip — hidden when panel is open */}
       {!open && (
         <span className="basemap-tooltip">
           Manage basemap layers
         </span>
       )}
 
-      {/* Basemap selection panel */}
       {open && (
         <div className="basemap-panel">
           <p className="basemap-panel-title">Basemap</p>
