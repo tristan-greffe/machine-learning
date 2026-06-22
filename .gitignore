@@ -1,31 +1,46 @@
-# ── Editors
+# Editors
 .vscode/
 .idea/
 
-# ── Environment variables
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
 .env
 .env.*
 
-# ── Claude Code
+# Claude Code
 .claude/
 
-# ── Logs
+# Logs
 logs/
 *.log
 
-# ── Node.js
+# Node.js
 node_modules/
 
-# ── VitePress
+# VitePress
 docs/.vitepress/cache/
 docs/.vitepress/dist/
 
-# ── Python
+# Python
 **/__pycache__/
 *.pyc
 *.pyo
 .venv/
+*.egg-info/
+dist/
+build/
 
-# ── ML model
-model/data/
+# Jupyter
+.ipynb_checkpoints/
+
+# ML — generated datasets, tile cache, training runs, model weights
+model/dataset/buildings/
+model/dataset/pools/
+model/dataset/_tilecache/
+model/runs/
 model/weights/
+*.pt
+*.onnx

@@ -1,12 +1,13 @@
 import argparse
 import sys
 from pathlib import Path
+
+# Add the project root (geo-ml/) to sys.path so `from model.dataset.*` works
+# regardless of the working directory the script is launched from.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from model.dataset.buildings import prepare_buildings
 from model.dataset.pools import prepare_pools
-
-# Add the project root (geo-ml/) to the Python path so imports like
-# `from model.data.yolo_common import ...` work regardless of where the script is launched from.
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 def main():
     # --- Arguments ---
