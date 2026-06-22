@@ -1,8 +1,9 @@
 import requests
-from model.dataset.config import BUILDING_ZONES
+from model.dataset.config import BUILDING_ZONES, DATASET_DIR
 from model.dataset.utils import (
     download_mosaic, polygon_to_pixel_bbox,
     group_touching_polygons, merge_overlapping_boxes,
+    iter_windows, boxes_in_window, YoloDatasetWriter,
 )
 
 
@@ -45,6 +46,8 @@ def fetch_building_polygons(bounds, session):
 # 4. Slide 640×640 windows over the mosaic and write labels
 def prepare_buildings():
     session = requests.Session()
+    dataset_writer = YoloDatasetWriter(DATASET_DIR / "buildings", ["building"])
+
     for name, (latitude, longitude, grid) in BUILDING_ZONES.items():
         print(f"  zone {name} ({latitude}, {longitude}) grid={grid}")
 
@@ -88,3 +91,12 @@ def prepare_buildings():
         print(f"  {len(boxes)} bounding boxes after grouping/merging")
 
         # Step 4: slide 640×640 windows over the mosaic and write labels
+        windows_before = len(dataset_writer)
+        for window_x, window_y in iter_windows(image_width, image_height):
+            crop = mosaic.crop((window_x, window_y,
+                                window_x + 640, window_y + 640))
+            label_lines = boxes_in_window(boxes, window_x, window_y)
+            dataset_writer.add(crop, label_lines)
+        print(f"  +{len(dataset_writer) - windows_before} windows")
+
+    print(f"\n{len(dataset_writer)} images / {dataset_writer.number_of_boxes()} boxes → {DATASET_DIR / 'buildings'}")

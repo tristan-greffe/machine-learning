@@ -1,5 +1,6 @@
 import io
 import math
+import random
 import time
 from pathlib import Path
 from PIL import Image
@@ -19,6 +20,8 @@ WMTS_URL = (
 )
 TILE_SIZE_PIXELS = 256
 ZOOM = 19
+WINDOW_SIZE = 640   # YOLO training image size in pixels
+JPEG_QUALITY = 90
 
 # On-disk cache: avoids re-downloading tiles shared across nearby windows
 _CACHE_DIR = Path(__file__).parent / "_tilecache"
@@ -194,3 +197,106 @@ def merge_overlapping_boxes(boxes, minimum_overlap=0.1):
             used[i] = True
         boxes = result
     return boxes
+
+
+# ============================================================
+# Window slicing
+# ============================================================
+
+# Yield (window_x, window_y) top-left corners for sliding windows covering the image.
+# Default stride gives 25% overlap between adjacent windows.
+def iter_windows(image_width, image_height, window_size=WINDOW_SIZE, stride=None):
+    if stride is None:
+        stride = window_size * 3 // 4
+    xs = list(range(0, max(1, image_width - window_size + 1), stride))
+    ys = list(range(0, max(1, image_height - window_size + 1), stride))
+    if xs[-1] != image_width - window_size:
+        xs.append(max(0, image_width - window_size))
+    if ys[-1] != image_height - window_size:
+        ys.append(max(0, image_height - window_size))
+    for window_y in ys:
+        for window_x in xs:
+            yield window_x, window_y
+
+
+# Return YOLO-format label lines for boxes visible inside the window.
+# Boxes with less than minimum_visible fraction inside are skipped (avoids sliver labels).
+def boxes_in_window(boxes, window_x, window_y, window_size=WINDOW_SIZE,
+                    minimum_size=4, minimum_visible=0.4):
+    label_lines = []
+    for class_id, x0, y0, x1, y1 in boxes:
+        intersection_x0 = max(x0, window_x)
+        intersection_y0 = max(y0, window_y)
+        intersection_x1 = min(x1, window_x + window_size)
+        intersection_y1 = min(y1, window_y + window_size)
+        intersection_width  = intersection_x1 - intersection_x0
+        intersection_height = intersection_y1 - intersection_y0
+        if intersection_width <= minimum_size or intersection_height <= minimum_size:
+            continue
+        if (intersection_width * intersection_height) / max(1e-6, (x1 - x0) * (y1 - y0)) < minimum_visible:
+            continue
+        center_x = ((intersection_x0 + intersection_x1) / 2 - window_x) / window_size
+        center_y = ((intersection_y0 + intersection_y1) / 2 - window_y) / window_size
+        normalized_width  = intersection_width  / window_size
+        normalized_height = intersection_height / window_size
+        label_lines.append(
+            f"{class_id} {center_x:.6f} {center_y:.6f} {normalized_width:.6f} {normalized_height:.6f}"
+        )
+    return label_lines
+
+
+# ============================================================
+# Dataset writer
+# ============================================================
+
+# Writes YOLO dataset samples (image + label) straight to disk as they arrive.
+# Train/val split is decided per sample via a seeded RNG — deterministic and crash-safe.
+class YoloDatasetWriter:
+
+    def __init__(self, output_directory, class_names,
+                 validation_ratio=0.2, keep_empty_ratio=0.1, seed=42):
+        self.output_directory = Path(output_directory)
+        self.class_names      = class_names
+        self.validation_ratio = validation_ratio
+        self.keep_empty_ratio = keep_empty_ratio
+        self.rng              = random.Random(seed)
+        self._sample_count    = 0
+        self._box_count       = 0
+
+        for split in ("train", "val"):
+            (self.output_directory / "images" / split).mkdir(parents=True, exist_ok=True)
+            (self.output_directory / "labels" / split).mkdir(parents=True, exist_ok=True)
+        self._write_yaml()
+
+    def add(self, image, label_lines):
+        # Drop most negative (empty) windows to keep the dataset balanced
+        if not label_lines and self.rng.random() > self.keep_empty_ratio:
+            return
+        split       = "val" if self.rng.random() < self.validation_ratio else "train"
+        sample_name = f"{self._sample_count:06d}"
+        image.save(
+            self.output_directory / "images" / split / f"{sample_name}.jpg",
+            quality=JPEG_QUALITY,
+        )
+        (self.output_directory / "labels" / split / f"{sample_name}.txt").write_text(
+            "\n".join(label_lines) + ("\n" if label_lines else "")
+        )
+        self._sample_count += 1
+        self._box_count    += len(label_lines)
+
+    def __len__(self):
+        return self._sample_count
+
+    def number_of_boxes(self):
+        return self._box_count
+
+    def _write_yaml(self):
+        class_list = "\n".join(f"  {i}: {name}" for i, name in enumerate(self.class_names))
+        yaml_content = (
+            f"# Auto-generated YOLO dataset\n"
+            f"path: {self.output_directory.resolve()}\n"
+            f"train: images/train\n"
+            f"val: images/val\n"
+            f"names:\n{class_list}\n"
+        )
+        (self.output_directory / "dataset.yaml").write_text(yaml_content)
