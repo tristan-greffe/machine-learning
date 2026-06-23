@@ -5,13 +5,25 @@ channels:
   - defaults
 dependencies:
   - python=3.11
+
+  # -- ML stack
   - pytorch
   - torchvision
   - numpy
   - pillow
   - matplotlib
   - rasterio
+  - pandas
   - geopandas
+  - shapely
+  - tqdm
+  - requests
+
+  # -- ONNX export
+  - onnx
+  - onnxruntime
+
   - pip
   - pip:
-    - huggingface_hub
+      - huggingface_hub
+      - ultralytics      # YOLOv8 object detection

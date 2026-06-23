@@ -49,19 +49,17 @@ def prepare_buildings():
     dataset_writer = YoloDatasetWriter(DATASET_DIR / "buildings", ["building"])
 
     for name, (latitude, longitude, grid) in BUILDING_ZONES.items():
-        print(f"  zone {name} ({latitude}, {longitude}) grid={grid}")
+        print(f"  {name:<24} ...", end="\r", flush=True)
 
         # Step 1: download tiles → mosaic + bounds
         result = download_mosaic(latitude, longitude, grid, session)
         if result is None:
-            print(f"  tiles unavailable, skipping")
+            print(f"  {name:<24} ✗ tiles unavailable")
             continue
         mosaic, bounds = result
-        print(f"  mosaic {mosaic.size[0]}×{mosaic.size[1]} px")
 
         # Step 2: fetch building polygons for those bounds
         features = fetch_building_polygons(bounds, session)
-        print(f"  {len(features)} features")
 
         # Step 3: convert GPS polygons → pixel bounding boxes
         image_width, image_height = mosaic.size
@@ -88,7 +86,6 @@ def prepare_buildings():
             x0, y0, x1, y1 = polygon_to_pixel_bbox(all_points, bounds, image_width, image_height)
             boxes.append((0, x0, y0, x1, y1))
         boxes = merge_overlapping_boxes(boxes)
-        print(f"  {len(boxes)} bounding boxes after grouping/merging")
 
         # Step 4: slide 640×640 windows over the mosaic and write labels
         windows_before = len(dataset_writer)
@@ -97,6 +94,9 @@ def prepare_buildings():
                                 window_x + 640, window_y + 640))
             label_lines = boxes_in_window(boxes, window_x, window_y)
             dataset_writer.add(crop, label_lines)
-        print(f"  +{len(dataset_writer) - windows_before} windows")
 
-    print(f"\n{len(dataset_writer)} images / {dataset_writer.number_of_boxes()} boxes → {DATASET_DIR / 'buildings'}")
+        mosaic_size    = f"{mosaic.size[0]}×{mosaic.size[1]}"
+        windows_added  = len(dataset_writer) - windows_before
+        print(f"  {name:<24} {mosaic_size:<10}  {len(features):>4} feat → {len(boxes):>4} boxes  +{windows_added} win")
+
+    print(f"  {'total':<24} {len(dataset_writer)} images · {dataset_writer.number_of_boxes()} boxes\n")

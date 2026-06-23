@@ -70,7 +70,7 @@ def prepare_pools():
     dataset_writer = YoloDatasetWriter(DATASET_DIR / "pools", ["pool"])
 
     for name, (latitude, longitude, half) in POOL_ZONES.items():
-        print(f"  zone {name} ({latitude}, {longitude}) half={half}°")
+        print(f"  {name:<24} ...", end="\r", flush=True)
 
         # Step 1: compute zone bounds from half_extent_deg
         zone_bounds = (latitude + half, longitude - half, latitude - half, longitude + half)
@@ -83,8 +83,8 @@ def prepare_pools():
             if POOL_MINIMUM_SIZE_METERS < pool_size_in_meters(element) < POOL_MAXIMUM_SIZE_METERS
             and len(element.get("geometry", [])) >= 3
         ]
-        print(f"  {len(valid_pools)} pools after size filter")
         if not valid_pools:
+            print(f"  {name:<24} ✗ no valid pools ({len(all_elements)} OSM elements)")
             continue
 
         # Shuffle and cap: iterate over at most POOL_MAXIMUM_WINDOWS_PER_ZONE pool centres
@@ -132,6 +132,7 @@ def prepare_pools():
                 continue  # pool slipped outside window after jitter — skip
             dataset_writer.add(crop, label_lines)
 
-        print(f"  +{len(dataset_writer) - windows_before} windows")
+        windows_added = len(dataset_writer) - windows_before
+        print(f"  {name:<24} {len(all_elements):>4} OSM → {len(valid_pools):>4} valid  +{windows_added} win")
 
-    print(f"\n{len(dataset_writer)} images / {dataset_writer.number_of_boxes()} boxes → {DATASET_DIR / 'pools'}")
+    print(f"  {'total':<24} {len(dataset_writer)} images · {dataset_writer.number_of_boxes()} boxes\n")
