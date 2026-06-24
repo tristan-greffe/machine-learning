@@ -1,5 +1,6 @@
 import math
 import random
+import time
 import requests
 from model.dataset.config import POOL_ZONES, DATASET_DIR
 from model.dataset.utils import (
@@ -28,8 +29,9 @@ POOL_MAXIMUM_SIZE_METERS = 35.0
 # Utility Functions
 # ============================================================
 
-# Fetch pool polygons from OSM Overpass for the given bounds (north, west, south, east)
-def fetch_pool_polygons(bounds, session):
+# Fetch pool polygons from OSM Overpass for the given bounds (north, west, south, east).
+# Retries on 5xx errors (Overpass returns 504 when overloaded) with a growing delay.
+def fetch_pool_polygons(bounds, session, retries=3):
     north, west, south, east = bounds
     query = (
         f"[out:json][timeout:90];"
@@ -37,11 +39,21 @@ def fetch_pool_polygons(bounds, session):
         f" relation[leisure=swimming_pool]({south},{west},{north},{east}););"
         f"out geom;"
     )
-    # User-Agent required - server returns HTTP 406 without it
-    response = session.get(OVERPASS_URL, params={"data": query},
-                           headers={"User-Agent": "geo-ml/1.0 (research)"}, timeout=100)
+    # User-Agent required — server returns HTTP 406 without it
+    headers = {"User-Agent": "geo-ml/1.0 (research)"}
+    for attempt in range(retries):
+        response = session.get(OVERPASS_URL, params={"data": query},
+                               headers=headers, timeout=100)
+        if response.status_code == 200:
+            return response.json().get("elements", [])
+        if response.status_code < 500:
+            response.raise_for_status()  # 4xx — no point retrying
+        if attempt < retries - 1:
+            wait = 60 * (attempt + 1)
+            print(f" retry in {wait}s (HTTP {response.status_code})", flush=True)
+            time.sleep(wait)
     response.raise_for_status()
-    return response.json().get("elements", [])
+    return []
 
 
 # Return the max bounding dimension of a pool element in metres
