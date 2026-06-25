@@ -26,32 +26,34 @@ IMAGE_SIZE       = 640
 DEFAULT_EPOCHS   = 80
 DEFAULT_BATCH    = 16
 DEFAULT_PATIENCE = 20
-# Nano checkpoint — smallest footprint, fastest to converge
+# Nano checkpoint - smallest footprint, fastest to converge
 DEFAULT_BASE     = "yolov8n.pt"
 
 
 # ============================================================
-# Main
+# Argument parsing
 # ============================================================
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Train a YOLO model on a dataset built by model/dataset/main.py"
-    )
-    parser.add_argument("--model",     required=True, choices=["buildings", "pools"],
-                        help="Which dataset to train on")
-    parser.add_argument("--epochs",    type=int, default=DEFAULT_EPOCHS)
-    parser.add_argument("--batch",     type=int, default=DEFAULT_BATCH)
-    parser.add_argument("--patience",  type=int, default=DEFAULT_PATIENCE,
-                        help="Early-stop patience (epochs with no mAP improvement)")
-    parser.add_argument("--base",      default=DEFAULT_BASE,
-                        help="Pretrained checkpoint to fine-tune from")
-    parser.add_argument("--resume",    action="store_true",
-                        help="Resume training from model/runs/<model>/weights/last.pt")
-    parser.add_argument("--no-export", action="store_true",
-                        help="Skip ONNX export after training")
-    args = parser.parse_args()
+# Build and return the parsed CLI arguments.
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Train a YOLO model on a dataset built by model/dataset/main.py")
+    parser.add_argument("--model", required=True, choices=["buildings", "pools"], help="Which dataset to train on")
+    parser.add_argument("--epochs", type=int, default=DEFAULT_EPOCHS)
+    parser.add_argument("--batch", type=int, default=DEFAULT_BATCH)
+    parser.add_argument("--patience", type=int, default=DEFAULT_PATIENCE, help="Early-stop patience (epochs with no mAP improvement)")
+    parser.add_argument("--base", default=DEFAULT_BASE, help="Pretrained checkpoint to fine-tune from")
+    parser.add_argument("--resume", action="store_true", help="Resume training from model/runs/<model>/weights/last.pt")
+    parser.add_argument("--no-export", action="store_true", help="Skip ONNX export after training")
+    return parser.parse_args()
 
+
+# ============================================================
+# Training
+# ============================================================
+
+# Run YOLO training for the given model name and return the path to best.pt.
+# Resumes from last.pt when args.resume is set, otherwise starts fresh from args.base.
+def run_training(args):
     data_yaml = DATASET_DIR / args.model / "dataset.yaml"
     if not data_yaml.exists():
         print(f"Dataset not found: {data_yaml}")
@@ -61,7 +63,6 @@ def main():
     WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
     FRONTEND_DIR.mkdir(parents=True, exist_ok=True)
 
-    # --- Train ---
     if args.resume:
         last_checkpoint = RUNS_DIR / args.model / "weights" / "last.pt"
         if not last_checkpoint.exists():
@@ -81,7 +82,7 @@ def main():
             project=str(RUNS_DIR),
             name=args.model,
             exist_ok=True,
-            # Aerial imagery has no canonical orientation — full rotation and both flips are valid
+            # Aerial imagery has no canonical orientation - full rotation and both flips are valid
             fliplr=0.5,
             flipud=0.5,
             degrees=180,
@@ -98,23 +99,42 @@ def main():
     shutil.copy(best_checkpoint, destination_pt)
     print(f"\nWeights → {destination_pt}")
 
-    # --- Export ONNX for in-browser inference ---
-    if args.no_export:
-        return
+    return best_checkpoint
 
-    best_model       = YOLO(str(best_checkpoint))
-    onnx_path        = best_model.export(
+
+# ============================================================
+# ONNX export
+# ============================================================
+
+# Export best.pt to ONNX and copy it to frontend/public/models/ for in-browser inference.
+# opset=12 - last version broadly supported by onnxruntime-web
+# nms=False - NMS is handled in JS (more flexible, avoids ORT compatibility issues)
+# dynamic=False - fixed input shape required by onnxruntime-web
+def export_onnx(model_name, best_checkpoint):
+    best_model = YOLO(str(best_checkpoint))
+    onnx_path  = best_model.export(
         format="onnx",
         imgsz=IMAGE_SIZE,
         opset=12,
         simplify=True,
-        nms=False,      # NMS is handled in JS by the frontend (onnxruntime-web)
-        dynamic=False,  # fixed input shape required by onnxruntime-web
+        nms=False,
+        dynamic=False,
     )
-    destination_onnx = FRONTEND_DIR / f"{args.model}.onnx"
+    destination_onnx = FRONTEND_DIR / f"{model_name}.onnx"
     shutil.copy(onnx_path, destination_onnx)
     size_mb = destination_onnx.stat().st_size / 1024 / 1024
     print(f"ONNX → {destination_onnx}  ({size_mb:.1f} MB)")
+
+
+# ============================================================
+# Entry point
+# ============================================================
+
+def main():
+    args = parse_arguments()
+    best_checkpoint = run_training(args)
+    if not args.no_export:
+        export_onnx(args.model, best_checkpoint)
 
 
 if __name__ == "__main__":
