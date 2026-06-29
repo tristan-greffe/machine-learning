@@ -1,13 +1,13 @@
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
 export default withMermaid({
-  base: '/geo-ml',
+  base: '/geo-ml/documentation/',
   title: 'GeoML',
   ignoreDeadLinks: true,
   appearance: false,
   head: [
     ['link', { href: 'https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css', rel: 'stylesheet' }],
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/geo-ml/logo.svg' }]
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/geo-ml/documentation/logo.svg' }]
   ],
   markdown: {
     math: true
@@ -34,8 +34,8 @@ export default withMermaid({
       themeConfig: {
         outline: { label: 'Sur cette page' },
         nav: [
-          { text: 'À propos',      link: '/fr/about/introduction' },
-          { text: 'Guide',         link: '/fr/guide/introduction' },
+          { text: 'À propos', link: '/fr/about/introduction' },
+          { text: 'Guide', link: '/fr/guide/overview' },
           { text: 'Apprentissage', link: '/fr/learning/introduction' }
         ],
         sidebar: {
@@ -82,31 +82,33 @@ function getGuideSidebar (lang) {
   const t = (fr, en) => lang === 'fr' ? fr : en
 
   return [
-    { text: t('Guide', 'Guide'),                    link: `${p}/guide/introduction` },
+    { text: t('Aperçu général', 'Global overview'), link: `${p}/guide/overview` },
     { text: t('Démarrage rapide', 'Getting started'), link: `${p}/guide/getting-started` },
-    { text: t('Architecture', 'Architecture'),        link: `${p}/guide/architecture` },
+    { text: t('Architecture', 'Architecture'), link: `${p}/guide/architecture` },
     {
       text: t('Modèles', 'Models'),
       collapsed: true,
       items: [
-        { text: t('Détection d\'arbres', 'Tree detection'), link: `${p}/guide/models/tree-detection` }
-      ]
-    },
-    {
-      text: 'Backend',
-      collapsed: true,
-      items: [
-        { text: t('Architecture', 'Architecture'), link: `${p}/guide/backend/architecture` },
-        { text: 'Endpoints',                       link: `${p}/guide/backend/endpoints` }
+        { text: t('Introduction', 'Introduction'), link: `${p}/guide/models/introduction` },
+        { text: t('YOLO', 'YOLO'), link: `${p}/guide/models/yolo` },
+        { text: 'ONNX', link: `${p}/guide/models/onnx` },
+        { text: t('Jeu de données', 'Dataset'), link: `${p}/guide/models/dataset` },
+        { text: t('Détection de bâtiments', 'Building detection'), link: `${p}/guide/models/building-detection` },
+        { text: t('Détection de piscines', 'Pool detection'), link: `${p}/guide/models/pool-detection` }
       ]
     },
     {
       text: 'Frontend',
       collapsed: true,
       items: [
-        { text: t('Technologies', 'Technology'), link: `${p}/guide/frontend/technology` },
-        { text: t('Carte & panneau', 'Map & panel'), link: `${p}/guide/frontend/map` }
+        { text: t('Technologies',    'Technology'),  link: `${p}/guide/frontend/technology` },
+        { text: t('Carte & panneau', 'Map & panel'), link: `${p}/guide/frontend/map` },
+        { text: t('Inférence locale', 'Local inference'), link: `${p}/guide/frontend/inference` }
       ]
+    },
+    {
+      text: t('Déploiement', 'Deployment'),
+      link: `${p}/guide/deployment`
     }
   ]
 }
@@ -179,12 +181,11 @@ function getLearningSidebar (lang) {
           text: 'Réseaux de Neurones de Convolution - CNNs',
           collapsed: true,
           items: [
-            { text: lang === 'fr' ? 'Fondamentaux' : 'Fundamentals', link: `${p}/learning/deep-learning/cnn/introduction` }
+            { text: lang === 'fr' ? 'Introduction' : 'Introduction', link: `${p}/learning/deep-learning/cnn/introduction` },
+            { text: lang === 'fr' ? 'Principe de convolution d\'images' : 'Principle of image convolution', link: `${p}/learning/deep-learning/cnn/principle` },
+            { text: lang === 'fr' ? 'Architecture' : 'Architecture', link: `${p}/learning/deep-learning/cnn/architecture` }
           ]
-        },
-        { text: lang === 'fr' ? 'Réseaux convolutifs (CNN)' : 'Convolutional networks (CNN)', link: `${p}/learning/deep-learning/cnn` },
-        { text: lang === 'fr' ? 'Segmentation sémantique' : 'Semantic segmentation', link: `${p}/learning/deep-learning/segmentation` },
-        { text: 'U-Net', link: `${p}/learning/deep-learning/unet` }
+        }
       ]
     },
     {
