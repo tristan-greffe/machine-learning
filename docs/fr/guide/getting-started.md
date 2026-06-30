@@ -2,67 +2,62 @@
 
 ## Prérequis
 
-- Python 3.11+
-- Node.js 20+
-- Git
+- **conda**: pour l'environnement Python d'entraînement
+- **Node.js 20+**: pour le frontend et la documentation
 
 ## 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/tristan-greffe/machine-learning.git
-cd machine-learning
+git clone https://github.com/tristan-greffe/geo-ml.git
+cd geo-ml
 ```
 
-## 2. Lancer le backend
+## 2. Environnement Python
+
+Uniquement nécessaire pour générer un dataset ou entraîner un modèle. Le frontend tourne sans Python.
 
 ```bash
-cd tree-detection/backend
-python -m venv .venv
-source .venv/bin/activate      # Windows : .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload
+conda env create -f model/environment.yml    # première fois
+conda env update -f model/environment.yml    # si le fichier change
+conda activate geoml
 ```
-
-L'API est disponible sur `http://localhost:8000`.  
-Vérification : `http://localhost:8000/health` → `{"status":"ok"}`
 
 ## 3. Lancer le frontend
 
-Dans un second terminal :
-
 ```bash
-cd tree-detection/frontend
-python -m http.server 3000
+cd frontend
+npm install
+npm run dev
 ```
 
-Ouvrir `http://localhost:3000` dans le navigateur.
+:::info
+Ouvrir <http://localhost:5173/geo-ml/>.
 
-## 4. Entraîner le modèle (optionnel)
+Il n'y a pas d'API. cliquer sur **Run detection** charge le fichier `.onnx` depuis `public/models/`, exécute l'inférence dans le navigateur via ONNX Runtime Web, et affiche les résultats sur la carte.
+:::
+
+## 4. Générer un dataset et entraîner un modèle
 
 ```bash
-cd model
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-jupyter notebook
-```
+conda activate geoml
 
-Ouvrir le notebook `notebooks/01_exploration.ipynb` pour commencer.
+# Générer le dataset (télécharge tuiles IGN + polygones BD TOPO / OSM)
+python -m model.dataset.main --buildings
+python -m model.dataset.main --pools
+
+# Entraîner et exporter en ONNX (écrit dans frontend/public/models/)
+python model/train.py --model buildings
+python model/train.py --model pools
+```
 
 ## 5. Lancer la documentation
 
 ```bash
 cd docs
 npm install
-npm run docs:dev
+npm run dev
 ```
 
-Documentation disponible sur `http://localhost:5173`.
-
-## Structure des branches
-
-```
-master          ← branche principale stable
-feature/xxx     ← nouvelles fonctionnalités
-fix/xxx         ← corrections de bugs
-```
+:::info
+Ouvrir <http://localhost:5174/geo-ml/documentation/>.
+:::

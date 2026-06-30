@@ -2,59 +2,62 @@
 
 ## Prerequisites
 
-- Python 3.11+
-- Node.js 20+
-- Git
+- **conda**: for the Python training environment
+- **Node.js 20+**: for the frontend and this documentation
 
-## 1. Clone the repository
-
-```bash
-git clone https://github.com/tristan-greffe/machine-learning.git
-cd machine-learning
-```
-
-## 2. Run the backend
+## 1. Clone the repo
 
 ```bash
-cd tree-detection/backend
-python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload
+git clone https://github.com/tristan-greffe/geo-ml.git
+cd geo-ml
 ```
 
-API available at `http://localhost:8000`.  
-Health check: `http://localhost:8000/health` → `{"status":"ok"}`
+## 2. Python environment
+
+Only needed if you want to generate a dataset or train a model. The frontend runs without Python.
+
+```bash
+conda env create -f model/environment.yml    # first time
+conda env update -f model/environment.yml    # whenever the file changes
+conda activate geoml
+```
 
 ## 3. Run the frontend
 
-In a second terminal:
-
 ```bash
-cd tree-detection/frontend
-python -m http.server 3000
+cd frontend
+npm install
+npm run dev
 ```
 
-Open `http://localhost:3000`.
+:::info
+Open <http://localhost:5173/geo-ml/>.
 
-## 4. Train the model (optional)
+There is no API. clicking **Run detection** loads the relevant `.onnx` file from `public/models/`, runs inference in the browser via ONNX Runtime Web, and renders the results on the map.
+:::
+
+## 4. Generate a dataset and train a model
 
 ```bash
-cd model
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-jupyter notebook
-```
+conda activate geoml
 
-Open `notebooks/01_exploration.ipynb` to get started.
+# Build the dataset (downloads IGN tiles + BD TOPO / OSM polygons)
+python -m model.dataset.main --buildings
+python -m model.dataset.main --pools
+
+# Train and export to ONNX (writes to frontend/public/models/)
+python model/train.py --model buildings
+python model/train.py --model pools
+```
 
 ## 5. Run the documentation
 
 ```bash
 cd docs
 npm install
-npm run docs:dev
+npm run dev
 ```
 
-Documentation available at `http://localhost:5173`.
+:::info
+Open <http://localhost:5174/geo-ml/documentation/>.
+:::
