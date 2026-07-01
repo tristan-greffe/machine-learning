@@ -1,9 +1,9 @@
 import {
-  TreePine, Building2, Waves,
-  Hash, Ruler, Leaf,
+  Building2, Waves,
   Lasso, Circle,
   Landmark, Type, Train, Anchor, Bike, Navigation, Mountain, Snowflake,
-  Zap, Droplets, Fuel, Radio
+  Zap, Droplets, Fuel, Radio,
+  Sprout, Layers3
 } from 'lucide-react'
 
 // ── Basemaps
@@ -35,11 +35,18 @@ export const BASEMAPS = [
     tiles: ['https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'],
     thumbnail: 'https://a.basemaps.cartocdn.com/dark_all/5/16/11.png',
     attribution: '© CARTO © OpenStreetMap contributors'
+  },
+  {
+    id: 'sentinel2',
+    label: 'Sentinel-2',
+    tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg'],
+    thumbnail: 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/5/11/16.jpg',
+    attribution: 'Sentinel-2 cloudless 2023 by EOX · Copernicus data'
   }
 ]
 
 // ── Catalog layers
-export const CATALOG_GROUPS = ['Administrative', 'Transport', 'Outdoor', 'Infrastructure']
+export const CATALOG_GROUPS = ['Administrative', 'Transport', 'Outdoor', 'Infrastructure', 'Copernicus']
 
 export const CATALOG_LAYERS = [
   // Administrative
@@ -136,6 +143,32 @@ export const CATALOG_LAYERS = [
     description: 'Towers & cables · OpenInfraMap',
     tiles: ['https://tiles.openinframap.org/telecoms/{z}/{x}/{y}.png'],
     attribution: '© OpenInfraMap'
+  },
+
+  // Copernicus - public services, no auth required
+  {
+    id: 'worldcover', group: 'Copernicus', icon: Sprout,
+    label: 'ESA WorldCover 2021',
+    description: 'Global 10 m land cover · Terrascope',
+    tiles: [
+      'https://services.terrascope.be/wmts/v2?' +
+      'layer=WORLDCOVER_2021_MAP&style=default&tilematrixset=g' +
+      '&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng' +
+      '&TileMatrix={z}&TileCol={x}&TileRow={y}'
+    ],
+    attribution: '© ESA WorldCover project · Terrascope'
+  },
+  {
+    id: 'corine', group: 'Copernicus', icon: Layers3,
+    label: 'Corine Land Cover 2018',
+    description: 'European land cover · Copernicus Land Monitoring',
+    tiles: [
+      'https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2018_WM/MapServer/WMSServer?' +
+      'SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=12&STYLES=' +
+      '&FORMAT=image/png&TRANSPARENT=TRUE&SRS=EPSG:3857' +
+      '&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}'
+    ],
+    attribution: '© European Environment Agency · Copernicus Land Monitoring Service'
   }
 ]
 
@@ -158,42 +191,27 @@ export const DEFAULT_DISPLAY_SETTINGS = {
   coords:     true
 }
 
-// ── Detection models
-// Each model declares the sections shown inside its panel — keeps
-// ModelPanel completely data-driven.
+// ── Per-model map colours
+export const MODEL_COLORS = {
+  buildings: { fill: '#f97316', outline: '#ea580c', fillOpacity: 0.28 },
+  pools:     { fill: '#0ea5e9', outline: '#0284c7', fillOpacity: 0.40 },
+}
+
+// ── Detection models (YOLOv8 object detectors)
+// Each detector returns a count and the approximate location (bbox centre)
+// of every object found in the visible area.
 export const MODELS = [
-  {
-    id: 'trees',
-    icon: TreePine,
-    label: 'Tree Detection',
-    description: 'Outlines individual tree crowns — count, area, type.',
-    sections: [
-      { title: 'Tree count',     icon: Hash,  value: '—', hint: 'Run detection on the visible area to see results.' },
-      { title: 'Estimated area', icon: Ruler, value: '—', hint: 'Total canopy coverage will appear here.' },
-      { title: 'Tree type',      icon: Leaf,  defaultOpen: false, hint: 'Species breakdown will appear here.' }
-    ]
-  },
   {
     id: 'buildings',
     icon: Building2,
     label: 'Building Detection',
-    description: 'Outlines buildings — count, area, type.',
-    sections: [
-      { title: 'Building count', icon: Hash,       value: '—', hint: 'Run detection to count buildings in the visible area.' },
-      { title: 'Footprint area', icon: Ruler,      value: '—', hint: 'Total building footprint will appear here.' },
-      { title: 'Building type',  icon: Building2,  defaultOpen: false, hint: 'Residential / commercial breakdown will appear here.' }
-    ]
+    description: 'Detects buildings from aerial imagery and reports how many were found, with the approximate location of each.',
   },
   {
     id: 'pools',
     icon: Waves,
     label: 'Pool Detection',
-    description: 'Detects swimming pools from aerial imagery.',
-    sections: [
-      { title: 'Pool count',     icon: Hash,  value: '—', hint: 'Run detection to count pools in the visible area.' },
-      { title: 'Estimated area', icon: Ruler, value: '—', hint: 'Total water surface will appear here.' },
-      { title: 'Pool shape',     icon: Waves, defaultOpen: false, hint: 'Rectangular / freeform breakdown will appear here.' }
-    ]
+    description: 'Detects swimming pools from aerial imagery and reports how many were found, with the approximate location of each.',
   }
 ]
 
