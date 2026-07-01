@@ -36,11 +36,10 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 
-# ML — generated datasets, tile cache, training runs, model weights
+# ML - generated datasets, tile cache, training runs, model weights
 model/dataset/buildings/
 model/dataset/pools/
 model/dataset/_tilecache/
 model/runs/
 model/weights/
 *.pt
-*.onnx
