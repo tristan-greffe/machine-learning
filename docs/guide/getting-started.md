@@ -5,6 +5,17 @@
 - **conda**: for the Python training environment
 - **Node.js 20+**: for the frontend and this documentation
 
+:::tip Repository layout
+```
+geo-ml/
+├── frontend/          React SPA + MapLibre GL + ONNX Runtime Web
+│   └── public/models/ .onnx weights served with the SPA
+├── model/             Dataset pipeline (Python) + YOLOv8 training
+│   └── dataset/       automatic annotated dataset generation
+└── docs/              VitePress documentation
+```
+:::
+
 ## 1. Clone the repo
 
 ```bash

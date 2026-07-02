@@ -5,6 +5,17 @@
 - **conda**: pour l'environnement Python d'entraînement
 - **Node.js 20+**: pour le frontend et la documentation
 
+:::tip Structure du dépôt
+```
+geo-ml/
+├── frontend/          SPA React + MapLibre GL + ONNX Runtime Web
+│   └── public/models/ poids .onnx servis avec le SPA
+├── model/             Pipeline dataset (Python) + entraînement YOLOv8
+│   └── dataset/       génération automatique du dataset annoté
+└── docs/              Documentation VitePress
+```
+:::
+
 ## 1. Cloner le dépôt
 
 ```bash

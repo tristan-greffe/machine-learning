@@ -84,7 +84,6 @@ function getGuideSidebar (lang) {
   return [
     { text: t('Aperçu général', 'Global overview'), link: `${p}/guide/overview` },
     { text: t('Démarrage rapide', 'Getting started'), link: `${p}/guide/getting-started` },
-    { text: t('Architecture', 'Architecture'), link: `${p}/guide/architecture` },
     {
       text: t('Modèles', 'Models'),
       collapsed: true,
