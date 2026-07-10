@@ -5,7 +5,7 @@ In **geo-ml**, there is **no manual annotation**. That is the core principle of 
 The pipeline's role is purely mechanical: download IGN satellite tiles, assemble mosaics, convert GPS polygons into pixel bounding boxes, then slice everything into 640×640 windows in the format expected by YOLO.
 
 :::tip No manual annotation
-Labels cover all of France. We download, convert, train — without ever drawing a box by hand.
+Labels cover all of France. We download, convert, train - without ever drawing a box by hand.
 :::
 
 ## Label sources
@@ -54,7 +54,7 @@ class  cx    cy     w      h    (all normalised to [0.0, 1.0])
 - **`class`**: class identifier (`0` = building or pool depending on the model). A single integer.
 - **`cx`, `cy`**: coordinates of the **centre** of the box, normalised between `0.0` and `1.0` (`0` = left/top edge, `1` = right/bottom edge).
 - **`w`, `h`**: **width** and **height** of the box, normalised the same way.
-All values are relative to the 640×640 image — no absolute pixels.
+All values are relative to the 640×640 image - no absolute pixels.
 :::
 
 ```yaml
@@ -68,7 +68,7 @@ names:
 
 ## Pipeline overview
 
-The pipeline starts from two distinct data sources — one vector (annotations), one raster (imagery) — that converge to produce the final dataset.
+The pipeline starts from two distinct data sources - one vector (annotations), one raster (imagery) - that converge to produce the final dataset.
 
 <img src="/guide/dataset_pipeline_overview.png" style="display:block;margin:1.5rem auto;width:100%;height:auto;">
 
@@ -96,7 +96,7 @@ The pipeline starts from two distinct data sources — one vector (annotations),
 
 ### Why assemble a mosaic?
 
-A raw IGN tile is 256×256 px — too small for a 640×640 YOLO window. Upscaling blurs the image and defeats the purpose of using high-resolution IGN imagery. By assembling 4×4 tiles, we get a 1024×1024 px mosaic at native resolution from which we can cut multiple 640×640 windows. It is also exactly the same scale as at inference time, ensuring the model sees the same resolution during training and in production.
+A raw IGN tile is 256×256 px - too small for a 640×640 YOLO window. Upscaling blurs the image and defeats the purpose of using high-resolution IGN imagery. By assembling 4×4 tiles, we get a 1024×1024 px mosaic at native resolution from which we can cut multiple 640×640 windows. It is also exactly the same scale as at inference time, ensuring the model sees the same resolution during training and in production.
 
 <img src="/guide/mosaique.png" style="display:block;margin:1.5rem auto;width:100%;height:auto;">
 
@@ -104,7 +104,7 @@ A raw IGN tile is 256×256 px — too small for a 640×640 YOLO window. Upscalin
 
 Buildings and pools are distributed very differently. The pipeline adapts its slicing strategy to each object type.
 
-### Buildings — sliding window on a grid
+### Buildings - sliding window on a grid
 
 Buildings are **dense and uniformly distributed**. For each zone, we assemble a large mosaic then **slide a 640×640 window with 25% overlap** across the entire surface, ensuring exhaustive coverage without cutting objects at the edges.
 
@@ -117,7 +117,7 @@ Buildings are **dense and uniformly distributed**. For each zone, we assemble a 
 3. Convert GPS polygons → pixel bboxes on the mosaic.
 4. Slide the 640×640 window → write image + YOLO labels.
 
-### Pools — object-centred window with jitter
+### Pools - object-centred window with jitter
 
 Pools are **rare and scattered**: grid slicing would mostly produce empty images. Instead, for **each pool**, we download a mosaic centred on it, then cut a window with a random offset (**jitter ±120 px**) to improve position invariance.
 
@@ -151,5 +151,5 @@ python -m model.dataset.main --pools      # pools only
 | `--pools` | Generates only the pools dataset (OSM Overpass) |
 
 :::info Dataset imprecision
-BD TOPO and OSM polygons are not always **perfectly aligned** with the IGN orthophoto — a 1–2 m offset is common. Bounding boxes may therefore be slightly shifted from the real object. YOLO tolerates this label noise well, but it is the main source of dataset imprecision.
+BD TOPO and OSM polygons are not always **perfectly aligned** with the IGN orthophoto - a 1–2 m offset is common. Bounding boxes may therefore be slightly shifted from the real object. YOLO tolerates this label noise well, but it is the main source of dataset imprecision.
 :::

@@ -92,8 +92,7 @@ function getGuideSidebar (lang) {
         { text: t('YOLO', 'YOLO'), link: `${p}/guide/models/yolo` },
         { text: 'ONNX', link: `${p}/guide/models/onnx` },
         { text: t('Jeu de données', 'Dataset'), link: `${p}/guide/models/dataset` },
-        { text: t('Détection de bâtiments', 'Building detection'), link: `${p}/guide/models/building-detection` },
-        { text: t('Détection de piscines', 'Pool detection'), link: `${p}/guide/models/pool-detection` }
+        { text: t('Entraînement', 'Training'), link: `${p}/guide/models/train` }
       ]
     },
     {
