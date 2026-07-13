@@ -6,7 +6,7 @@ import {
   Sprout, Layers3
 } from 'lucide-react'
 
-// ── Basemaps
+// Basemaps
 export const BASEMAPS = [
   {
     id: 'satellite',
@@ -45,7 +45,7 @@ export const BASEMAPS = [
   }
 ]
 
-// ── Catalog layers
+// Catalog layers
 export const CATALOG_GROUPS = ['Administrative', 'Transport', 'Outdoor', 'Infrastructure', 'Copernicus']
 
 export const CATALOG_LAYERS = [
@@ -172,13 +172,13 @@ export const CATALOG_LAYERS = [
   }
 ]
 
-// ── Draw tools
+// Draw tools
 export const DRAW_TOOLS = [
   { id: 'polygon', icon: Lasso,  label: 'Draw polygon', hint: 'Double-click to finish' },
   { id: 'circle',  icon: Circle, label: 'Draw circle',  hint: 'Click center, click radius' }
 ]
 
-// ── Display options
+// Display options
 export const DISPLAY_OPTIONS = [
   { key: 'northArrow', label: 'North arrow' },
   { key: 'scale',      label: 'Scale bar' },
@@ -191,13 +191,13 @@ export const DEFAULT_DISPLAY_SETTINGS = {
   coords:     true
 }
 
-// ── Per-model map colours
+// Per-model map colours
 export const MODEL_COLORS = {
   buildings: { fill: '#f97316', outline: '#ea580c', fillOpacity: 0.28 },
   pools:     { fill: '#0ea5e9', outline: '#0284c7', fillOpacity: 0.40 },
 }
 
-// ── Detection models (YOLOv8 object detectors)
+// Detection models (YOLOv8 object detectors)
 // Each detector returns a count and the approximate location (bbox centre)
 // of every object found in the visible area.
 export const MODELS = [
@@ -215,11 +215,11 @@ export const MODELS = [
   }
 ]
 
-// ── Run conditions
+// Run conditions
 // Conditions a model must satisfy before its "Run detection" button
 // becomes enabled.
 export const RUN_CONDITIONS = {
-  minZoom:         15,
+  minZoom:         18,
   requiredBasemap: 'satellite',
   hints: {
     basemap: 'Switch to satellite view first',
