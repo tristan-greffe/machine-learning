@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react'
 import { MapPin, Trash2, LocateFixed } from 'lucide-react'
+import { GEOCODER } from '../config.js'
 
-// Top-of-app content — brand, clear button (when shapes exist),
-// address search and "my location" button. Mounted inside <TopPane>.
 function TopBar({ onFlyTo, hasShapes, onClear }) {
   const [query, setQuery]       = useState('')
   const [results, setResults]   = useState([])
@@ -10,14 +9,14 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
   const [locating, setLocating] = useState(false)
   const inputRef = useRef(null)
 
-  // Search via Nominatim (OpenStreetMap geocoder — free, no API key)
+  // Search via Nominatim (OpenStreetMap geocoder - free, no API key)
   async function handleSearch(e) {
     e.preventDefault()
     if (!query.trim()) return
 
     setLoading(true)
     try {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`
+      const url = `${GEOCODER.url}?q=${encodeURIComponent(query)}&format=json&limit=${GEOCODER.limit}`
       const res  = await fetch(url, { headers: { 'Accept-Language': 'fr' } })
       const data = await res.json()
       setResults(data)
@@ -51,11 +50,13 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
 
   return (
     <>
+      {/* Brand */}
       <div className="topbar-brand">
-        <img src="/logo.svg" alt="GeoML" width="22" height="25" />
+        <img src="/geo-ml/logo.svg" alt="GeoML" width="22" height="25" />
         <span className="topbar-title">GeoML</span>
       </div>
 
+      {/* Clear button - appears only when drawn shapes exist */}
       {hasShapes && (
         <button className="topbar-clear" onClick={onClear}>
           <Trash2 size={13} />
@@ -63,6 +64,7 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
         </button>
       )}
 
+      {/* Address search + locate button - right side */}
       <div className="topbar-search-wrap">
         <div className="topbar-search-row">
           <form className="topbar-search" onSubmit={handleSearch}>
@@ -78,6 +80,7 @@ function TopBar({ onFlyTo, hasShapes, onClear }) {
             {loading && <span className="search-spinner" />}
           </form>
 
+          {/* My location button */}
           <div className="locate-btn-wrap">
             <button
               className={`locate-btn${locating ? ' locating' : ''}`}

@@ -227,7 +227,13 @@ export const RUN_CONDITIONS = {
   }
 }
 
-// ── Map defaults
+// Geocoder
+export const GEOCODER = {
+  url:   'https://nominatim.openstreetmap.org/search',
+  limit: 5
+}
+
+// Map defaults
 export const MAP_DEFAULTS = {
   center: [2.2137, 46.2276],
   zoom:   5
