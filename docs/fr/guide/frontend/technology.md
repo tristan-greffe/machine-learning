@@ -1,3 +1,0 @@
-# Technologies
-
-> Documentation à venir.

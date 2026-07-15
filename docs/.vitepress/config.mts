@@ -18,8 +18,8 @@ export default withMermaid({
       lang: 'en',
       themeConfig: {
         nav: [
-          { text: 'About',    link: '/about/introduction' },
-          { text: 'Guide',    link: '/guide/introduction' },
+          { text: 'About', link: '/about/introduction' },
+          { text: 'Guide', link: '/guide/introduction' },
           { text: 'Learning', link: '/fr/learning/introduction' }
         ],
         sidebar: {
@@ -39,8 +39,8 @@ export default withMermaid({
           { text: 'Apprentissage', link: '/fr/learning/introduction' }
         ],
         sidebar: {
-          '/fr/about/':    getAboutSidebar('fr'),
-          '/fr/guide/':    getGuideSidebar('fr'),
+          '/fr/about/': getAboutSidebar('fr'),
+          '/fr/guide/': getGuideSidebar('fr'),
           '/fr/learning/': getLearningSidebar('fr')
         },
         docFooter: {
@@ -65,14 +65,14 @@ export default withMermaid({
 // ── About
 function getAboutSidebar (lang) {
   if (lang === 'en') return [
-    { text: 'GeoML',        link: '/about/introduction' },
+    { text: 'GeoML', link: '/about/introduction' },
     { text: 'Contributing', link: '/about/contributing' },
-    { text: 'License',      link: '/about/license' }
+    { text: 'License', link: '/about/license' }
   ]
   return [
-    { text: 'GeoML',     link: '/fr/about/introduction' },
+    { text: 'GeoML', link: '/fr/about/introduction' },
     { text: 'Contribuer', link: '/fr/about/contributing' },
-    { text: 'Licence',    link: '/fr/about/license' }
+    { text: 'Licence', link: '/fr/about/license' }
   ]
 }
 
@@ -99,9 +99,8 @@ function getGuideSidebar (lang) {
       text: 'Frontend',
       collapsed: true,
       items: [
-        { text: t('Technologies',    'Technology'),  link: `${p}/guide/frontend/technology` },
-        { text: t('Carte & panneau', 'Map & panel'), link: `${p}/guide/frontend/map` },
-        { text: t('Inférence locale', 'Local inference'), link: `${p}/guide/frontend/inference` }
+        { text: t('Aperçu', 'Overview'), link: `${p}/guide/frontend/overview` },
+        { text: t('Inférence', 'Inference'), link: `${p}/guide/frontend/inference` }
       ]
     },
     {
@@ -111,7 +110,7 @@ function getGuideSidebar (lang) {
   ]
 }
 
-// ── Learning
+// Learning
 function getLearningSidebar (lang) {
   const p = lang === 'fr' ? '/fr' : ''
 
