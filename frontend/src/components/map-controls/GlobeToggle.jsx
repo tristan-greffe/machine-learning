@@ -1,6 +1,6 @@
 import { Globe } from 'lucide-react'
 
-// Floating button — toggles 2D / 3D globe projection.
+// Floating button - toggles 2D / 3D globe projection.
 function GlobeToggle({ isGlobe, onToggle }) {
   return (
     <div className="globe-toggle-wrap">

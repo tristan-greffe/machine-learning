@@ -1,6 +1,6 @@
 import { DRAW_TOOLS } from '../../config.js'
 
-// Draw toolbar — inline to the left of the ruler button.
+// Draw toolbar - inline to the left of the ruler button.
 function DrawToolbar({ drawMode, onSetMode }) {
   return (
     <div className="draw-toolbar">

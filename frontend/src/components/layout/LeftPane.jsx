@@ -1,6 +1,6 @@
 import { ChevronLeft } from 'lucide-react'
 
-// Generic left-side pane — collapse tab sticks out to the right.
+// Generic left-side pane - collapse tab sticks out to the right.
 function LeftPane({ title, children, onClose }) {
   return (
     <aside className="left-pane">
