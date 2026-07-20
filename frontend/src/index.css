@@ -335,6 +335,28 @@ html, body, #root {
   opacity: 1;
 }
 
+/* Push the help button to the bottom of the sidebar column */
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 4px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  width: 100%;
+}
+
+.sidebar-help-btn {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.sidebar-help-btn:hover {
+  color: var(--brand);
+}
+
 /* ── Side panel — fixed column between sidebar and map ───── */
 .side-panel,
 .left-pane {
@@ -1366,4 +1388,241 @@ html, body, #root {
   font-style: italic;
   line-height: 1.4;
   text-align: center;
+}
+
+/* ── Detection results ───────────────────────────────────── */
+
+/* Big count headline */
+.detect-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 16px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-btn);
+}
+.detect-count-num {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text);
+}
+.detect-count-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--text-muted);
+}
+
+.detect-list-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--text-muted);
+  padding: 10px 14px 4px;
+}
+
+/* One detection row: chip + GPS + fly-to */
+.detect-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.detect-row:last-child { border-bottom: none; }
+.detect-row-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  min-width: 20px;
+  text-align: center;
+  padding: 1px 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.detect-row-gps {
+  flex: 1;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  color: var(--text);
+}
+.detect-row-flyto {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 5px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.12s, background 0.12s;
+}
+.detect-row-flyto:hover {
+  color: var(--brand);
+  background: var(--bg-btn-hover);
+}
+
+/* Summary banner (legacy, still used elsewhere) */
+.detect-summary {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-btn);
+}
+.detect-summary-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.detect-summary-num {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+.detect-summary-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+}
+.detect-summary-sep {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* Scrollable list of detections */
+.detect-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+/* Individual detection card */
+.detect-item {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.detect-item:last-child { border-bottom: none; }
+
+.detect-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.detect-item-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.detect-item-shape {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+.detect-item-flyto {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 5px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.12s, background 0.12s;
+}
+.detect-item-flyto:hover {
+  color: var(--brand);
+  background: var(--bg-btn-hover);
+}
+
+/* 2-column grid: label | value */
+.detect-item-grid {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 2px 6px;
+}
+.detect-stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1.6;
+}
+.detect-stat-value {
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.6;
+}
+.detect-gps {
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  word-break: break-all;
+}
+
+/* Truncation notice */
+.detect-truncated {
+  padding: 8px 14px;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Footer with "Run again" */
+.detect-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* Running state overlay */
+.detect-running {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 14px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.detect-spinner {
+  animation: spin 1s linear infinite;
+  color: var(--brand);
+}
+
+/* "Model not available" warning */
+.detect-no-model {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 8px 10px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #92400e;
+  line-height: 1.5;
+}
+.detect-no-model code {
+  font-family: 'Courier New', monospace;
+  background: rgba(0,0,0,0.08);
+  padding: 1px 3px;
+  border-radius: 3px;
 }

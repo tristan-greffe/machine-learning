@@ -6,6 +6,7 @@ import TopPane from './components/layout/TopPane.jsx'
 import ModelPanel from './components/panels/ModelPanel.jsx'
 import CatalogPanel from './components/panels/CatalogPanel.jsx'
 import { CATALOG_LAYERS, MAP_DEFAULTS } from './config.js'
+import { detect } from './inference/detect.js'
 
 function App() {
   const mapRef = useRef(null)
@@ -17,7 +18,7 @@ function App() {
   const [showCatalog, setShowCatalog]                 = useState(false)
   const [activeCatalogLayers, setActiveCatalogLayers] = useState([])
 
-  // Map state — forwarded to ModelPanel to gate the Run button
+  // Map state - forwarded to ModelPanel to gate the Run button
   const [mapState, setMapState] = useState({ zoom: MAP_DEFAULTS.zoom, basemap: 'satellite' })
 
   function handleTogglePanel(id) {
@@ -51,6 +52,17 @@ function App() {
     )
   }
 
+  // Detection - runs entirely in the browser via ONNX Runtime Web.
+  // Same return shape as the (previously) FastAPI endpoint.
+  async function handleRun(modelId) {
+    const bbox = mapRef.current?.getBbox()
+    if (!bbox) throw new Error('Map not ready')
+
+    const result = await detect({ modelId, bbox, zoom: 19 })
+    mapRef.current?.showDetections(result.features, modelId)
+    return result
+  }
+
   return (
     <div className="app">
       <TopPane>
@@ -60,13 +72,15 @@ function App() {
       <div className="app-body">
         <Sidebar activePanel={activePanel} onTogglePanel={handleTogglePanel} />
 
-        {/* Left pane — model results */}
+        {/* Left pane - model results */}
         {activePanel && (
           <ModelPanel
             modelId={activePanel}
             onClose={() => setActivePanel(null)}
             zoom={mapState.zoom}
             basemap={mapState.basemap}
+            onRun={handleRun}
+            onFlyTo={handleFlyTo}
           />
         )}
 
@@ -81,7 +95,7 @@ function App() {
           />
         </div>
 
-        {/* Right pane — data catalog */}
+        {/* Right pane - data catalog */}
         {showCatalog && (
           <CatalogPanel
             activeLayers={activeCatalogLayers}

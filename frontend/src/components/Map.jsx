@@ -6,7 +6,7 @@ import MapSettings from './map-controls/MapSettings.jsx'
 import GlobeToggle from './map-controls/GlobeToggle.jsx'
 import DrawToggle from './map-controls/DrawToggle.jsx'
 import CatalogToggle from './map-controls/CatalogToggle.jsx'
-import { BASEMAPS, DEFAULT_DISPLAY_SETTINGS, MAP_DEFAULTS } from '../config.js'
+import { BASEMAPS, DEFAULT_DISPLAY_SETTINGS, MAP_DEFAULTS, MODEL_COLORS } from '../config.js'
 import northArrowSvg from '../assets/north-arrow.svg'
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] }
@@ -86,6 +86,22 @@ const Map = forwardRef(function Map(
       setDrawnFeatures([])
       setPendingPoints([])
       setDrawMode(null)
+      Object.keys(MODEL_COLORS).forEach((id) => {
+        const src = map.current?.getSource(`detections-${id}`)
+        if (src) src.setData(EMPTY_FC)
+      })
+    },
+
+    // Current visible map bbox as [w, s, e, n].
+    getBbox: () => {
+      const b = map.current?.getBounds()
+      return b ? [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()] : null
+    },
+
+    // Replace the detection features on the map for a given model.
+    showDetections: (featureCollection, modelId) => {
+      const src = map.current?.getSource(`detections-${modelId}`)
+      if (src) src.setData(featureCollection ?? EMPTY_FC)
     },
 
     // Add or remove a catalog layer on the MapLibre map
@@ -138,7 +154,7 @@ const Map = forwardRef(function Map(
     if (canvas) canvas.style.cursor = drawMode ? 'crosshair' : ''
   }, [drawMode])
 
-  // ── Map initialisation ─────────────────────────────────────
+  // Map initialisation
   useEffect(() => {
     if (map.current) return
 
@@ -170,6 +186,27 @@ const Map = forwardRef(function Map(
       m.addSource('draw-shapes',  { type: 'geojson', data: EMPTY_FC })
       m.addSource('draw-preview', { type: 'geojson', data: EMPTY_FC })
 
+      // One source per detection model. Detections are drawn as bbox
+      // outlines plus a marker at each bbox centre (its approximate location).
+      Object.entries(MODEL_COLORS).forEach(([id, c]) => {
+        m.addSource(`detections-${id}`, { type: 'geojson', data: EMPTY_FC })
+        // bbox outline (Polygon features with kind=bbox)
+        m.addLayer({ id: `detections-${id}-box`, type: 'line',
+          source: `detections-${id}`,
+          filter: ['==', ['get', 'kind'], 'bbox'],
+          paint: { 'line-color': c.outline, 'line-width': 2 } })
+        // centre marker (Point features with kind=center)
+        m.addLayer({ id: `detections-${id}-center`, type: 'circle',
+          source: `detections-${id}`,
+          filter: ['==', ['get', 'kind'], 'center'],
+          paint: {
+            'circle-radius': 5,
+            'circle-color': c.fill,
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 1.5,
+          } })
+      })
+
       m.addLayer({ id: 'draw-fill',    type: 'fill', source: 'draw-shapes',
         paint: { 'fill-color': '#0891b2', 'fill-opacity': 0.15 } })
       m.addLayer({ id: 'draw-outline', type: 'line', source: 'draw-shapes',
@@ -191,7 +228,7 @@ const Map = forwardRef(function Map(
       onMapStateRef.current?.({ zoom: m.getZoom(), basemap: basemapRef.current })
     })
 
-    // ── Click: polygon vertex / circle center-radius ──
+    // Click: polygon vertex / circle center-radius
     m.on('click', (e) => {
       const mode = drawModeRef.current
       if (!mode) return
@@ -220,7 +257,7 @@ const Map = forwardRef(function Map(
       }
     })
 
-    // ── Double-click: close polygon ────────────────────────
+    // Double-click: close polygon
     m.on('dblclick', (e) => {
       if (drawModeRef.current !== 'polygon') return
       e.preventDefault()
@@ -293,7 +330,7 @@ const Map = forwardRef(function Map(
     <div className={`map-wrapper${mapSettings.scale ? '' : ' hide-scale'}`}>
       <div ref={mapContainer} className="map-container" />
 
-      {/* Right-side controls — stacked vertically */}
+      {/* Right-side controls - stacked vertically */}
       <BasemapSwitcher current={basemap} onSelect={handleBasemapSelect} />
       <DrawToggle
         active={showDrawToolbar}
@@ -305,7 +342,7 @@ const Map = forwardRef(function Map(
       <GlobeToggle isGlobe={isGlobe} onToggle={handleToggleGlobe} />
       <CatalogToggle active={showCatalog} onToggle={onToggleCatalog} />
 
-      {/* North arrow — top-left */}
+      {/* North arrow - top-left */}
       {mapSettings.northArrow && (
         <button className="north-arrow" onClick={handleResetNorth} title="Reset north">
           <img
@@ -316,7 +353,7 @@ const Map = forwardRef(function Map(
         </button>
       )}
 
-      {/* Coordinates — bottom-left */}
+      {/* Coordinates - bottom-left */}
       {mapSettings.coords && coords && (
         <div className="map-coords">
           {`Lat: ${coords.lat} · Lng: ${coords.lng}`}
