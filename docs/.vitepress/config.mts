@@ -19,7 +19,7 @@ export default withMermaid({
       themeConfig: {
         nav: [
           { text: 'About', link: '/about/introduction' },
-          { text: 'Guide', link: '/guide/introduction' },
+          { text: 'Guide', link: '/guide/overview' },
           { text: 'Learning', link: '/fr/learning/introduction' }
         ],
         sidebar: {
@@ -62,7 +62,7 @@ export default withMermaid({
   }
 })
 
-// ── About
+// About
 function getAboutSidebar (lang) {
   if (lang === 'en') return [
     { text: 'GeoML', link: '/about/introduction' },
@@ -76,7 +76,7 @@ function getAboutSidebar (lang) {
   ]
 }
 
-// ── Guide
+// Guide
 function getGuideSidebar (lang) {
   const p = lang === 'fr' ? '/fr' : ''
   const t = (fr, en) => lang === 'fr' ? fr : en
