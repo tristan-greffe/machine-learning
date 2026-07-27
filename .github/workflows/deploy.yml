@@ -1,0 +1,49 @@
+name: deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & deploy SPA + docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true  # ONNX models may be tracked with Git LFS
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          pnpm install
+          pnpm build
+
+      - name: Build docs
+        working-directory: docs
+        run: |
+          pnpm install
+          pnpm build
+
+      - name: Combine into Pages bundle
+        run: |
+          mkdir -p pages-dist/documentation
+          cp -r frontend/dist/. pages-dist/
+          cp -r docs/.vitepress/dist/. pages-dist/documentation/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: pages-dist
+          token: ${{ secrets.TOKEN_GITHUB }}
